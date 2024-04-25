@@ -1,13 +1,199 @@
-<!-- views/admin.ejs -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administrador</title>
+    <title>Appix</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <style>
+        /* Estilos CSS */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5; /* Color de fondo gris claro */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: #1976d2; /* Color de fondo azul */
+            color: #fff;
+            padding: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-weight: 500;
+            font-size: 24px;
+        }
+        .container {
+            max-width: 1200px; /* Aumentado el ancho máximo */
+            margin: 20px auto;
+            padding: 0 20px;
+            display: flex;
+            flex-wrap: wrap; /* Permitir que los post-its se envuelvan en múltiples líneas */
+            justify-content: space-evenly; /* Espaciado uniforme entre los post-its */
+        }
+        .post-it {
+            flex-basis: calc(33.33% - 20px); /* Tamaño original de los post-its con margen entre ellos */
+            background-color: #fff; /* Color de fondo blanco */
+            padding: 20px;
+            margin-bottom: 20px; /* Espacio entre los post-its */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+        .post-it:hover {
+            transform: translateY(-5px);
+        }
+        .post-it-header {
+            background-color: #1976d2; /* Color de fondo azul */
+            color: #fff;
+            padding: 10px;
+            border-radius: 10px 10px 0 0;
+            margin: -20px -20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .post-it h2 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 500;
+        }
+        .post-it p {
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        .risk {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 14px;
+        }
+        .edit-button,
+        .delete-button {
+            width: 30px;
+            height: 30px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .edit-button img,
+        .delete-button img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        footer {
+            background-color: #1976d2; /* Color de fondo azul */
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        .additional-info {
+            display: none;
+            margin-top: 20px;
+        }
+        .expand-button {
+            background-color: #1976d2;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <h1>Panel de Administrador</h1>
-    <!-- Contenido del panel de administrador -->
+    <header>
+        <h1>Appix</h1>
+        <a class="btn waves-effect waves-light blue" href="/nuevo-proyecto">Nuevo Proyecto</a>
+    </header>
+    <div class="container">
+        <div class="post-it">
+            <div class="post-it-header">
+                <h2>Proyecto 1</h2>
+                <button class="edit-button"><img src="pencil.png" alt="Editar"></button>
+                <button class="delete-button"><img src="trash.png" alt="Eliminar"></button>
+            </div>
+            <div class="post-it-content">
+                <p><strong>Descripción:</strong> Descripción del proyecto 1.</p>
+                <p><strong>Empresa:</strong> Empresa ABC</p>
+                <p><strong>Estatus del Proyecto:</strong> En proceso</p>
+            </div>
+            <div class="additional-info">
+                <p><strong>Fecha de Inicio:</strong> 01/01/2024</p>
+                <p><strong>Fecha de Finalización:</strong> 31/12/2024</p>
+                <p><strong>Riesgos:</strong></p>
+                <ol>
+                    <li>El encargado del proyecto NO cuenta con conocimiento teórico del desarrollo de software</li>
+                    <p>5/10</p>
+                </ol>
+                <p><strong>Acciones:</strong></p>
+                <ol>
+                    <li>Hacer la presentación</li>
+                    <li>Revisar el presupuesto</li>
+                </ol>
+            </div>
+            <div class="risk">Riesgo: 30%</div>
+            <button class="expand-button">Ver más</button>
+        </div>
+        <div class="post-it">
+            <div class="post-it-header">
+                <h2>Proyecto 2</h2>
+                <button class="edit-button"><img src="pencil.png" alt="Editar"></button>
+                <button class="delete-button"><img src="trash.png" alt="Eliminar"></button>
+            </div>
+            <div class="post-it-content">
+                <p><strong>Descripción:</strong> Descripción del proyecto 2.</p>
+                <p><strong>Empresa:</strong> Empresa DEF</p>
+                <p><strong>Estatus del Proyecto:</strong> Etapa inicial</p>
+            </div>
+            <div class="additional-info">
+                <p><strong>Fecha de Inicio:</strong> 15/02/2024</p>
+                <p><strong>Fecha de Finalización:</strong> 30/06/2024</p>
+                <p><strong>Riesgos:</strong></p>
+                <ol>
+                    <li>El cliente demora en enviarnos archivos o información que requerimos</li>
+                    <p>8/10</p>
+                </ol>
+                <p><strong>Acciones:</strong></p>
+                <ol>
+                    <li>Realizar el plan de trabajo</li>
+                    <li>Contactar proveedores</li>
+                </ol>
+            </div>
+            <div class="risk">Riesgo: 20%</div>
+            <button class="expand-button">Ver más</button>
+        </div>
+        <!-- Agrega más post-its según sea necesario -->
+    </div>
+    <footer>
+        <p>Derechos de autor © 2024 Empresa Appix. Todos los derechos reservados.</p>
+        <a class="btn waves-effect waves-light" href="/usuario">Ir a Interfaz de Usuario</a>
+    </footer>
+    <script>
+        document.querySelectorAll('.expand-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const additionalInfo = button.parentElement.querySelector('.additional-info');
+                additionalInfo.style.display = additionalInfo.style.display === 'none' ? 'block' : 'none';
+            });
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
 </html>
