@@ -1,0 +1,51 @@
+idGestion_pk,idEstatus_fk,idProyecto_fk,idRiesgo_fk,fechaInicio,fechaFinalizacion,nivelRiesgo,comentarioAcciones,cantVariables,porcentajeRiesgo
+1,3,1,2,10-01-2024,20-02-2024,5,"Realizar reuniones periódicas con el cliente para asegurar comprensión de requerimientos",3,60
+2,1,5,7,01-02-2024,15-03-2024,7,"Contratar experto en seguridad informática para auditoría y mitigación",2,85
+3,2,10,11,05-03-2024,10-04-2024,4,"Establecer reuniones semanales para validar avances y ajustar objetivos",1,40
+4,4,8,13,15-02-2024,25-03-2024,6,"Asignar recursos adicionales al equipo de desarrollo para cumplir con plazos",2,75
+5,5,3,18,20-01-2024,28-02-2024,3,"Realizar pruebas exhaustivas de escalabilidad antes del lanzamiento",3,55
+6,1,12,6,01-03-2024,15-04-2024,8,"Capacitar al equipo en la integración de sistemas externos",1,90
+7,3,9,4,10-02-2024,20-03-2024,5,"Revisar y actualizar el plan de comunicación con el cliente",2,70
+8,5,17,14,15-03-2024,30-04-2024,7,"Implementar medidas adicionales de seguridad de datos",2,80
+9,2,15,9,25-01-2024,05-03-2024,4,"Revisar y mejorar la documentación del proyecto",1,45
+10,4,19,16,20-02-2024,01-04-2024,6,"Realizar pruebas de usabilidad con usuarios finales",2,65
+11,1,4,20,15-01-2024,01-03-2024,8,"Contratar consultoría especializada en análisis de datos",1,95
+12,3,14,5,05-02-2024,10-03-2024,5,"Realizar análisis de riesgos adicionales relacionados con proveedores",3,75
+13,5,11,19,10-03-2024,20-04-2024,7,"Implementar mejoras de rendimiento según retroalimentación del cliente",2,85
+14,2,2,8,30-01-2024,15-03-2024,4,"Establecer métricas de calidad para monitorizar el desarrollo",1,50
+15,4,18,12,25-02-2024,05-04-2024,6,"Revisar y ajustar presupuesto para incluir contingencias",2,70
+16,1,7,17,05-03-2024,15-04-2024,8,"Establecer protocolos de comunicación con proveedores externos",1,90
+17,3,13,3,15-02-2024,25-03-2024,5,"Implementar protocolos de seguridad adicionales en el sistema",3,60
+18,2,6,10,20-01-2024,01-03-2024,4,"Realizar análisis de requisitos detallado",2,45
+19,4,16,15,10-02-2024,20-03-2024,6,"Ejecutar pruebas de carga y rendimiento",3,70
+20,5,20,1,05-03-2024,15-04-2024,8,"Establecer estrategia de respaldo de datos",1,80
+21,1,3,14,15-01-2024,25-02-2024,3,"Realizar auditoría de seguridad",2,55
+22,3,9,5,01-02-2024,10-03-2024,5,"Revisar y actualizar documentación técnica",1,65
+23,2,12,9,25-02-2024,05-04-2024,4,"Realizar pruebas de integración con sistemas externos",2,70
+24,4,7,16,20-03-2024,30-04-2024,6,"Evaluar impacto y riesgos del cambio de tecnología",3,75
+25,5,18,2,05-04-2024,15-05-2024,8,"Desarrollar plan de contingencia ante riesgos críticos",1,90
+26,1,11,10,15-02-2024,25-03-2024,3,"Revisar y validar requisitos de seguridad",2,60
+27,3,4,12,01-03-2024,10-04-2024,5,"Realizar revisión de arquitectura del sistema",1,75
+28,2,16,20,10-03-2024,20-04-2024,4,"Realizar pruebas de aceptación con el cliente",2,80
+29,4,1,18,25-01-2024,05-03-2024,6,"Optimizar consultas y acceso a la base de datos",3,85
+30,5,10,8,20-02-2024,01-04-2024,8,"Realizar pruebas de compatibilidad con navegadores",1,95
+31,1,14,4,05-03-2024,15-04-2024,5,"Establecer protocolos de seguridad para acceso remoto",2,60
+32,3,5,19,15-02-2024,25-03-2024,7,"Implementar mejoras de usabilidad en la interfaz de usuario",1,75
+33,2,13,6,01-03-2024,10-04-2024,4,"Capacitar al equipo en técnicas de desarrollo ágil",2,80
+34,4,8,11,10-03-2024,20-04-2024,6,"Revisar y ajustar estimaciones de tiempos y costos",3,85
+35,5,17,15,25-01-2024,05-03-2024,8,"Realizar pruebas de rendimiento con carga simulada",1,90
+36,1,2,7,20-02-2024,01-04-2024,3,"Revisar y actualizar políticas de seguridad",2,60
+37,3,19,13,05-03-2024,15-04-2024,5,"Realizar análisis de impacto de cambios en requerimientos",1,75
+38,2,7,9,15-02-2024,25-03-2024,4,"Documentar y compartir lecciones aprendidas",2,80
+39,4,16,10,01-03-2024,10-04-2024,6,"Realizar pruebas de compatibilidad con sistemas operativos",3,85
+40,5,3,12,10-03-2024,20-04-2024,8,"Revisar y mejorar proceso de control de versiones",1,90
+41,1,11,20,25-01-2024,05-03-2024,3,"Definir estrategia de respaldo de bases de datos",2,60
+42,3,4,16,20-02-2024,01-04-2024,5,"Realizar pruebas de rendimiento con carga real",1,75
+43,2,14,8,05-03-2024,15-04-2024,4,"Establecer métricas de rendimiento y disponibilidad",2,80
+44,4,6,4,15-02-2024,25-03-2024,6,"Implementar medidas de seguridad adicionales en la red",3,85
+45,5,10,18,01-03-2024,10-04-2024,8,"Realizar pruebas de seguridad con herramientas de penetración",1,90
+46,1,1,15,10-03-2024,20-04-2024,3,"Revisar y mejorar documentación de proceso de desarrollo",2,60
+47,3,9,3,25-01-2024,05-03-2024,5,"Establecer protocolos de copias de seguridad automáticas",1,75
+48,2,12,19,20-02-2024,01-04-2024,4,"Realizar pruebas de integración con sistemas externos",2,80
+49,4,5,5,05-03-2024,15-04-2024,6,"Realizar análisis de riesgos adicionales relacionados con proveedores",3,85
+50,5,17,11,10-03-2024,20-04-2024,8,"Evaluar impacto y riesgos del cambio de tecnología",1,90
