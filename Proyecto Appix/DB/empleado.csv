@@ -1,0 +1,3 @@
+idEmpleado_pk,contraseña,nombre,rol
+1,123,Administrador,0
+2,123,Usuario,1
