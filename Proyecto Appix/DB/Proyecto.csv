@@ -1,0 +1,21 @@
+idProyecto_pk,idCliente_fk,nombreProyecto,descripcion,departamento
+1,3,Desarrollo de Plataforma E-commerce,"Desarrollo de una plataforma de comercio electrónico para venta de productos electrónicos",Desarrollo
+2,8,Rediseño de Sitio Web Corporativo,"Rediseño completo del sitio web corporativo para mejorar la experiencia del usuario",Diseño
+3,6,Implementación de Sistema de Gestión CRM,"Desarrollo e implementación de un sistema CRM personalizado para mejorar la gestión de clientes",Desarrollo
+4,12,Desarrollo de Aplicación Móvil de Viajes,"Creación de una aplicación móvil para reservas y gestión de viajes",Desarrollo
+5,5,Optimización de Plataforma de E-learning,"Mejora y optimización de una plataforma de aprendizaje en línea para ofrecer mejores servicios educativos",Desarrollo
+6,17,Desarrollo de Sistema de Gestión de Inventarios,"Implementación de un sistema de gestión de inventarios para optimizar el control de stocks",Desarrollo
+7,9,Rediseño de Aplicación de Recursos Humanos,"Rediseño de una aplicación de gestión de recursos humanos para mejorar la usabilidad y funcionalidades",Diseño
+8,4,Desarrollo de Plataforma de Marketing Digital,"Creación de una plataforma integral de marketing digital para campañas promocionales",Desarrollo
+9,11,Implementación de Sistema de Pagos en Línea,"Integración de un sistema de pagos en línea seguro y confiable",Desarrollo
+10,2,Desarrollo de Aplicación Web para Ventas,"Diseño y desarrollo de una aplicación web para mejorar las ventas en línea",Desarrollo
+11,15,Rediseño de Portal de Noticias,"Actualización y rediseño de un portal de noticias en línea para mejorar la experiencia del usuario",Diseño
+12,10,Desarrollo de Plataforma de Colaboración Empresarial,"Creación de una plataforma colaborativa para empresas con herramientas de comunicación y gestión",Desarrollo
+13,7,Implementación de Sistema de Reservas en Línea,"Desarrollo e implementación de un sistema de reservas en línea para eventos y actividades",Desarrollo
+14,1,Desarrollo de Aplicación de Seguimiento Logístico,"Creación de una aplicación para seguimiento logístico y gestión de entregas",Desarrollo
+15,19,Rediseño de Plataforma de Comunicación Interna,"Optimización y rediseño de una plataforma de comunicación interna para mejorar la colaboración en la empresa",Diseño
+16,14,Desarrollo de Aplicación de Realidad Aumentada,"Desarrollo de una aplicación de realidad aumentada para experiencias interactivas",Desarrollo
+17,13,Implementación de Sistema de Gestión de Proyectos,"Integración de un sistema de gestión de proyectos para mejorar la productividad y organización",Desarrollo
+18,16,Desarrollo de Plataforma de E-commerce B2B,"Creación de una plataforma de comercio electrónico B2B para ventas entre empresas",Desarrollo
+19,20,Rediseño de Aplicación de Salud y Bienestar,"Mejora y rediseño de una aplicación de salud y bienestar para ofrecer nuevas funcionalidades",Diseño
+20,18,Desarrollo de Aplicación de Análisis de Datos,"asassasdasd",Diseño

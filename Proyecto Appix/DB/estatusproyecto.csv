@@ -1,0 +1,6 @@
+idStatus_pk,status
+1,En planeación
+2,En proceso
+3,En espera
+4,Atrasado
+5,Finalizado
