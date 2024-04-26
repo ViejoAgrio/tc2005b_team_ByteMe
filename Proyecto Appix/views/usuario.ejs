@@ -11,7 +11,9 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f5f5f5; /* Color de fondo gris claro */
+            background-image: url('fondoBlanco.png'); 
+            background-size: cover;
+            background-position: center;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
@@ -19,16 +21,20 @@
         header {
             background-color: #1976d2; /* Color de fondo azul */
             color: #fff;
-            padding: 30px;
+            padding: 10px;
             display: flex;
-            justify-content: center;
+            /*justify-content: center;*/
             align-items: center;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        header h1 {
-            margin: 0;
-            font-weight: 500;
-            font-size: 24px;
+        .logo-header {
+            width: 70px; /* Ajusta esto al tamaño de tu logo */
+            height: 70px; /* Ajusta esto al tamaño de tu logo */
+            background-image: url('logo-appix-blanco.png'); 
+            background-size: contain; /* Asegura que el logo se ajuste dentro de las dimensiones */
+            background-repeat: no-repeat;
+            background-position: center;
+            margin-right: 5px; /* Espacio entre el logo y el texto */
         }
         .container {
             max-width: 1200px; /* Aumentado el ancho máximo */
@@ -113,7 +119,7 @@
 </head>
 <body>
     <header>
-        <h1>Appix</h1>
+        <div class="logo-header"></div>
     </header>
     <div class="container">
         <div class="post-it">
