@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Nuevo Proyecto</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <style>
+        /* Estilos personalizados */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('fondoAzul.png'); 
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+            background-color: #fff; /* Color de fondo blanco */
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .form-container {
+            padding: 20px;
+        }
+        .form-container label {
+            font-weight: bold;
+        }
+        .risk-catalog {
+            margin-top: 20px;
+        }
+        .risk {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .risk-checkbox {
+            margin-right: 10px;
+        }
+        .cancel-button {
+            background-color: #f44336; /* Color rojo */
+        }
+        .save-button {
+            background-color: #4caf50; /* Color verde */
+        }
+        /* Estilos para la tabla invisible */
+        .invisible-table {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Agregar Nuevo Proyecto</h2>
+        <div class="form-container">
+            <label for="nombre-proyecto">Nombre del proyecto:</label>
+            <input type="text" id="nombre-proyecto" name="nombre-proyecto"><br>
+
+            <label for="fecha-inicio">Fecha de Inicio:</label>
+            <input type="date" id="fecha-inicio" name="fecha-inicio"><br>
+
+            <label for="fecha-fin">Fecha de entrega:</label>
+            <input type="date" id="fecha-fin" name="fecha-fin"><br>
+
+            <label for="empresa">Empresa:</label>
+            <input type="text" id="empresa" name="empresa"><br>
+
+            <label for="encargado">Encargado:</label>
+            <input type="text" id="encargado" name="encargado"><br>
+
+            <label for="plan-accion">Plan de acción:</label>
+            <textarea id="plan-accion" name="plan-accion"></textarea><br>
+            <div class="risk-catalog">
+                <h4>Riesgos Existentes</h4>
+                <!-- Botón para mostrar/ocultar la tabla de riesgos existentes -->
+                <button id="show-existing-risks-btn" class="waves-effect waves-light btn">Mostrar riesgos existentes</button>
+            </div>
+            <!-- Tabla invisible para los riesgos existentes -->
+            <table class="invisible-table">
+                <thead>
+                    <!-- Agrega filas según sea necesario -->
+                    <tr>
+                        <td>
+                            <label>
+                                <input type="checkbox" class="risk-checkbox"/>
+                                <span></span>
+                            </label>
+                        </td>
+                        <td><button class="delete-risk-btn waves-effect waves-light btn red">Eliminar</button></td>
+                        <td>Riesgo 1</td>
+                        <td>3</td>
+                        <td>Categoría A</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Agrega filas según sea necesario -->
+                    <tr>
+                        <td>
+                            <label>
+                                <input type="checkbox" class="risk-checkbox"/>
+                                <span></span>
+                            </label>
+                        </td>
+                        <td><button class="delete-risk-btn waves-effect waves-light btn red">Eliminar</button></td>
+                        <td>Riesgo 2</td>
+                        <td>8</td>
+                        <td>Categoría B</td>
+                    </tr>
+                    <!-- Agrega más filas según sea necesario -->
+                </tbody>
+            </table>
+            <div class="new-risks">
+                <h5>Nuevos Riesgos</h5>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nuevo riesgo</th>
+                            <th>Categoría (Aplicación web)</th>
+                            <th>Nivel (0-9)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="text" class="new-risk-Nuevoriesgo"></td>
+                            <td>
+                                <select class="new-risk-category browser-default">
+                                    <option value="" disabled selected>Seleccione una categoría</option>
+                                    <option value="categoria-1">Categoría 1</option>
+                                    <option value="categoria-2">Categoría 2</option>
+                                    <option value="categoria-3">Categoría 3</option>
+                                    <!-- Agregar más opciones según sea necesario -->
+                                </select>
+                            </td>
+                            <td>
+                                <select class="new-risk-level browser-default">
+                                    <option value="" disabled selected>Seleccione un nivel</option>
+                                    <option value="0">0 (Mínimo)</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9 (Máximo)</option>
+                                    <!-- Agregar más opciones según sea necesario -->
+                                </select>
+                            </td>                            
+                            <td><button class="add-risk-btn waves-effect waves-light btn">Agregar</button></td>
+                        </tr>
+                        <!-- Agregar más filas según sea necesario -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="button-container">
+            <button class="btn waves-effect waves-light cancel-button" type="button" onclick="window.location.href='/admin'">Cancelar</button>
+            <button class="btn waves-effect waves-light save-button" type="button" onclick="window.location.href='/admin'">Guardar</button>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        // JavaScript para mostrar/ocultar la tabla de riesgos existentes
+        document.getElementById('show-existing-risks-btn').addEventListener('click', function() {
+            var existingRisksTable = document.querySelector('.invisible-table');
+            if (existingRisksTable.style.display === 'none') {
+                existingRisksTable.style.display = 'table';
+            } else {
+                existingRisksTable.style.display = 'none';
+            }
+        });
+
+        // Script para el selector de opciones según la fecha
+        function actualizarOpciones() {
+            // Obtener el valor de la fecha seleccionada
+            const fechaSeleccionada = document.getElementById('fecha').value;
+
+            // Obtener el elemento del selector de opciones
+            const selectorOpciones = document.getElementById('opciones');
+
+            // Limpiar las opciones existentes
+            selectorOpciones.innerHTML = '';
+
+            // Generar nuevas opciones basadas en la fecha seleccionada
+            if (fechaSeleccionada === '2024-04-25') {
+                agregarOpcion('Opción 1', 'opcion1');
+                agregarOpcion('Opción 2', 'opcion2');
+                agregarOpcion('Opción 3', 'opcion3');
+            } else if (fechaSeleccionada === '2024-04-26') {
+                agregarOpcion('Opción A', 'opcionA');
+                agregarOpcion('Opción B', 'opcionB');
+                agregarOpcion('Opción C', 'opcionC');
+            } else {
+                agregarOpcion('No hay opciones disponibles para esta fecha', '');
+            }
+        }
+
+        function agregarOpcion(texto, valor) {
+            const opcion = document.createElement('option');
+            opcion.text = texto;
+            opcion.value = valor;
+            document.getElementById('opciones').appendChild(opcion);
+        }
+
+        // Actualizar las opciones al cargar la página
+        actualizarOpciones();
+    </script>
+</body>
+</html>
