@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appix</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #E9F6FF;
+        }
+        header {
+            background-color: #1976d2;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .login-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .login-form {
+            display: inline-block;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .login-form input[type="text"],
+        .login-form input[type="password"],
+        .login-form input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        .login-form input[type="submit"] {
+            background-color: #1976d2;
+            color: #fff;
+            cursor: pointer;
+        }
+        footer {
+            background-color: #1976d2;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Appix</h1>
+    </header>
+    <div class="login-container">
+        <h2>Iniciar Sesión</h2>
+        <form class="login-form" action="/login" method="post">
+            <input type="text" name="usuario" placeholder="Correo electrónico" required><br>
+            <input type="password" name="contrasena" placeholder="Contraseña" required><br>
+            <input type="submit" value="Iniciar Sesión">
+        </form>
+    </div>
+    <footer>
+        <p>Derechos de autor © 2024 Empresa Appix. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
