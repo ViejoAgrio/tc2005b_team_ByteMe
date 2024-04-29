@@ -4,189 +4,131 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Appix</title>
+    <link rel="stylesheet" href="/css/usuario.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <style>
-        /* Estilos CSS */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-image: url('fondoBlanco.png'); 
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-        header {
-            background-color: #1976d2; /* Color de fondo azul */
-            color: #fff;
-            padding: 10px;
-            display: flex;
-            /*justify-content: center;*/
-            align-items: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        .logo-header {
-            width: 70px; /* Ajusta esto al tamaño de tu logo */
-            height: 70px; /* Ajusta esto al tamaño de tu logo */
-            background-image: url('logo-appix-blanco.png'); 
-            background-size: contain; /* Asegura que el logo se ajuste dentro de las dimensiones */
-            background-repeat: no-repeat;
-            background-position: center;
-            margin-right: 5px; /* Espacio entre el logo y el texto */
-        }
-        .container {
-            max-width: 1200px; /* Aumentado el ancho máximo */
-            margin: 20px auto;
-            padding: 0 20px;
-            display: flex;
-            flex-wrap: wrap; /* Permitir que los post-its se envuelvan en múltiples líneas */
-            justify-content: space-evenly; /* Espaciado uniforme entre los post-its */
-        }
-        .post-it {
-            flex-basis: calc(33.33% - 20px); /* Tamaño original de los post-its con margen entre ellos */
-            background-color: #fff; /* Color de fondo blanco */
-            padding: 20px;
-            margin-bottom: 20px; /* Espacio entre los post-its */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            transition: transform 0.3s ease;
-            position: relative;
-        }
-        .post-it:hover {
-            transform: translateY(-5px);
-        }
-        .post-it-header {
-            background-color: #1976d2; /* Color de fondo azul */
-            color: #fff;
-            padding: 10px;
-            border-radius: 10px 10px 0 0;
-            margin: -20px -20px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .post-it h2 {
-            margin: 0;
-            font-size: 20px;
-            font-weight: 500;
-        }
-        .post-it p {
-            margin-bottom: 10px;
-            font-size: 14px;
-        }
-        .risk {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            font-size: 14px;
-        }
-        .edit-button,
-        .delete-button {
-            width: 30px;
-            height: 30px;
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
-            margin-left: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        footer {
-            background-color: #1976d2; /* Color de fondo azul */
-            color: #fff;
-            text-align: center;
-            padding: 10px 0;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-        .additional-info {
-            display: none;
-            margin-top: 20px;
-        }
-        .expand-button {
-            background-color: #1976d2;
-            color: #fff;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-    </style>
 </head>
 <body>
     <header>
         <div class="logo-header"></div>
     </header>
-    <div class="container">
-        <div class="post-it">
-            <div class="post-it-header">
-                <h2>Proyecto 1</h2>
+    <div class="row">
+        <div class="col s4">
+            <div class="post-it">
+                <div class="post-it-header">
+                    <h2>Proyecto 2</h2>
+                </div>
+                <div class="post-it-info">
+                    <div class="row">
+                        <div class="col s2">
+                            <h3>Empresa:</h3>
+                        </div>
+                        <div class="col s5">
+                            <h3>ABC-empresa</h3>
+                        </div>
+                        <div class="col s2">
+                            <h3>Deadline:</h3>
+                        </div>
+                        <div class="col s3">
+                            <h3>12/dec/2024</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-it-desc">
+                    <p> En todo este espacio se piensa emplear una descripcion detallada
+                        del proyecto en cuestion. Es importante ver que sucede cuando la 
+                        extension de este texto es mas grande que el esapcio designado, 
+                        igualmente estara limitado en la base de datos. Me parece que el
+                        limite de caracteres para esta descripcion son 500, por lo tanto 
+                        quiero llegar a ellos. Ya solo me faltan poquitos.
+                    </p>
+                </div>
+                <div class="post-it-pend">
+                    <h3>Pendientes: </h3>
+                    <p> - Realizar las actividades pendientes del proyecto 2 <br>
+                        - Escribir actividades pendientes en esta seccion
+                        - Realizar las actividades pendientes del proyecto 2 <br>
+                        - Escribir actividades pendientes en esta seccion
+                        - Realizar las actividades pendientes del proyecto 2 <br>
+                        - Escribir actividades pendientes en esta seccion
+                        - Realizar las actividades pendientes del proyecto 2 <br>
+                        - Escribir actividades pendientes en esta seccion
+                        - Realizar las actividades pendientes del proyecto 2 <br>
+                        - Escribir actividades pendientes en esta seccion
+                        - Realizar las actividades pendientes del proyecto 2 <br>
+                        - Escribir actividades pendientes en esta seccion
+                        - Realizar las actividades pendientes del proyecto 2 <br>
+                        - Escribir actividades pendientes en esta seccion
+                        - Realizar las actividades pendientes del proyecto 2 <br>
+                        - Escribir actividades pendientes en esta seccion
+                    </p>
+                </div>
+                <div class="risk">
+                    <div class="risk-left">
+                        <button class="expand-button">Ver más</button>
+                    </div>
+                    <div class="risk-right">
+                        Riesgo: 20%
+                    </div>
+                </div>
+                <div class="post-it-footer">
+                    <h2> En proceso </h2>
+                </div>
             </div>
-            <div class="post-it-content">
-                <p><strong>Descripción:</strong> Descripción del proyecto 1.</p>
-                <p><strong>Empresa:</strong> Empresa ABC</p>
-                <p><strong>Estatus del Proyecto:</strong> En proceso</p>
+            <div class="post-it">
+                <div class="post-it-header">
+                    <h2>Proyecto 2</h2>
+                </div>
+                <div class="post-it-info">
+                    <div class="row">
+                        <div class="col s2">
+                            <h3>Empresa:</h3>
+                        </div>
+                        <div class="col s5">
+                            <h3>ABC-empresa</h3>
+                        </div>
+                        <div class="col s2">
+                            <h3>Deadline:</h3>
+                        </div>
+                        <div class="col s3">
+                            <h3>12/dec/2024</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-it-desc">
+                    <p> En todo este espacio se piensa emplear una descripcion detallada
+                        del proyecto en cuestion. Es importante ver que sucede cuando la 
+                        extension de este texto es mas grande que el esapcio designado, 
+                        igualmente estara limitado en la base de datos. Me parece que el
+                        limite de caracteres para esta descripcion son 500, por lo tanto 
+                        quiero llegar a ellos. Ya solo me faltan poquitos.
+                    </p>
+                </div>
+                <div class="post-it-pend">
+                    <h3>Pendientes: </h3>
+                    <p> - Realizar las actividades pendientes del proyecto 2 <br>
+                        - Escribir actividades pendientes en esta seccion
+                    </p>
+                </div>
+                <div class="risk">
+                    <div class="risk-left">
+                        <button class="expand-button">Ver más</button>
+                    </div>
+                    <div class="risk-right">
+                        Riesgo: 20%
+                    </div>
+                </div>
+                <div class="post-it-footer">
+                    <h2> En planeacion </h2>
+                </div>
             </div>
-            <div class="additional-info">
-                <p><strong>Fecha de Inicio:</strong> 01/01/2024</p>
-                <p><strong>Fecha de Finalización:</strong> 31/12/2024</p>
-                <p><strong>Riesgos:</strong></p>
-                <ol>
-                    <li>El encargado del proyecto NO cuenta con conocimiento teórico del desarrollo de software</li>
-                    <p>5/10</p>
-                </ol>
-                <p><strong>Acciones:</strong></p>
-                <ol>
-                    <li>Hacer la presentación</li>
-                    <li>Revisar el presupuesto</li>
-                </ol>
-            </div>
-            <div class="risk">Riesgo: 30%</div>
-            <button class="expand-button">Ver más</button>
         </div>
-        <div class="post-it">
-            <div class="post-it-header">
-                <h2>Proyecto 2</h2>
-            </div>
-            <div class="post-it-content">
-                <p><strong>Descripción:</strong> Descripción del proyecto 2.</p>
-                <p><strong>Empresa:</strong> Empresa DEF</p>
-                <p><strong>Estatus del Proyecto:</strong> Etapa inicial</p>
-            </div>
-            <div class="additional-info">
-                <p><strong>Fecha de Inicio:</strong> 15/02/2024</p>
-                <p><strong>Fecha de Finalización:</strong> 30/06/2024</p>
-                <p><strong>Riesgos:</strong></p>
-                <ol>
-                    <li>El cliente demora en enviarnos archivos o información que requerimos</li>
-                    <p>8/10</p>
-                </ol>
-                <p><strong>Acciones:</strong></p>
-                <ol>
-                    <li>Realizar el plan de trabajo</li>
-                    <li>Contactar proveedores</li>
-                </ol>
-            </div>
-            <div class="risk">Riesgo: 20%</div>
-            <button class="expand-button">Ver más</button>
+        <div class="col s4">
         </div>
-        <!-- Agrega más post-its según sea necesario -->
-    </div>
+        <div class="col s4">
+        </div>
+      </div>
     <footer>
         <p>Derechos de autor © 2024 Empresa Appix. Todos los derechos reservados.</p>
     </footer>
-    <script>
-        document.querySelectorAll('.expand-button').forEach(button => {
-            button.addEventListener('click', () => {
-                const additionalInfo = button.parentElement.querySelector('.additional-info');
-                additionalInfo.style.display = additionalInfo.style.display === 'none' ? 'block' : 'none';
-            });
-        });
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
 </html>
