@@ -1,0 +1,154 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('/images/fondoBlanco.png'); 
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+header {
+    background-color: #1976d2; /* Color de fondo azul */
+    color: #fff;
+    padding: 10px;
+    display: flex;
+    /*justify-content: center;*/
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo-header {
+    width: 70px; /* Ajusta esto al tamaño de tu logo */
+    height: 70px; /* Ajusta esto al tamaño de tu logo */
+    background-image: url('/images/logo-appix-blanco.png'); 
+    background-size: contain; /* Asegura que el logo se ajuste dentro de las dimensiones */
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 5px; /* Espacio entre el logo y el texto */
+}
+
+.row {
+    display: flex;
+    width: 100%;
+}
+
+.post-it {
+    height: 440px;
+    background-color: #fff; /* Color de fondo blanco */
+    margin: 20px; /* Espacio entre los post-its */
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+    border: 1px solid #ccc;
+    overflow: hidden;
+}
+
+.post-it h2 {
+    font-size: 15px;
+    margin: 0;
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+.post-it h3{
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0;
+    margin-left: 5px;
+}
+
+.post-it p {
+    margin: 5px;
+    font-size: 13px;
+}
+
+.post-it:hover {
+    transform: translateY(-5px);
+}
+
+.post-it-header {
+    display: flex;
+    background-color: #1976d2; /* Color de fondo azul */
+    color: #fff;
+    height: 40px;
+    width: 100%;
+    border-radius: 10px 10px 0 0;
+    justify-content: left;
+    align-items: center;
+}
+
+.post-it-info {
+    width: 100%;
+    height: 15px;
+    margin-top: 5px;
+    margin-bottom: 0;
+}
+
+.post-it-desc {
+    height: 105px;
+    width: 100%;
+    overflow: scroll;
+}
+
+.post-it-pend {
+    height: 185px;
+    width: 100%;
+    margin: 0;
+    margin-top: 10px;
+    overflow: scroll;
+}
+
+.risk {
+    display: flex;
+    width: 100%;
+    height: 40px;
+    align-items: center;
+}
+
+.risk-left,
+.risk-right {
+    flex: 1; /* Las secciones ocupan el mismo espacio */
+    display: flex; /* Utilizar flexbox para la disposición dentro de las secciones */
+    align-items: center; /* Centrar contenido verticalmente */
+}
+
+.risk-left{
+    justify-content: left;
+    margin-left: 5px;
+}
+
+.risk-right{
+    justify-content: right;
+    padding: 10px;
+    color: red;
+}
+
+.expand-button {
+    background-color: #1976d2;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.post-it-footer {
+    display: flex;
+    background-color: rgb(16, 180, 16); /* Color de fondo azul */
+    color: #fff;
+    height: 40px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+footer {
+    background-color: #1976d2; /* Color de fondo azul */
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    position:sticky;
+    bottom: 0;
+    width: 100%;
+}

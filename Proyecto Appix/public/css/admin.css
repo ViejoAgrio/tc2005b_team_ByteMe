@@ -1,0 +1,63 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('/images/fondoBlanco.png'); /* Color de fondo gris claro */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.header-container {
+    display: flex; /* Utilizar flexbox para la disposición horizontal */
+    justify-content: space-between; /* Distribuir el espacio entre los elementos */
+    align-items: center; /* Centrar verticalmente los elementos */
+    padding: 10px; /* Espaciado interno del header */
+    background-color: #1976d2; /* Color de fondo del header */
+    color: #fff; /* Color de texto */
+}
+
+.left-section,
+.right-section {
+    flex: 1; /* Las secciones ocupan el mismo espacio */
+    display: flex; /* Utilizar flexbox para la disposición dentro de las secciones */
+    align-items: center; /* Centrar contenido verticalmente */
+}
+
+.left-section {
+    justify-content: left; /* Centrar contenido horizontalmente */
+}
+
+.right-section {
+    justify-content: right;
+}
+
+.logo-header {
+    width: 70px; /* Ajusta esto al tamaño de tu logo */
+    height: 70px; /* Ajusta esto al tamaño de tu logo */
+    background-image: url('/images/logo-appix-blanco.png'); 
+    background-size: contain; /* Asegura que el logo se ajuste dentro de las dimensiones */
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 5px; /* Espacio entre el logo y el texto */
+}
+
+.container {
+    max-width: 1200px; /* Aumentado el ancho máximo */
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap; /* Permitir que los post-its se envuelvan en múltiples líneas */
+    justify-content: left; /* Espaciado uniforme entre los post-its */
+}
+
+
+footer {
+    background-color: #1976d2; /* Color de fondo azul */
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
