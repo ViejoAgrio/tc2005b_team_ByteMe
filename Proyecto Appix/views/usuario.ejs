@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+    <script src="/js/globalData.js"></script>
     <header class="header">
         <div class="logo-header"></div>
         <h1 class="header-title">RISK-MANAGER</h1>
@@ -17,6 +18,7 @@
         <div class="col s4">
             <div class="post-it">
                 <div class="post-it-header">
+                    <script src="/js/userColorHeaderFooterController.js"></script>
                     <h2>Aplicación de publicidad web para productos de ferreteria</h2>
                 </div>
                 <div class="row">
@@ -44,33 +46,7 @@
                     </div>
                     <div class="col s3">
                         <div class="post-it-info">
-                            <script>
-                                function asignarColorAElemento(elemento, variableCSS) {
-                                    // Remover todas las clases de color existentes
-                                    elemento.classList.remove('color-azul', '--color-info-alto', 'color-verde', 'color-amarillo');
-                                    
-                                    // Obtener el valor de la variable CSS
-                                    const color = getComputedStyle(document.documentElement).getPropertyValue(variableCSS);
-                        
-                                    // Aplicar el color como fondo al elemento
-                                    elemento.style.backgroundColor = color;
-                                }
-                        
-                                // Uso de la función para asignar color basado en una variable
-                                document.addEventListener('DOMContentLoaded', () => {
-                                    const postIt = document.querySelector('.post-it-info');
-                                    const risk = 67;
-                                    if (risk > 66) {
-                                        asignarColorAElemento(postIt, '--color-info-alto');
-                                    }
-                                    else if (risk > 33){
-                                        asignarColorAElemento(postIt, '--color-riesgo-moderado');
-                                    }
-                                    else if (risk > 0){
-                                        asignarColorAElemento(postIt, '--color-back-azul');
-                                    }
-                                });
-                            </script>
+                            <script src="/js/userColorInfoController.js"></script>
                             <p><br></p>
                             <h3>Empresa</h3>
                             <p>FRAGUA</p>
@@ -86,7 +62,6 @@
                             <p><br></p>
                             <h3>Departamento</h3>
                             <p>Desarrollo</p>
-                            <button class="expand-button">Detalles</button>
                         </div>
                     </div>
                 </div>

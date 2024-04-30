@@ -1,8 +1,10 @@
 :root {
-    --color-back-azul: #1976d2; 
-    --color-riesgo-alto: rgba(181, 28, 28, 0.934); 
-    --color-info-alto: rgb(224, 39, 39);
-    --color-riesgo-moderado: rgb(255, 193, 7); 
+    --color-back-azul: rgb(25, 118, 210); 
+    --color-rojo: rgba(181, 28, 28, 0.934); 
+    --color-info-rojo: rgb(224, 39, 39);
+    --color-amarillo: rgb(255, 193, 7); 
+    --color-info-amarillo: rgb(255, 200, 34);
+    --color-info-azul: rgb(49, 131, 214); 
 }
 
 
@@ -87,7 +89,7 @@ body {
 
 .post-it-header {
     display: flex;
-    background-color: var(--color-riesgo-alto); 
+    background-color: var(--color-rojo); 
     color: #fff;
     height: 40px;
     width: 100%;
@@ -102,7 +104,7 @@ body {
     width: 125%;
     height: 106%;
     margin: 0;
-    background-color: var(--color-info-alto);
+    background-color: var(--color-info-rojo);
     color: #fff;
     text-align: center;
 }
@@ -137,7 +139,7 @@ body {
 
 .post-it-footer {
     display: flex;
-    background-color: var(--color-riesgo-alto);
+    background-color: var(--color-rojo);
     color: #fff;
     height: 40px;
     width: 100%;

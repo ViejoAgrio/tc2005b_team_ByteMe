@@ -1,11 +1,20 @@
-const risk = 67;
-const values = [67, 100-risk]
+const risk = globalData.myGlobalNumber;
+if (risk > 66) {
+    miRGB = 'rgba(181, 28, 28, 0.934)'; 
+}
+else if (risk > 33){
+    miRGB = 'rgb(255, 193, 7)'; 
+}
+else if (risk > 0){
+    miRGB = 'rgb(49, 131, 214)';
+}
+const values = [risk, 100-risk]
 
 const data = {
     labels: ['Riesgo'],
     datasets: [{
         data: values, // Valores para cada sector del gráfico
-        backgroundColor: ['rgb(224, 39, 39)','white'], // Colores para cada sector
+        backgroundColor: [miRGB,'white'], // Colores para cada sector
         borderColor: ['grey'],
         borderWidth: 1
     }]
