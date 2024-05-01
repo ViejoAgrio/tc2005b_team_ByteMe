@@ -13,12 +13,18 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-image: url('/images/fondoBlanco.png'); 
-    background-size: cover;
-    background-position: center;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+}
+
+.con {
+    width: 100%;
+    height: 100vh;
+    overflow: scroll;
+    background-image: url('/images/fondoBlanco.png'); 
+    background-size: cover;
+    background-position: center;
 }
 
 .header {
@@ -153,7 +159,7 @@ footer {
     color: #fff;
     text-align: center;
     padding: 10px 0;
-    position:fixed;
+    position:sticky;
     bottom: 0;
     width: 100%;
 }

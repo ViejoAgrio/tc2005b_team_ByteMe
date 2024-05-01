@@ -1,3 +1,3 @@
 const globalData = {
-    myGlobalNumber: 1
+    myGlobalNumber: 1.1
 };
