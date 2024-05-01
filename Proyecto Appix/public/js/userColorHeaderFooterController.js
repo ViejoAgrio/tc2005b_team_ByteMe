@@ -9,7 +9,6 @@ function asignarColorAElemento(elemento, variableCSS) {
     elemento.style.backgroundColor = color;
 }
 
-// Uso de la función para asignar color basado en una variable
 document.addEventListener('DOMContentLoaded', () => {
     
     const postIt = document.querySelector('.post-it-header');
@@ -25,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Uso de la función para asignar color basado en una variable
 document.addEventListener('DOMContentLoaded', () => {
     
     const postIt = document.querySelector('.post-it-footer');
