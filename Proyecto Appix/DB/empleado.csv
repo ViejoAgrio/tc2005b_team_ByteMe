@@ -1,3 +1,3 @@
-idEmpleado_pk,contraseña,nombre,rol
-1,123,Administrador,0
-2,123,Usuario,1
+idEmpleado,contraseña,nombreUsuario,rol
+1,clave123,admin,0
+2,password456,user,1

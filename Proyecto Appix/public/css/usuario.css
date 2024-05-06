@@ -1,10 +1,12 @@
 :root {
-    --color-back-azul: rgb(25, 118, 210); 
-    --color-rojo: rgba(181, 28, 28, 0.934); 
-    --color-info-rojo: rgb(224, 39, 39);
-    --color-amarillo: rgb(255, 193, 7); 
-    --color-info-amarillo: rgb(255, 200, 34);
+    --color-back-azul: #00508F; 
+    --color-rojo: rgb(176, 14, 14); 
+    --color-info-rojo: rgb(205, 73, 73);
+    --color-amarillo: rgb(226, 173, 14); 
+    --color-info-amarillo: rgb(215, 171, 40);
     --color-info-azul: rgb(49, 131, 214); 
+    --color-negro: rgba(0, 0, 0, 0.947); 
+    --color-info-negro: rgba(0, 0, 0, 0.836); 
 }
 
 
@@ -20,7 +22,7 @@ body {
 
 .con {
     width: 100%;
-    height: 100vh;
+    height: 90vh;
     overflow: scroll;
     background-image: url('/images/fondoBlanco.png'); 
     background-size: cover;
@@ -51,21 +53,30 @@ body {
 }
 
 .row {
-    display: flex;
-    margin: 0;
     width: 100%;
+    margin: 0;
 }
 
 .post-it {
-    height: 440px;
+    display: flex;
+    flex-direction: column;
+    width: 450;
+    height: 250px;
     background-color: #fff; /* Color de fondo blanco */
     margin: 20px; /* Espacio entre los post-its */
-    border-radius: 10px;
+    border-radius: 10px 10px 10px 0;
     transition: transform 0.3s ease;
     border: 1px solid #ccc;
     overflow: hidden;
-    justify-content: right;
 }
+
+.post-it h1 {
+    font-size: 50px;
+    margin: 0;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
 
 .post-it h2 {
     font-size: 15px;
@@ -76,17 +87,8 @@ body {
 
 .post-it h3{
     font-size: 14px;
-    font-weight: bold;
     margin: 0;
-    margin-left: 5px;
-    margin-right: 5px;
-}
-
-.post-it p {
-    margin: 0;
-    margin-left: 5px;
-    margin-right: 5px;
-    font-size: 13px;
+    padding: 10px;
 }
 
 .post-it:hover {
@@ -95,63 +97,97 @@ body {
 
 .post-it-header {
     display: flex;
-    background-color: var(--color-rojo); 
+    
     color: #fff;
-    height: 40px;
-    width: 100%;
-    border-radius: 10px 10px 0 0;
+    height: 45px;
+    width: 336px;
+    border-radius: 10px 0 0 0;
     justify-content: left;
     align-items: center;
-    margin: 0;
-}
-
-.post-it-info {
-    position: relative;
-    width: 125%;
-    height: 106%;
-    margin: 0;
-    background-color: var(--color-info-rojo);
-    color: #fff;
     text-align: center;
-}
-
-.post-it-cont {
-    height: 340px;
-    width: 100%;
-    margin: 0;
-    overflow: scroll;
-    margin-left: 10px;
-    text-align:justify;
-}
-
-.myPieChart {
-    width: 20px; /* Ancho más pequeño */
-    height: 20px; /* Altura más pequeña */
     margin: 0;
 }
 
-.expand-button {
-    background-color: rgb(198, 35, 35);
-    color: #fff;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    position: absolute;
-    bottom: 5px;
-    right: 12px;
-    cursor: pointer;
+.post-it-header-rojo {
+    background-color: var(--color-rojo); 
 }
 
-.post-it-footer {
+.post-it-header-amarillo {
+    background-color: var(--color-amarillo); 
+}
+
+.post-it-header-azul {
+    background-color: var(--color-back-azul); 
+}
+
+.post-it-header-negro {
+    background-color: var(--color-negro); 
+}
+
+
+.post-it-dates {
     display: flex;
-    background-color: var(--color-rojo);
+    flex-direction: column;
+    width: 112px;
+    height: 250px;
     color: #fff;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0 10px 0 0;
+}
+
+.post-it-dates-rojo {
+    background-color: var(--color-info-rojo);
+}
+
+.post-it-dates-amarillo {
+    background-color: var(--color-info-amarillo);
+}
+
+.post-it-dates-azul {
+    background-color: var(--color-info-azul);
+}
+
+.post-it-dates-negro {
+    background-color: var(--color-info-negro);
+}
+
+.post-it-risk {
+    display: flex;
+    flex-direction: column;
+    height: 170px;
+    width: 336px;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    margin: 0;
+}
+
+.post-it-risk-rojo {
+    color: var(--color-info-rojo);
+}
+
+.post-it-risk-amarillo {
+    color: var(--color-info-amarillo);
+}
+
+.post-it-risk-azul {
+    color: var(--color-info-azul);
+}
+
+.post-it-risk-negro {
+    color: var(--color-info-negro);
+}
+
+.post-it-status {
+    display: flex;
     height: 40px;
-    width: 100%;
+    width: 336px;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     margin: 0;
+    padding: 5px;
 }
 
 footer {
@@ -159,7 +195,7 @@ footer {
     color: #fff;
     text-align: center;
     padding: 10px 0;
-    position:sticky;
+    position:absolute;
     bottom: 0;
     width: 100%;
 }

@@ -3,7 +3,7 @@ const pool = mariadb.createPool({
     host:"localhost",
     user:"root",
     password:"qazSPILI741",
-    database: "reto",
+    database: "Appix",
     connectionLimit:5,
     port: 3308
 });
