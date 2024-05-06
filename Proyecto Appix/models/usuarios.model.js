@@ -9,7 +9,7 @@ module.exports = class User {
     async save() {
         try {
             const connection = await db(); // Obtener conexión a la base de datos
-            const query = `SELECT porcentajeRiesgo from tiene`
+            const query = `SELECT porcentajeRiesgo from proyecto`
             const rows = await connection.execute(query);
             await connection.release(); // Liberar la conexión
             return rows; // Devolver el resultado de la consulta
