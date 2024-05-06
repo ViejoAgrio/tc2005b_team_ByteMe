@@ -1,22 +1,11 @@
-document.addEventListener('DOMContentLoaded', () => {
-
-    const risk = globalData.myGlobalNumber;
-    if (risk > 66) {
-        miRGB = 'rgba(181, 28, 28, 0.934)'; 
-    }
-    else if (risk > 33){
-        miRGB = 'rgb(255, 193, 7)'; 
-    }
-    else if (risk > 0){
-        miRGB = 'rgb(49, 131, 214)';
-    }
-    const values = [risk, 100-risk]
+function pie(risk){
+    const values = [risk, 100-risk];
 
     const data = {
         labels: ['Riesgo'],
         datasets: [{
             data: values, // Valores para cada sector del gráfico
-            backgroundColor: [miRGB,'white'], // Colores para cada sector
+            backgroundColor: ['rgb(25, 118, 210)', 'white'], 
             borderColor: ['grey'],
             borderWidth: 1
         }]
@@ -26,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
         type: 'pie',
         data: data,
         options: {
-            responsive: true,
             plugins: {
                 legend: {
                     position: 'right', // Posición de la leyenda (arriba)
@@ -58,7 +46,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     };
-
+ 
     const myPieChart = new Chart(document.getElementById('myPieChart'), config);
+}
 
-});
+pie(20);

@@ -1,21 +1,31 @@
-idRiesgo_pk,descripcion
-1,"Cliente con poco conocimiento teórico del desarrollo web"
-2,"Requerimientos poco claros o cambiantes durante el proyecto"
-3,"Escasez de recursos técnicos o humanos en el equipo"
-4,"Incompatibilidad entre tecnologías utilizadas"
-5,"Problemas de comunicación con el cliente o stakeholders"
-6,"Falta de experiencia en integración de sistemas externos"
-7,"Riesgo de seguridad y protección de datos insuficiente"
-8,"Desviación en el presupuesto inicial del proyecto"
-9,"Cambios en la tecnología o herramientas durante el desarrollo"
-10,"Problemas de escalabilidad y rendimiento del sistema"
-11,"Falta de alineación con los objetivos del negocio del cliente"
-12,"Problemas legales o regulatorios inesperados"
-13,"Riesgo de dependencia excesiva en proveedores externos"
-14,"Falta de documentación o seguimiento adecuado del proyecto"
-15,"Cambios en las expectativas del cliente a lo largo del tiempo"
-16,"Dificultades en la gestión del tiempo y los recursos"
-17,"Errores en la estimación de esfuerzo y duración del proyecto"
-18,"Desafíos en la adopción de nuevas tecnologías emergentes"
-19,"Falta de experiencia en el dominio específico del cliente"
-20,"Riesgos relacionados con la gestión de la calidad del software"
+idRiesgo,idProyecto,descripcionRiesgo,nivelRiesgo
+1,1,"Posible retraso en la entrega de contenido por parte del cliente",5
+2,1,"Riesgo de cambios frecuentes en los requisitos del proyecto",3
+3,2,"Posibilidad de sobrecarga en la infraestructura durante picos de tráfico",7
+4,3,"Complicaciones técnicas relacionadas con la integración de sistemas externos",6
+5,4,"Limitaciones de recursos para la fase de pruebas de usabilidad",2
+6,6,"Riesgo de retraso debido a la disponibilidad limitada de recursos clave",4
+7,7,"Posible demora en la aprobación de diseño por parte del cliente",1
+8,9,"Desafíos de seguridad relacionados con la autenticación de usuarios",8
+9,5,"Posible impacto negativo en la experiencia del usuario debido a problemas de rendimiento",4
+10,10,"Riesgo de incumplimiento de plazos por cambios frecuentes en los requisitos",5
+11,8,"Riesgo de confusión debido a falta de comunicación efectiva con el cliente",3
+12,12,"Posibles retrasos en la fase de diseño por cambios constantes en las especificaciones",6
+13,3,"Riesgo de fallos en la integración con sistemas heredados",7
+14,11,"Riesgo de falta de disponibilidad de recursos clave en etapas críticas del proyecto",5
+15,4,"Riesgo de falta de aprobaciones internas necesarias para avanzar con el proyecto",2
+16,9,"Posible exposición a vulnerabilidades de seguridad debido a integraciones externas",8
+17,2,"Riesgo de insatisfacción del cliente debido a diferencias en expectativas",4
+18,6,"Riesgo de sobrecarga del equipo de desarrollo durante picos de trabajo",6
+19,8,"Riesgo de desviación del presupuesto asignado para el proyecto",7
+20,7,"Riesgo de retraso en la entrega de activos por parte del cliente",3
+21,5,"Riesgo de conflicto en la planificación de recursos entre proyectos concurrentes",5
+22,11,"Riesgo de falta de compromiso del equipo con las metas del proyecto",2
+23,10,"Riesgo de falta de aceptación del sistema por parte de los usuarios finales",7
+24,12,"Riesgo de dificultades técnicas no previstas en la fase de implementación",6
+25,3,"Riesgo de cambios regulatorios que impacten el alcance del proyecto",8
+26,9,"Riesgo de falta de escalabilidad de la solución propuesta",4
+27,1,"Riesgo de problemas de rendimiento debido a la arquitectura seleccionada",5
+28,4,"Riesgo de falta de disponibilidad de recursos técnicos especializados",6
+29,2,"Riesgo de errores críticos en la etapa de pruebas finales",3
+30,7,"Riesgo de cambios de prioridades del cliente durante el desarrollo",2

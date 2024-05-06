@@ -10,77 +10,121 @@
 </head>
 <body>
     <div class="con">
-        <script src="/js/globalData.js"></script>
         <header class="header">
             <div class="logo-header"></div>
             <h1 class="header-title">RISK-MANAGER</h1>
         </header>
         <div class="row">
+            <% for (let i = 0; i <= numberP; i++) { %>
             <div class="col s4">
+                <% if (risk[i].porcentajeRiesgo > 88) { %>
                 <div class="post-it">
-                    <div class="post-it-header">
-                        <script src="/js/userColorHeaderFooterController.js"></script>
-                        <h2>Aplicación de publicidad web para productos de ferreteria</h2>
-                    </div>
                     <div class="row">
                         <div class="col s9">
-                            <div class="post-it-cont">
-                                <p> 
-                                    <br> En todo este espacio se piensa emplear una descripcion detallada
-                                    del proyecto en cuestion. Es importante ver que sucede cuando la 
-                                    extension de este texto es mas grande que el esapcio designado, 
-                                    igualmente estara limitado en la base de datos. Me parece que el
-                                    limite de caracteres para esta descripcion son 500, por lo tanto 
-                                    quiero llegar a ellos. Ya solo me faltan poquitos.
-                                </p>
-                                <p><br></p>
-                                <canvas id="myPieChart"></canvas>
-                                <script src="/js/userPieController.js"></script>
-                                <p><br></p>
-                                <h3>Pendientes: </h3>
-                                <p><br></p>
-                                <p> - Realizar las actividades pendientes del proyecto 2 <br>
-                                    - Escribir actividades pendientes en esta seccion
-                                </p>
-                                <p><br></p>
-                                <h3>Riesgos: </h3>
-                                <p><br></p>
-                                <p> - Realizar las actividades pendientes del proyecto 2 <br>
-                                    - Escribir actividades pendientes en esta seccion
-                                </p>
-                                <p><br></p>
+                            <div class="post-it-header post-it-header-rojo">
+                                <h2>Aplicación de publicidad web para productos de ferreteria</h2>
+                            </div>
+                            <div class="post-it-risk post-it-risk-rojo">
+                                <h1><%= risk[i].porcentajeRiesgo %>%</h1>
+                                <h3>Porcentaje de riesgo</h3>
+                            </div>
+                            <div class="post-it-status">
+                                <h3>En proceso</h3>
                             </div>
                         </div>
                         <div class="col s3">
-                            <div class="post-it-info">
-                                <script src="/js/userColorInfoController.js"></script>
+                            <div class="post-it-dates post-it-dates-rojo">
+                                <h2>Inicio</h2>
+                                <h3>12/12/12</h3>
                                 <p><br></p>
-                                <h3>Empresa</h3>
-                                <p>FRAGUA</p>
-                                <p><br></p>
-                                <h3>Encargado</h3>
-                                <p>Imanol Muniz Ramirez</p>
-                                <p><br></p>
-                                <h3>Inicio</h3>
-                                <p>01/01/12</p>
-                                <p><br></p>
-                                <h3>Deadline</h3>
-                                <p>12/12/12</p>
-                                <p><br></p>
-                                <h3>Departamento</h3>
-                                <p>Desarrollo</p>
+                                <h2>Final</h2>
+                                <h3>12/12/12</h3>
                             </div>
                         </div>
                     </div>
-                    <div class="post-it-footer">
-                        <h2> En proceso </h2>
+                </div>
+                <% } else if (risk[i].porcentajeRiesgo > 60) { %>
+                <div class="post-it">
+                    <div class="row">
+                        <div class="col s9">
+                            <div class="post-it-header post-it-header-amarillo">
+                                <h2>Aplicación de publicidad web para productos de ferreteria</h2>
+                            </div>
+                            <div class="post-it-risk post-it-risk-amarillo">
+                                <h1><%= risk[i].porcentajeRiesgo %>%</h1>
+                                <h3>Porcentaje de riesgo</h3>
+                            </div>
+                            <div class="post-it-status">
+                                <h3>En proceso</h3>
+                            </div>
+                        </div>
+                        <div class="col s3">
+                            <div class="post-it-dates post-it-dates-amarillo">
+                                <h2>Inicio</h2>
+                                <h3>12/12/12</h3>
+                                <p><br></p>
+                                <h2>Final</h2>
+                                <h3>12/12/12</h3>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <% } else if (risk[i].porcentajeRiesgo > 0) { %>
+                    <div class="post-it">
+                        <div class="row">
+                            <div class="col s9">
+                                <div class="post-it-header post-it-header-azul">
+                                    <h2>Aplicación de publicidad web para productos de ferreteria</h2>
+                                </div>
+                                <div class="post-it-risk post-it-risk-azul">
+                                    <h1><%= risk[i].porcentajeRiesgo %>%</h1>
+                                    <h3>Porcentaje de riesgo</h3>
+                                </div>
+                                <div class="post-it-status">
+                                    <h3>En proceso</h3>
+                                </div>
+                            </div>
+                            <div class="col s3">
+                                <div class="post-it-dates post-it-dates-azul">
+                                    <h2>Inicio</h2>
+                                    <h3>12/12/12</h3>
+                                    <p><br></p>
+                                    <h2>Final</h2>
+                                    <h3>12/12/12</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% } else { %>   
+                    <div class="post-it">
+                        <div class="row">
+                            <div class="col s9">
+                                <div class="post-it-header post-it-header-negro">
+                                    <h2>Aplicación de publicidad web para productos de ferreteria</h2>
+                                </div>
+                                <div class="post-it-risk post-it-risk-negro">
+                                    <h1><%= risk[i].porcentajeRiesgo %>%</h1>
+                                    <h3>Porcentaje de riesgo</h3>
+                                </div>
+                                <div class="post-it-status">
+                                    <h3>En proceso</h3>
+                                </div>
+                            </div>
+                            <div class="col s3">
+                                <div class="post-it-dates post-it-dates-negro ">
+                                    <h2>Inicio</h2>
+                                    <h3>12/12/12</h3>
+                                    <p><br></p>
+                                    <h2>Final</h2>
+                                    <h3>12/12/12</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
             </div>
-            <div class="col s4"></div>
-            <div class="col s4"></div>
+            <% } %>
         </div>
-    </div>
     <footer>
         <p>Derechos de autor © 2024 Empresa Appix. Todos los derechos reservados.</p>
     </footer>

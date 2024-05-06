@@ -13,6 +13,11 @@ app.use(session({
   saveUninitialized: false, //Asegura que no se guarde una sesión para una petición que no lo necesita
 }));
 
+app.use(function(req, res, next) {
+  res.header("X-Content-Type-Options", "nosniff");
+  next();
+});
+
 app.set('view engine', 'ejs'); 
 app.set('views', 'views'); 
 

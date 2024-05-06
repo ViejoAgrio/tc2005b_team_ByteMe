@@ -1,21 +1,17 @@
-idProyecto_pk,idCliente_fk,nombreProyecto,descripcion,departamento
-1,3,Desarrollo de Plataforma E-commerce,"Desarrollo de una plataforma de comercio electrónico para venta de productos electrónicos",Desarrollo
-2,8,Rediseño de Sitio Web Corporativo,"Rediseño completo del sitio web corporativo para mejorar la experiencia del usuario",Diseño
-3,6,Implementación de Sistema de Gestión CRM,"Desarrollo e implementación de un sistema CRM personalizado para mejorar la gestión de clientes",Desarrollo
-4,12,Desarrollo de Aplicación Móvil de Viajes,"Creación de una aplicación móvil para reservas y gestión de viajes",Desarrollo
-5,5,Optimización de Plataforma de E-learning,"Mejora y optimización de una plataforma de aprendizaje en línea para ofrecer mejores servicios educativos",Desarrollo
-6,17,Desarrollo de Sistema de Gestión de Inventarios,"Implementación de un sistema de gestión de inventarios para optimizar el control de stocks",Desarrollo
-7,9,Rediseño de Aplicación de Recursos Humanos,"Rediseño de una aplicación de gestión de recursos humanos para mejorar la usabilidad y funcionalidades",Diseño
-8,4,Desarrollo de Plataforma de Marketing Digital,"Creación de una plataforma integral de marketing digital para campañas promocionales",Desarrollo
-9,11,Implementación de Sistema de Pagos en Línea,"Integración de un sistema de pagos en línea seguro y confiable",Desarrollo
-10,2,Desarrollo de Aplicación Web para Ventas,"Diseño y desarrollo de una aplicación web para mejorar las ventas en línea",Desarrollo
-11,15,Rediseño de Portal de Noticias,"Actualización y rediseño de un portal de noticias en línea para mejorar la experiencia del usuario",Diseño
-12,10,Desarrollo de Plataforma de Colaboración Empresarial,"Creación de una plataforma colaborativa para empresas con herramientas de comunicación y gestión",Desarrollo
-13,7,Implementación de Sistema de Reservas en Línea,"Desarrollo e implementación de un sistema de reservas en línea para eventos y actividades",Desarrollo
-14,1,Desarrollo de Aplicación de Seguimiento Logístico,"Creación de una aplicación para seguimiento logístico y gestión de entregas",Desarrollo
-15,19,Rediseño de Plataforma de Comunicación Interna,"Optimización y rediseño de una plataforma de comunicación interna para mejorar la colaboración en la empresa",Diseño
-16,14,Desarrollo de Aplicación de Realidad Aumentada,"Desarrollo de una aplicación de realidad aumentada para experiencias interactivas",Desarrollo
-17,13,Implementación de Sistema de Gestión de Proyectos,"Integración de un sistema de gestión de proyectos para mejorar la productividad y organización",Desarrollo
-18,16,Desarrollo de Plataforma de E-commerce B2B,"Creación de una plataforma de comercio electrónico B2B para ventas entre empresas",Desarrollo
-19,20,Rediseño de Aplicación de Salud y Bienestar,"Mejora y rediseño de una aplicación de salud y bienestar para ofrecer nuevas funcionalidades",Diseño
-20,18,Desarrollo de Aplicación de Análisis de Datos,"asassasdasd",Diseño
+idProyecto,idCliente,nombreProyecto,descripcionProyecto,departamento,estatus,fechaInicio,fechaFinal,porcentajeRiesgo
+1,3,Sitio Web Corporativo,"Desarrollo de un nuevo sitio web corporativo para ABC Company",Diseño web,En proceso,01-04-2024,30-06-2024,20
+2,5,Tienda en Línea,"Creación de una plataforma de comercio electrónico para XYZ Corporation",Desarrollo web,En planeación,15-05-2024,30-09-2024,30
+3,1,App Móvil de Entregas,"Desarrollo de una aplicación móvil de entregas para Global Solutions Inc.",Desarrollo web,Atrasado,15-03-2024,31-07-2024,50
+4,7,Rediseño de Logotipo,"Proyecto de rediseño del logotipo para Swift Enterprises",Diseño web,Finalizado,01-02-2024,15-04-2024,10
+5,2,Plataforma Educativa,"Desarrollo de una plataforma educativa en línea para Innovative Designs",Desarrollo web,En espera,20-04-2024,15-08-2024,15
+6,4,Sistema de Reservas,"Implementación de un sistema de reservas online para Quick Logistics",Desarrollo web,En proceso,10-06-2024,30-10-2024,25
+7,6,App de Gestión de Proyectos,"Desarrollo de una aplicación de gestión de proyectos para Prime Services",Desarrollo web,En planeación,01-05-2024,15-09-2024,20
+8,9,Portal de Noticias,"Diseño y desarrollo de un portal de noticias para Dynamic Solutions",Diseño web,En proceso,20-03-2024,10-07-2024,35
+9,8,Plataforma de Reseñas,"Creación de una plataforma de reseñas para Fast Forward Inc.",Desarrollo web,Finalizado,15-01-2024,30-04-2024,5
+10,10,Sistema de Pagos,"Desarrollo de un sistema de pagos en línea para Elite Ventures",Desarrollo web,Finalizado,28-02-2024,31-05-2024,8
+11,3,Redes Sociales Corporativas,"Implementación de redes sociales corporativas para ABC Company",Desarrollo web,En espera,10-04-2024,01-08-2024,12
+12,5,Plataforma de Empleo,"Diseño y desarrollo de una plataforma de empleo para XYZ Corporation",Diseño web,En proceso,05-05-2024,20-09-2024,18
+13,1,Marketplace de Arte,"Creación de un marketplace de arte en línea para Global Solutions Inc.",Desarrollo web,En planeación,15-06-2024,30-11-2024,22
+14,7,App de Fitness,"Desarrollo de una aplicación móvil de fitness para Swift Enterprises",Desarrollo web,En proceso,01-07-2024,15-11-2024,28
+15,2,Sistema de Reservas de Hoteles,"Implementación de un sistema de reservas de hoteles para Innovative Designs",Desarrollo web,Finalizado,10-03-2024,30-06-2024,15
+
