@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis de Control de Acceso</title>
+</head>
+<body>
+    <h1>Control de Acceso Basado en Roles (RBAC)</h1>
+
+    <h2>¿Qué es el control de acceso basado en roles?</h2>
+    <p>El control de acceso basado en roles (RBAC) es un modelo de control de acceso que asigna permisos a roles específicos dentro de una organización. Los usuarios son luego asignados a uno o varios roles, y su acceso a recursos está determinado por los permisos asociados con esos roles. En RBAC, los roles representan funciones dentro de la organización, como "administrador", "usuario estándar", "gerente", etc. Los permisos se asignan a los roles en lugar de a usuarios individuales. Esto simplifica la administración de permisos, ya que los cambios en los permisos se realizan modificando los roles en lugar de ajustar los permisos de cada usuario individualmente.</p>
+
+    <h2>Sistema que aplica RBAC: Microsoft Active Directory (AD)</h2>
+    <p>Microsoft Active Directory es un servicio de directorio utilizado en entornos de red de Windows. Implementa RBAC para administrar el acceso a recursos de red, como archivos compartidos, impresoras, aplicaciones, etc. Los administradores definen roles dentro de Active Directory y asignan permisos a estos roles. Luego, los usuarios son agregados a los roles correspondientes según sus responsabilidades en la organización. Active Directory ofrece una gestión centralizada y escalable de los accesos, lo que facilita la administración de la seguridad en entornos de red empresariales.</p>
+
+    <h2>Sistema que no aplica RBAC: WordPress (sin complementos de control de acceso)</h2>
+    <p>WordPress es un sistema de gestión de contenidos (CMS) ampliamente utilizado para crear sitios web. No aplica RBAC de forma nativa, lo que significa que los usuarios no se asignan a roles específicos con permisos predefinidos. En su lugar, WordPress utiliza un sistema de roles y capacidades más básico, donde los usuarios pueden tener roles predefinidos como "Administrador", "Editor", "Autor", etc., pero los permisos asociados a estos roles son fijos y limitados.</p>
+
+    <h2>Análisis de Ventajas y Desventajas</h2>
+
+    <h3>RBAC</h3>
+    <ul>
+        <li><strong>Ventajas:</strong>
+            <ul>
+                <li>Simplicidad de administración: RBAC simplifica la administración de permisos al asignarlos a roles en lugar de a usuarios individuales, lo que facilita la gestión de la seguridad en sistemas complejos.</li>
+                <li>Escalabilidad: RBAC es escalable y se adapta bien a organizaciones de cualquier tamaño, desde pequeñas empresas hasta grandes corporaciones.</li>
+                <li>Consistencia: Al asignar permisos a roles, se garantiza una consistencia en los derechos de acceso dentro de la organización.</li>
+            </ul>
+        </li>
+        <li><strong>Desventajas:</strong>
+            <ul>
+                <li>Complejidad inicial: Implementar RBAC puede requerir una planificación cuidadosa y una configuración inicial compleja.</li>
+                <li>Flexibilidad limitada: En algunos casos, el modelo de roles predefinidos puede no adaptarse completamente a las necesidades específicas de una organización.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h3>WordPress (sin complementos de control de acceso)</h3>
+    <ul>
+        <li><strong>Ventajas:</strong>
+            <ul>
+                <li>Simplicidad: El sistema de roles predefinidos de WordPress es fácil de entender y usar, lo que lo hace adecuado para sitios web de pequeñas y medianas empresas.</li>
+                <li>Amplia disponibilidad: Dado que WordPress es ampliamente utilizado, hay una gran cantidad de recursos disponibles para ayudar en su implementación y uso.</li>
+            </ul>
+        </li>
+        <li><strong>Desventajas:</strong>
+            <ul>
+                <li>Limitaciones de personalización: El sistema de roles y capacidades de WordPress puede ser limitado en términos de personalización, lo que puede dificultar la implementación de políticas de acceso más complejas.</li>
+                <li>Menos control granular: WordPress no proporciona un control granular sobre los permisos de los usuarios, lo que puede ser un problema en entornos donde se requiere una gestión más fina de los accesos.</li>
+            </ul>
+        </li>
+    </ul>
+</body>
+</html>
