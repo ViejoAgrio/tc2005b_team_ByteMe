@@ -6,6 +6,7 @@
     <title>Appix</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="/css/admin.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>       
     <div class="con">
@@ -16,6 +17,10 @@
                 </div>
                 <div class="col s2">
                     <h1 class="header-title">RISK-MANAGER</h1>
+                </div>
+                <div class="col s5"></div>
+                <div class="col s2">
+                    <div class="button-centered"><button>Administrar cuenta</button></div>
                 </div>
                 <div class="col s2">
                     <div class="button-centered"><button>Crear Proyecto</button></div>
@@ -58,7 +63,7 @@
         <div class="row">
             <% for (let i = 0; i <= resumedProyects.length - 1; i++) { %>
             <div class="col s4">
-                <% if (resumedProyects[i].porcentajeRiesgo > 66) { %>
+                <% if (resumedProyects[i].porcentajeRiesgo > 49) { %>
                 <div class="post-it">
                     <div class="row">
                         <div class="col s9">
@@ -74,6 +79,19 @@
                             </div>
                         </div>
                         <div class="col s3">
+                            <div class="icons post-it-dates-rojo">
+                                <div class="row">
+                                    <div class="col s4">
+                                        <div class="icon-edit"><i class="material-icons">edit</i></div>
+                                    </div>
+                                    <div class="col s4">
+                                        <div class="icon-copy"><i class="material-icons">content_copy</i></div>
+                                    </div>
+                                    <div class="col s4">
+                                        <div class="icon-delete"><i class="material-icons">delete</i></div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="post-it-dates post-it-dates-rojo">
                                 <h2>Inicio</h2>
                                 <h3><%= resumedProyects[i].fechaInicio %></h3>
@@ -100,6 +118,19 @@
                             </div>
                         </div>
                         <div class="col s3">
+                            <div class="icons post-it-dates-amarillo">
+                                <div class="row">
+                                    <div class="col s4">
+                                        <div class="icon-edit"><i class="material-icons">edit</i></div>
+                                    </div>
+                                    <div class="col s4">
+                                        <div class="icon-copy"><i class="material-icons">content_copy</i></div>
+                                    </div>
+                                    <div class="col s4">
+                                        <div class="icon-delete"><i class="material-icons">delete</i></div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="post-it-dates post-it-dates-amarillo">
                                 <h2>Inicio</h2>
                                 <h3><%= resumedProyects[i].fechaInicio %></h3>
@@ -126,6 +157,19 @@
                                 </div>
                             </div>
                             <div class="col s3">
+                                <div class="icons post-it-dates-azul">
+                                    <div class="row">
+                                        <div class="col s4">
+                                            <div class="icon-edit"><i class="material-icons">edit</i></div>
+                                        </div>
+                                        <div class="col s4">
+                                            <div class="icon-copy"><i class="material-icons">content_copy</i></div>
+                                        </div>
+                                        <div class="col s4">
+                                            <div class="icon-delete"><i class="material-icons">delete</i></div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="post-it-dates post-it-dates-azul">
                                     <h2>Inicio</h2>
                                     <h3><%= resumedProyects[i].fechaInicio %></h3>
@@ -152,6 +196,19 @@
                                 </div>
                             </div>
                             <div class="col s3">
+                                <div class="icons post-it-dates-negro">
+                                    <div class="row">
+                                        <div class="col s4">
+                                            <div class="icon-edit"><i class="material-icons">edit</i></div>
+                                        </div>
+                                        <div class="col s4">
+                                            <div class="icon-copy"><i class="material-icons">content_copy</i></div>
+                                        </div>
+                                        <div class="col s4">
+                                            <div class="icon-delete"><i class="material-icons">delete</i></div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="post-it-dates post-it-dates-negro ">
                                     <h2>Inicio</h2>
                                     <h3><%= resumedProyects[i].fechaInicio %></h3>
@@ -177,9 +234,9 @@
 <footer> 
     <div class="row">
         <div class="col s4"></div>
-        <div class="col s5"><div class="footer1">Derechos de autor © 2024 Empresa Appix. Todos los derechos reservados.</div></div>
+        <div class="col s5"><div class="button-centered">Derechos de autor © 2024 Empresa Appix. Todos los derechos reservados.</div></div>
         <div class="col s2"></div>
-        <div class="col s1"><div class="footer1"><button>Cerrar Sesión</button></div></div>
+        <div class="col s1"><div class="button-centered"><button>Cerrar Sesión</button></div></div>
     </div>
 </footer>
 </html>
