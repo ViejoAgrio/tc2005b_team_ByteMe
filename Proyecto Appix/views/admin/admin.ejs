@@ -4,24 +4,183 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Appix</title>
-    <link rel="stylesheet" href="/css/admin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="/css/admin.css">
 </head>
-<body>
-    <header class="header-container">
-        <div class="left-section">
-            <div class="logo-header"></div>
+<body>       
+    <div class="con">
+        <header class="header">
+            <div class="row">
+                <div class="col s1">
+                    <div class="logo-header"></div>
+                </div>
+                <div class="col s2">
+                    <h1 class="header-title">RISK-MANAGER</h1>
+                </div>
+                <div class="col s2">
+                    <div class="button-centered"><button>Crear Proyecto</button></div>
+                </div>
+            </div>
+        </header>
+        <div class="selectors">
+            <div class="input-field">
+                <select>
+                  <option value="" disabled selected>Opciones...</option>
+                  <option value="1">En proceso</option>
+                  <option value="2">Con retraso</option>
+                  <option value="3">En planeación</option>
+                  <option value="4">En espera</option>
+                  <option value="5">Finalizado</option>
+                  <option value="6">Todos</option>
+                </select>
+                <label>Estatus del proyecto</label>
+            </div>
+            <div class="input-field">
+                <select>
+                  <option value="" disabled selected>Opciones...</option>
+                  <option value="1">Desarrollo web</option>
+                  <option value="2">Diseño web</option>
+                  <option value="3">Todos</option>
+                </select>
+                <label>Departamento del proyecto</label>
+            </div>
+            <div class="input-field">
+                <select>
+                  <option value="" disabled selected>Opciones...</option>
+                  <% for (let i = 0; i <= hidden.length - 1; i++) { %>
+                  <option value="1"><%= hidden[i].nombreEmpresa %></option>
+                  <% } %>
+                  <option value="77">Todos</option>
+                </select>
+                <label>Empresa del proyecto</label>
+            </div>
         </div>
-        <div class="right-section">
-            <a class="btn waves-effect waves-light blue" href="/nuevo-proyecto">Nuevo Proyecto</a>
+        <div class="row">
+            <% for (let i = 0; i <= resumedProyects.length - 1; i++) { %>
+            <div class="col s4">
+                <% if (resumedProyects[i].porcentajeRiesgo > 66) { %>
+                <div class="post-it">
+                    <div class="row">
+                        <div class="col s9">
+                            <div class="post-it-header post-it-header-rojo">
+                                <h2><%= resumedProyects[i].nombreProyecto %></h2>
+                            </div>
+                            <div class="post-it-risk post-it-risk-rojo">
+                                <h1><%= resumedProyects[i].porcentajeRiesgo %>%</h1>
+                                <h3>Porcentaje de riesgo</h3>
+                            </div>
+                            <div class="post-it-status">
+                                <h3><%= resumedProyects[i].estatus %></h3>
+                            </div>
+                        </div>
+                        <div class="col s3">
+                            <div class="post-it-dates post-it-dates-rojo">
+                                <h2>Inicio</h2>
+                                <h3><%= resumedProyects[i].fechaInicio %></h3>
+                                <p><br></p>
+                                <h2>Final</h2>
+                                <h3><%= resumedProyects[i].fechaFinal %></h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% } else if (resumedProyects[i].porcentajeRiesgo > 33) { %>
+                <div class="post-it">
+                    <div class="row">
+                        <div class="col s9">
+                            <div class="post-it-header post-it-header-amarillo">
+                                <h2><%= resumedProyects[i].nombreProyecto %></h2>
+                            </div>
+                            <div class="post-it-risk post-it-risk-amarillo">
+                                <h1><%= resumedProyects[i].porcentajeRiesgo %>%</h1>
+                                <h3>Porcentaje de riesgo</h3>
+                            </div>
+                            <div class="post-it-status">
+                                <h3><%= resumedProyects[i].estatus %></h3>
+                            </div>
+                        </div>
+                        <div class="col s3">
+                            <div class="post-it-dates post-it-dates-amarillo">
+                                <h2>Inicio</h2>
+                                <h3><%= resumedProyects[i].fechaInicio %></h3>
+                                <p><br></p>
+                                <h2>Final</h2>
+                                <h3><%= resumedProyects[i].fechaFinal %></h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% } else if (resumedProyects[i].porcentajeRiesgo > 0) { %>
+                    <div class="post-it">
+                        <div class="row">
+                            <div class="col s9">
+                                <div class="post-it-header post-it-header-azul">
+                                    <h2><%= resumedProyects[i].nombreProyecto %></h2>
+                                </div>
+                                <div class="post-it-risk post-it-risk-azul">
+                                    <h1><%= resumedProyects[i].porcentajeRiesgo %>%</h1>
+                                    <h3>Porcentaje de riesgo</h3>
+                                </div>
+                                <div class="post-it-status">
+                                    <h3><%= resumedProyects[i].estatus %></h3>
+                                </div>
+                            </div>
+                            <div class="col s3">
+                                <div class="post-it-dates post-it-dates-azul">
+                                    <h2>Inicio</h2>
+                                    <h3><%= resumedProyects[i].fechaInicio %></h3>
+                                    <p><br></p>
+                                    <h2>Final</h2>
+                                    <h3><%= resumedProyects[i].fechaFinal %></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% } else { %>   
+                    <div class="post-it">
+                        <div class="row">
+                            <div class="col s9">
+                                <div class="post-it-header post-it-header-negro">
+                                    <h2><%= resumedProyects[i].nombreProyecto %></h2>
+                                </div>
+                                <div class="post-it-risk post-it-risk-negro">
+                                    <h1><%= resumedProyects[i].porcentajeRiesgo %>%</h1>
+                                    <h3>Porcentaje de riesgo</h3>
+                                </div>
+                                <div class="post-it-status">
+                                    <h3><%= resumedProyects[i].estatus %></h3>
+                                </div>
+                            </div>
+                            <div class="col s3">
+                                <div class="post-it-dates post-it-dates-negro ">
+                                    <h2>Inicio</h2>
+                                    <h3><%= resumedProyects[i].fechaInicio %></h3>
+                                    <p><br></p>
+                                    <h2>Final</h2>
+                                    <h3><%= resumedProyects[i].fechaFinal %></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+            <% } %>
         </div>
-    </header>
-    
-    <div class="container">
-        
-    </div>
-    <footer>
-        <p>Derechos de autor © 2024 Empresa Appix. Todos los derechos reservados.</p>
-    </footer>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $('select').formSelect();
+            });
+        </script>
 </body>
+<footer> 
+    <div class="row">
+        <div class="col s4"></div>
+        <div class="col s5"><div class="footer1">Derechos de autor © 2024 Empresa Appix. Todos los derechos reservados.</div></div>
+        <div class="col s2"></div>
+        <div class="col s1"><div class="footer1"><button>Cerrar Sesión</button></div></div>
+    </div>
+</footer>
 </html>
+
