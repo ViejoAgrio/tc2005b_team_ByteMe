@@ -61,8 +61,11 @@ body {
 }
 
 .header-title {
+    display: flex;
     font-size: 24px; /* Tamaño de fuente del título */
     margin: 0; /* Elimina el margen por defecto del H1 */
+    height: 70px;
+    align-items: center;
 }
 
 .row {
@@ -137,8 +140,7 @@ body {
     background-color: var(--color-negro); 
 }
 
-
-.post-it-dates {
+.post-it-dates-full {
     display: flex;
     flex-direction: column;
     width: 112px;
@@ -146,7 +148,6 @@ body {
     color: #fff;
     justify-content: center;
     align-items: center;
-    border-radius: 0 10px 0 0;
 }
 
 .post-it-dates-rojo {
@@ -211,13 +212,14 @@ footer {
     bottom: 0;
     width: 100%;
     height: 70px;
-    align-items: center;
 }
 
 .button-centered {
     display: flex;
-    height: 100%;
+    height: 70px;
+    width: 100%;
     align-items: center;
+    margin: 0;
 }
 
 button{
@@ -226,7 +228,7 @@ button{
     border:none;
     position:relative;
     height:35px;
-    width: 130px;
+    width: 100%;
     cursor:pointer;
     transition:800ms ease all;
     outline:none;

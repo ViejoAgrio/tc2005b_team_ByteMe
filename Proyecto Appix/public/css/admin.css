@@ -1,2 +1,31 @@
 @import url('usuario.css');
 
+.post-it-dates {
+    display: flex;
+    flex-direction: column;
+    width: 112px;
+    height: 205px;
+    color: #fff;
+    justify-content: center;
+    align-items: center;
+}
+
+.icons {
+    height: 45px;
+    width: 112px;
+    padding-left: 10px;
+    padding-top: 6px;
+    color: #fff;
+}
+
+.icon-edit:hover {
+    color: black;
+}
+
+.icon-copy:hover {
+    color: black;
+}
+
+.icon-delete:hover {
+    color: black;
+}

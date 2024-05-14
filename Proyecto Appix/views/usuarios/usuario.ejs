@@ -55,7 +55,7 @@
         <div class="row">
             <% for (let i = 0; i <= resumedProyects.length - 1; i++) { %>
             <div class="col s4">
-                <% if (resumedProyects[i].porcentajeRiesgo > 66) { %>
+                <% if (resumedProyects[i].porcentajeRiesgo > 49) { %>
                 <div class="post-it">
                     <div class="row">
                         <div class="col s9">
@@ -71,7 +71,7 @@
                             </div>
                         </div>
                         <div class="col s3">
-                            <div class="post-it-dates post-it-dates-rojo">
+                            <div class="post-it-dates-full post-it-dates-rojo">
                                 <h2>Inicio</h2>
                                 <h3><%= resumedProyects[i].fechaInicio %></h3>
                                 <p><br></p>
@@ -97,7 +97,7 @@
                             </div>
                         </div>
                         <div class="col s3">
-                            <div class="post-it-dates post-it-dates-amarillo">
+                            <div class="post-it-dates-full post-it-dates-amarillo">
                                 <h2>Inicio</h2>
                                 <h3><%= resumedProyects[i].fechaInicio %></h3>
                                 <p><br></p>
@@ -123,7 +123,7 @@
                                 </div>
                             </div>
                             <div class="col s3">
-                                <div class="post-it-dates post-it-dates-azul">
+                                <div class="post-it-dates-full post-it-dates-azul">
                                     <h2>Inicio</h2>
                                     <h3><%= resumedProyects[i].fechaInicio %></h3>
                                     <p><br></p>
@@ -149,7 +149,7 @@
                                 </div>
                             </div>
                             <div class="col s3">
-                                <div class="post-it-dates post-it-dates-negro ">
+                                <div class="post-it-dates-full post-it-dates-negro ">
                                     <h2>Inicio</h2>
                                     <h3><%= resumedProyects[i].fechaInicio %></h3>
                                     <p><br></p>
@@ -174,9 +174,9 @@
 <footer> 
     <div class="row">
         <div class="col s4"></div>
-        <div class="col s5">Derechos de autor © 2024 Empresa Appix. Todos los derechos reservados.</div>
+        <div class="col s5"><div class="button-centered">Derechos de autor © 2024 Empresa Appix. Todos los derechos reservados.</div></div>
         <div class="col s2"></div>
-        <div class="col s1"><button>Cerrar Sesión</button></div>
+        <div class="col s1"><div class="button-centered"><button>Cerrar Sesión</button></div></div>
     </div>
 </footer>
 </html>
