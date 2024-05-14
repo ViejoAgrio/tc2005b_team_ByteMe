@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
--- Host: localhost    Database: Appix
+-- Host: localhost    Database: appix
 -- ------------------------------------------------------
 -- Server version	11.3.2-MariaDB
 
@@ -108,8 +108,8 @@ CREATE TABLE `proyecto` (
   `descripcionProyecto` varchar(500) NOT NULL,
   `departamento` varchar(20) NOT NULL,
   `estatus` varchar(20) NOT NULL,
-  `fechaInicio` datetime NOT NULL,
-  `fechaFinal` datetime NOT NULL,
+  `fechaInicio` date NOT NULL,
+  `fechaFinal` date NOT NULL,
   `porcentajeRiesgo` int(10) unsigned NOT NULL,
   PRIMARY KEY (`idProyecto`),
   KEY `proyecto_Cliente_FK` (`idCliente`),
@@ -123,7 +123,7 @@ CREATE TABLE `proyecto` (
 
 LOCK TABLES `proyecto` WRITE;
 /*!40000 ALTER TABLE `proyecto` DISABLE KEYS */;
-INSERT INTO `proyecto` VALUES (1,3,'Sitio Web Corporativo','Desarrollo de un nuevo sitio web corporativo para ABC Company','Diseño web','En proceso','2024-04-01 00:00:00','2024-06-30 00:00:00',20),(2,5,'Tienda en Línea','Creación de una plataforma de comercio electrónico para XYZ Corporation','Desarrollo web','En planeación','2024-05-15 00:00:00','2024-09-30 00:00:00',30),(3,1,'App Móvil de Entregas','Desarrollo de una aplicación móvil de entregas para Global Solutions Inc.','Desarrollo web','Atrasado','2024-03-15 00:00:00','2024-07-31 00:00:00',50),(4,7,'Rediseño de Logotipo','Proyecto de rediseño del logotipo para Swift Enterprises','Diseño web','Finalizado','2024-02-01 00:00:00','2024-04-15 00:00:00',10),(5,2,'Plataforma Educativa','Desarrollo de una plataforma educativa en línea para Innovative Designs','Desarrollo web','En espera','2024-04-20 00:00:00','2024-08-15 00:00:00',15),(6,4,'Sistema de Reservas','Implementación de un sistema de reservas online para Quick Logistics','Desarrollo web','En proceso','2024-06-10 00:00:00','2024-10-30 00:00:00',25),(7,6,'App de Gestión de Proyectos','Desarrollo de una aplicación de gestión de proyectos para Prime Services','Desarrollo web','En planeación','2024-05-01 00:00:00','2024-09-15 00:00:00',20),(8,9,'Portal de Noticias','Diseño y desarrollo de un portal de noticias para Dynamic Solutions','Diseño web','En proceso','2024-03-20 00:00:00','2024-07-10 00:00:00',35),(9,8,'Plataforma de Reseñas','Creación de una plataforma de reseñas para Fast Forward Inc.','Desarrollo web','Finalizado','2024-01-15 00:00:00','2024-04-30 00:00:00',5),(10,10,'Sistema de Pagos','Desarrollo de un sistema de pagos en línea para Elite Ventures','Desarrollo web','Finalizado','2024-02-28 00:00:00','2024-05-31 00:00:00',8),(11,3,'Redes Sociales Corporativas','Implementación de redes sociales corporativas para ABC Company','Desarrollo web','En espera','2024-04-10 00:00:00','2024-08-01 00:00:00',12),(12,5,'Plataforma de Empleo','Diseño y desarrollo de una plataforma de empleo para XYZ Corporation','Diseño web','En proceso','2024-05-05 00:00:00','2024-09-20 00:00:00',18),(13,1,'Marketplace de Arte','Creación de un marketplace de arte en línea para Global Solutions Inc.','Desarrollo web','En planeación','2024-06-15 00:00:00','2024-11-30 00:00:00',22),(14,7,'App de Fitness','Desarrollo de una aplicación móvil de fitness para Swift Enterprises','Desarrollo web','En proceso','2024-07-01 00:00:00','2024-11-15 00:00:00',28),(15,2,'Sistema de Reservas de Hoteles','Implementación de un sistema de reservas de hoteles para Innovative Designs','Desarrollo web','Finalizado','2024-03-10 00:00:00','2024-06-30 00:00:00',15);
+INSERT INTO `proyecto` VALUES (1,3,'Sitio Web Corporativo','Desarrollo de un nuevo sitio web corporativo para ABC Company','Diseño web','En proceso','2024-04-01','2024-06-30',20),(2,5,'Tienda en Línea','Creación de una plataforma de comercio electrónico para XYZ Corporation','Desarrollo web','En planeación','2024-05-15','2024-09-30',30),(3,1,'App Móvil de Entregas','Desarrollo de una aplicación móvil de entregas para Global Solutions Inc.','Desarrollo web','Atrasado','2024-03-15','2024-07-31',50),(4,7,'Rediseño de Logotipo','Proyecto de rediseño del logotipo para Swift Enterprises','Diseño web','Finalizado','2024-02-01','2024-04-15',10),(5,2,'Plataforma Educativa','Desarrollo de una plataforma educativa en línea para Innovative Designs','Desarrollo web','En espera','2024-04-20','2024-08-15',15),(6,4,'Sistema de Reservas','Implementación de un sistema de reservas online para Quick Logistics','Desarrollo web','En proceso','2024-06-10','2024-10-30',25),(7,6,'App de Gestión de Proyectos','Desarrollo de una aplicación de gestión de proyectos para Prime Services','Desarrollo web','En planeación','2024-05-01','2024-09-15',20),(8,9,'Portal de Noticias','Diseño y desarrollo de un portal de noticias para Dynamic Solutions','Diseño web','En proceso','2024-03-20','2024-07-10',35),(9,8,'Plataforma de Reseñas','Creación de una plataforma de reseñas para Fast Forward Inc.','Desarrollo web','Finalizado','2024-01-15','2024-04-30',5),(10,10,'Sistema de Pagos','Desarrollo de un sistema de pagos en línea para Elite Ventures','Desarrollo web','Finalizado','2024-02-28','2024-05-31',8),(11,3,'Redes Sociales Corporativas','Implementación de redes sociales corporativas para ABC Company','Desarrollo web','En espera','2024-04-10','2024-08-01',12),(12,5,'Plataforma de Empleo','Diseño y desarrollo de una plataforma de empleo para XYZ Corporation','Diseño web','En proceso','2024-05-05','2024-09-20',18),(13,1,'Marketplace de Arte','Creación de un marketplace de arte en línea para Global Solutions Inc.','Desarrollo web','En planeación','2024-06-15','2024-11-30',22),(14,7,'App de Fitness','Desarrollo de una aplicación móvil de fitness para Swift Enterprises','Desarrollo web','En proceso','2024-07-01','2024-11-15',28),(15,2,'Sistema de Reservas de Hoteles','Implementación de un sistema de reservas de hoteles para Innovative Designs','Desarrollo web','Finalizado','2024-03-10','2024-06-30',15);
 /*!40000 ALTER TABLE `proyecto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -156,7 +156,7 @@ INSERT INTO `riesgo` VALUES (1,1,'Posible retraso en la entrega de contenido por
 UNLOCK TABLES;
 
 --
--- Dumping routines for database 'Appix'
+-- Dumping routines for database 'appix'
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -168,4 +168,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-06 16:49:12
+-- Dump completed on 2024-05-14  9:24:29
