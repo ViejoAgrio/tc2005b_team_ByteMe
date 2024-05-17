@@ -4,22 +4,22 @@ var dataValue = parseInt(document.getElementById('percentage-label').getAttribut
 // Función para determinar el color basado en el valor
 function getColor(value) {
     if (value > 0 && value <= 35) {
-        return '#008000'; // Verde
-    } else if (value > 35 && value <= 70) {
-        return '#FFFF00'; // Amarillo
+        return '#00508F'; // Verde
+    } else if (value > 35 && value <= 49) {
+        return 'rgb(226, 173, 14)'; // Amarillo
     } else {
-        return '#FF0000'; // Rojo
+        return 'rgb(176, 14, 14)'; // Rojo
     }
 }
 
 // Función para determinar el color de fondo basado en el valor
 function getBackgroundColor(value) {
     if (value > 0 && value <= 35) {
-        return '#008000'; // Verde
-    } else if (value > 35 && value <= 70) {
-        return '#FFFF00'; // Amarillo
+        return '#00508F'; // Verde
+    } else if (value > 35 && value <= 49) {
+        return 'rgb(226, 173, 14)'; // Amarillo
     } else {
-        return '#FF0000'; // Rojo
+        return 'rgb(176, 14, 14)'; // Rojo
     }
 }
 
