@@ -9,9 +9,9 @@ module.exports = class User {
     async saveResumed() {
         try {
             const connection = await db(); // Obtener conexión a la base de datos
-            const query = `SELECT nombreProyecto, estatus, fechaInicio, fechaFinal, porcentajeRiesgo 
+            const query = `SELECT proyecto.*, cliente.nombreEmpresa
             FROM proyecto
-            ORDER BY porcentajeRiesgo DESC;`
+            JOIN cliente ON proyecto.idCliente = cliente.idCliente;`
             const resumed = await connection.execute(query);
             await connection.release(); // Liberar la conexión
             return resumed; // Devolver el resultado de la consulta
@@ -20,13 +20,13 @@ module.exports = class User {
             throw error; // Re-throw para manejar el error fuera de la clase
         } 
     }
-    async saveHidden() {
+    async saveEmpresas() {
         try {
             const connection = await db(); // Obtener conexión a la base de datos
             const query = `SELECT nombreEmpresa from cliente;`
-            const hidden = await connection.execute(query);
+            const empresas = await connection.execute(query);
             await connection.release(); // Liberar la conexión
-            return hidden; // Devolver el resultado de la consulta
+            return empresas; // Devolver el resultado de la consulta
         } catch (error) {
             console.error('Error al ejecutar consulta:', error);
             throw error; // Re-throw para manejar el error fuera de la clase

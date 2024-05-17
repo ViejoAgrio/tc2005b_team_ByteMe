@@ -1,0 +1,29 @@
+$(document).ready(function(){
+    $('select').formSelect();
+
+    // Función para aplicar los filtros combinados
+    function applyFilters() {
+        const selectedStatus = $('#lista-estatus').val();
+        const selectedDepartment = $('#lista-departamento').val();
+        const selectedCompany = $('#lista-empresa').val();
+
+        $('.project-card').each(function() {
+            const cardStatus = $(this).data('status');
+            const cardDepartment = $(this).data('department');
+            const cardCompany = $(this).data('company');
+
+            const statusMatch = (selectedStatus === 'Todos' || cardStatus === selectedStatus);
+            const departmentMatch = (selectedDepartment === 'Todos' || cardDepartment === selectedDepartment);
+            const companyMatch = (selectedCompany === 'Todos' || cardCompany === selectedCompany);
+
+            if (statusMatch && departmentMatch && companyMatch) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    }
+    $('#lista-estatus').on('change', applyFilters);
+    $('#lista-departamento').on('change', applyFilters);
+    $('#lista-empresa').on('change', applyFilters);
+});
