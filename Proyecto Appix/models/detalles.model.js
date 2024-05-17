@@ -46,6 +46,7 @@ module.exports = class Project {
         `;
             const [resumed] = await connection.execute(query, [id_proyect]);
             await connection.release(); // Liberar la conexión
+            console.log('PROYECTO INFO', resumed);
             return resumed; // Devolver el resultado de la consulta
         } catch (error) {
             console.error('Error al ejecutar consulta:', error);
