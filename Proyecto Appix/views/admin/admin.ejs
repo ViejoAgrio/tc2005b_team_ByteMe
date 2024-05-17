@@ -29,40 +29,40 @@
         </header>
         <div class="selectors">
             <div class="input-field">
-                <select>
-                  <option value="" disabled selected>Opciones...</option>
-                  <option value="1">En proceso</option>
-                  <option value="2">Con retraso</option>
-                  <option value="3">En planeación</option>
-                  <option value="4">En espera</option>
-                  <option value="5">Finalizado</option>
-                  <option value="6">Todos</option>
+                <select id="lista-estatus">
+                  <option value="Todos">Todos</option>
+                  <option value="En proceso">En proceso</option>
+                  <option value="Atrasado">Atrasado</option>
+                  <option value="En planeación">En planeación</option>
+                  <option value="En espera">En espera</option>
+                  <option value="Finalizado">Finalizado</option>
                 </select>
                 <label>Estatus del proyecto</label>
             </div>
             <div class="input-field">
-                <select>
-                  <option value="" disabled selected>Opciones...</option>
-                  <option value="1">Desarrollo web</option>
-                  <option value="2">Diseño web</option>
-                  <option value="3">Todos</option>
+                <select id="lista-departamento">
+                    <option value="Todos">Todos</option>
+                  <option value="Desarrollo web">Desarrollo web</option>
+                  <option value="Diseño web">Diseño web</option>
                 </select>
                 <label>Departamento del proyecto</label>
             </div>
             <div class="input-field">
-                <select>
-                  <option value="" disabled selected>Opciones...</option>
-                  <% for (let i = 0; i <= hidden.length - 1; i++) { %>
-                  <option value="1"><%= hidden[i].nombreEmpresa %></option>
+                <select id="lista-empresa">
+                    <option value="Todos">Todos</option>
+                  <% for (let i = 0; i <= empresas.length - 1; i++) { %>
+                  <option value="<%= empresas[i].nombreEmpresa %>"><%= empresas[i].nombreEmpresa %></option>
                   <% } %>
-                  <option value="77">Todos</option>
                 </select>
                 <label>Empresa del proyecto</label>
             </div>
         </div>
         <div class="row">
             <% for (let i = 0; i <= resumedProyects.length - 1; i++) { %>
-            <div class="col s4">
+            <div class="col s4 project-card" 
+                data-status="<%= resumedProyects[i].estatus %>" 
+                data-department="<%= resumedProyects[i].departamento %>"
+                data-company="<%= resumedProyects[i].nombreEmpresa %>">
                 <% if (resumedProyects[i].porcentajeRiesgo > 49) { %>
                 <div class="post-it">
                     <div class="row">
@@ -228,6 +228,32 @@
         <script>
             $(document).ready(function(){
                 $('select').formSelect();
+
+                // Función para aplicar los filtros combinados
+                function applyFilters() {
+                    const selectedStatus = $('#lista-estatus').val();
+                    const selectedDepartment = $('#lista-departamento').val();
+                    const selectedCompany = $('#lista-empresa').val();
+
+                    $('.project-card').each(function() {
+                        const cardStatus = $(this).data('status');
+                        const cardDepartment = $(this).data('department');
+                        const cardCompany = $(this).data('company');
+
+                        const statusMatch = (selectedStatus === 'Todos' || cardStatus === selectedStatus);
+                        const departmentMatch = (selectedDepartment === 'Todos' || cardDepartment === selectedDepartment);
+                        const companyMatch = (selectedCompany === 'Todos' || cardCompany === selectedCompany);
+
+                        if (statusMatch && departmentMatch && companyMatch) {
+                            $(this).show();
+                        } else {
+                            $(this).hide();
+                        }
+                    });
+                }
+                $('#lista-estatus').on('change', applyFilters);
+                $('#lista-departamento').on('change', applyFilters);
+                $('#lista-empresa').on('change', applyFilters);
             });
         </script>
 </body>
@@ -240,4 +266,3 @@
     </div>
 </footer>
 </html>
-
