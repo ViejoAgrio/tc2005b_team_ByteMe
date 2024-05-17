@@ -35,6 +35,12 @@ app.use('/usuarios', rutasUsuarios);
 const rutasAdmin = require('./routes/admin.routes');
 app.use('/admin', rutasAdmin);
 
+const rutasDetalles = require('./routes/detalles.routes');
+app.use('/detalles', rutasDetalles);
+
+const rutasLogin = require('./routes/login.routes');
+app.use('/login', rutasLogin);
+
 const server = http.createServer( (request, response) => {    
     console.log(request.url);
 });
