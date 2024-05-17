@@ -15,27 +15,26 @@ module.exports.render_admin = async (req, res) => {
             return `${dia < 10 ? '0' + dia : dia} / ${mes < 10 ? '0' + mes : mes} / ${anio}`;
           }
           
-          // Recorrer cada objeto en el arreglo y actualizar las fechas
-          resumed.forEach(proyecto => {
+        resumed.forEach(proyecto => {
             proyecto.fechaInicio = formatearFecha(proyecto.fechaInicio);
             proyecto.fechaFinal = formatearFecha(proyecto.fechaFinal);
           });
           
         // Mostrar los proyectos con fechas formateadas
-        console.log('Id del proyecto obtenido de la base de datos:', resumed);
+        console.log('RESUMED:', resumed);
         
-        const hidden = await newUser.saveHidden();
+        const empresas = await newUser.saveEmpresas();
 
-        console.log('Id del proyecto obtenido de la base de datos:', hidden);
+        console.log('Empresas:', empresas);
 
         res.render("admin/admin", {
             resumedProyects: resumed,
-            hidden: hidden
+            empresas: empresas
         });
 
     } catch (error) {
-        console.error('Error al obtener el id_proyect de la base de datos:', error);
-        res.status(500).send('Error al obtener el id_proyect de la base de datos');
+        console.error('Error al obtener registro de la base de datos:', error);
+        res.status(500).send('Error al obtener registro de la base de datos');
     }
 };
 
