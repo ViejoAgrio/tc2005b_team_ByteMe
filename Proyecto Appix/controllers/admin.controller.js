@@ -42,3 +42,7 @@ module.exports.render_admin = async (req, res) => {
 module.exports.render_nuevo_proyecto = async(req,res) =>{
     res.render('admin/nuevo-proyecto');
 }
+
+module.exports.render_change_password = async(req, res) => {
+    res.render('admin/change-password');
+}

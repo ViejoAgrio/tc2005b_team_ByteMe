@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infoppix</title>
+    <link rel="stylesheet" href="/css/detalles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+        <header>
+            <div class="logo-header"></div>
+            <h1 class="header-title">RISK-MANAGER</h1>
+        </header>
+        <div class="container">
+            <div class="title">
+                <%= project.nombreProyecto %>
+            </div>
+            <div class="content">
+                <div class="left">
+                    <div class="info">
+                        <div><strong>Encargado:</strong> <%= project.nombreEncargado %></div>
+                        <div><strong>Empresa:</strong> <%= project.nombreEmpresa %></div>
+                        <div><strong>Departamento:</strong> <%= project.departamento %></div>
+                        <div><strong>Inicio:</strong> <%= project.fechaInicio %></div>
+                        <div><strong>Deadline:</strong> <%= project.fechaFinal %></div>
+                    </div>
+                    <div class="chart">
+                        <!-- Contenedor para el porcentaje -->
+                        <div id="percentage-label" data-value="<%= project.porcentajeRiesgo %>"><%= project.porcentajeRiesgo %>%</div>
+                        <!-- Gráfico circular -->
+                        <canvas id="myPieChart"></canvas>
+                    </div>
+                </div>
+                <div class="right">
+                    <h2><%= project.nombreProyecto %></h2>
+                    <p>
+                        <%= project.descripcionProyecto %>
+                    </p>
+                    <h3>Pendientes:</h3>
+                    <ul>
+                        <% if (project.descripcionAccion) { %>
+                            <li><%= project.descripcionAccion %></li>
+                        <% } else { %>
+                            <li>No hay pendientes</li>
+                        <% } %>
+                    </ul>
+                    <h3>Riesgos:</h3>
+                    <ul>
+                        <% if (project.descripcionRiesgo) { %>
+                            <li><%= project.descripcionRiesgo %></li>
+                        <% } else { %>
+                            <li>No hay riesgos</li>
+                        <% } %>
+                    </ul>
+                </div>
+                <div class="clearfix"></div>
+                <div class="status">
+                    <%= project.estatus %>
+                </div>
+            </div>
+        </div>
+        <div class="button-container">
+            <button onclick="history.back()">Regresar</button>
+        </div>
+    <script src="/js/detalles.js"></script>
+</body>
+</html>
