@@ -1,0 +1,165 @@
+/* Estilos generales */
+
+h2 {
+    text-align: center;
+    font-size: 4em; /* Letras más grandes */
+    color: #007bff; /* Color azul */
+    text-transform: uppercase;
+    margin-top: 50px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Estilo de fuente */
+    position: relative;
+}
+
+h2::after {
+    content: '';
+    display: block;
+    width: 450px;
+    height: 3px; /* Grosor de la línea */
+    background-color: #ccc; /* Color de la línea gris claro */
+    position: absolute;
+    bottom: -10px; /* Distancia desde el título */
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('/images/fondoBlanco.png'); 
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 0 20px;
+    background-color: #f2f2f2; /* Color de fondo blanco */
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-container {
+    padding: 20px;
+}
+
+.form-container label {
+    font-weight: bold;
+}
+
+.risk-catalog {
+    margin-top: 20px;
+}
+
+.risk {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.risk-checkbox {
+    margin-right: 10px;
+}
+
+.button-container-np{
+    margin-bottom: 10px;
+}
+
+.cancel-button {
+    background-color: #f44336; /* Color rojo */
+    width: 30%;
+    margin-left: 15px;
+}
+
+.save-button {
+    background-color: #00df07; /* Color verde */
+    width: 30%;
+}
+
+/* Estilos para la tabla invisible */
+.invisible-table {
+    display: none;
+}
+
+.selected-risk {
+    background-color: #e0e0e0; /* Cambia el color de fondo a gris claro */
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+}
+
+#plan-accion {
+    flex: 1;
+    margin-right: 10px;
+}
+
+#agregar-plan-btn {
+    padding: 8px 12px;
+    font-size: 14px;
+    width: 100px;
+    display: flex; /* Usar flexbox */
+    align-items: center; /* Centrar verticalmente el botón */
+    justify-content: center; /* Centrar horizontalmente el botón */
+}
+
+.enumerated-list {
+    list-style-type: none; /* Quita los números predeterminados */
+    counter-reset: plan; /* Resetea el contador */
+    padding-left: 0; /* Elimina el espacio en blanco predeterminado */
+}
+
+.enumerated-list li::before {
+    content: counter(plan) ". "; /* Agrega el contador */
+    counter-increment: plan; /* Incrementa el contador */
+    font-weight: bold; /* Hace que el número sea negrita */
+    color: #000000; /* Color del número */
+    margin-right: 5px; /* Espacio entre el número y el texto */
+}
+
+.eliminar-plan-btn {
+    background-color: #ffffff;
+    border: none; /* Quita el borde del botón */
+    padding: 0; /* Elimina el relleno */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    background-image: url('/images/trash2.png'); /* Agrega la imagen de fondo */
+    background-size: cover; /* Ajusta el tamaño de la imagen */
+    width: 20px; /* Ajusta el ancho del botón */
+    height: 20px; /* Ajusta la altura del botón */
+    margin-left: 10px;
+}
+
+
+
+
+.eliminar-plan-btn:hover img {
+    filter: brightness(80%); /* Reduce el brillo de la imagen al pasar el mouse sobre el botón */
+}
+
+.divider {
+    border-top: 1px solid #ccc; /* Línea divisoria gris */
+    margin-top: 10px; /* Espacio superior */
+    margin-bottom: 10px; /* Espacio inferior */
+}
+
+.titulo-secciones {
+    color: #4fa4ff; /* Color del título del plan de acción */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Estilo de fuente */
+    font-size: 2em;
+}
+
+.titulo-listado {
+    color: #000000; /* Color del título del plan de acción */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Estilo de fuente */
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 15px;
+    margin-left: 20px;
+    margin-bottom: 0;
+}

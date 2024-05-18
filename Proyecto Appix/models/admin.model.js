@@ -33,3 +33,30 @@ module.exports = class User {
         } 
     }
 }
+
+module.exports.render_nuevo_proyecto = async (req, res) => {
+    res.render('admin/nuevo-proyecto');
+};
+
+module.exports.save_nuevo_proyecto = async (req, res) => {
+    const { nombreEncargado, nombreEmpresa, nombreProyecto, descripcionProyecto, fechaInicio, fechaFinal, descripcionAccion } = req.body;
+
+    try {
+        const newProject = new Project(
+            nombreEncargado,
+            nombreEmpresa,
+            nombreProyecto,
+            descripcionProyecto,
+            fechaInicio,
+            fechaFinal,
+            descripcionAccion
+        );
+
+        await newProject.save();
+        
+        res.status(201).send('Proyecto guardado exitosamente');
+    } catch (error) {
+        console.error('Error al guardar el proyecto:', error);
+        res.status(500).send('Error al guardar el proyecto');
+    }
+};

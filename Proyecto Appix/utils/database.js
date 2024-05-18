@@ -2,8 +2,8 @@ const mariadb = require("mariadb");
 const pool = mariadb.createPool({
     host:"localhost",
     user:"root",
-    password:"qazSPILI741",
-    database: "Appix",
+    password:"1002151513",
+    database: "appix",
     connectionLimit:5,
     port: 3308
 });
@@ -13,6 +13,7 @@ module.exports = async () => {
         const connection = await pool.getConnection();
         return connection;
     } catch (error) {
-        throw error; // Re-throw the error for proper handling
+        console.error('Error al conectar a la base de datos:', error);
+        throw error;
     }
 };

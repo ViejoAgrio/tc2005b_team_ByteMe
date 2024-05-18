@@ -22,8 +22,10 @@ app.set('view engine', 'ejs');
 app.set('views', 'views'); 
 
 const bodyParser = require('body-parser');
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 
 app.get('/', async(req, res, next) => {
     res.render('login'); 

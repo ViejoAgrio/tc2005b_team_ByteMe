@@ -1,0 +1,131 @@
+<div> 
+    <div>
+        <form id="nuevo-proyecto-form">
+            <label for="nombre-proyecto">Nombre del proyecto:</label>
+            <input type="text" id="nombre-proyecto" name="nombreProyecto"><br> <!-- Cambiar name a "nombreProyecto" -->
+
+            <div style="display: flex; justify-content: space-between;">
+                <div style="width: 48%;">
+                    <label for="fecha-inicio">Fecha de Inicio:</label>
+                    <input type="date" id="fecha-inicio" name="fechaInicio"> <!-- Cambiar name a "fechaInicio" -->
+                </div>
+                <div style="width: 48%;">
+                    <label for="fecha-fin">Fecha de entrega:</label>
+                    <input type="date" id="fecha-fin" name="fechaFin"> <!-- Cambiar name a "fechaFin" -->
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between;">
+                <div style="width: 48%;">
+                    <label for="empresa">Empresa:</label>
+                    <input type="text" id="empresa" name="empresa"><br> <!-- Cambiar name a "empresa" -->
+                </div>
+                <div style="width: 48%;">
+                    <label for="nuevo-departamento">Departamento:</label>
+                    <select id="nuevo-departamento" class="new-risk-department browser-default">
+                        <option value="" disabled selected>Seleccione un departamento</option>
+                        <option value="Desarrollo Web">Desarrollo Web</option>
+                        <option value="Aplicaciones Web">Aplicaciones Web</option>
+                    </select>
+                </div>
+            </div>
+
+            <label for="encargado">Encargado:</label>
+            <input type="text" id="encargado" name="encargado"><br> <!-- Cambiar name a "encargado" -->
+
+            <label for="descripcion">Descripción:</label>
+            <input type="text" id="descripcion" name="descripcion"><br> <!-- Cambiar name a "descripcion" -->
+        </form>
+    </div>
+
+    <section id="plan-de-accion">
+        <header>
+            <h3 class="titulo-secciones">Plan de acción</h3>
+        </header>
+        <label for="plan-accion">Agrega los planes de acción para tu proyecto:</label>
+        <div class="input-group" style="display: flex; justify-content: flex-end;">
+            <input type="text" id="plan-accion" name="plan-accion">
+            <button id="agregar-plan-btn" class="waves-effect waves-light btn" type="button" onclick="agregarPlanAccion()">Agregar</button>
+        </div>
+        <div id="listado">
+            <header>
+                <h4 class="titulo-listado">Listado:</h4>
+            </header>
+            <ol id="lista-planes-accion" class="enumerated-list"></ol>
+        </div>
+    </section>        
+</div>
+<div class="new-risks">
+    <h3 class="titulo-secciones">Nuevos Riesgos</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Nuevo riesgo</th>
+                <th>Nivel (0-9)</th>
+                <th>Departamento</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="text" id="nuevo-nombre" class="new-risk-Nuevoriesgo"></td>
+                <td>
+                    <select id="nuevo-nivel" class="new-risk-level browser-default">
+                        <option value="" disabled selected>Seleccione un nivel</option>
+                        <option value="0">0 (Mínimo)</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9 (Máximo)</option>
+                    </select>
+                </td>
+
+                <td><button class="waves-effect waves-light btn" onclick="agregarNuevoRiesgo()">Agregar</button></td>
+            </tr>
+            
+        </tbody>
+    </table>
+</div>
+<div class="risk-catalog">
+    <h3 class="titulo-secciones">Riesgos</h3>
+    <input type="text" id="search-risk" placeholder="Buscar riesgos...">
+</div>        
+<table class="invisible-table" style="display: none;">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Nombre</th>
+            <th>Nivel</th>
+            <th>Departamento</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody id="table-body">
+        <tr>
+            <td>
+                <label>
+                    <input type="checkbox" onchange="toggleRowHighlight(this)"/>
+                    <span></span>
+                </label>
+            </td>
+            <td>Riesgo 1</td>
+            <td>3</td>
+            <td>Desarrollo Web</td>
+            <td>
+                <button class="edit-risk-btn waves-effect waves-light btn"><img src="/images/pencil.png" alt="Editar"></button>
+                <button class="delete-risk-btn waves-effect waves-light btn red"><img src="/images/trash.png" alt="Eliminar"></button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div class="button-container button-container-np" style="display: flex; justify-content: flex-end;">
+    <button class="btn waves-effect waves-light save-button" type="submit" onclick="guardarProyecto()">Guardar</button>
+            <button class="btn waves-effect waves-light cancel-button" type="button" onclick="cancelarProyecto()">Cancelar</button>
+        </div>
+    </section>
+</form>
+</div>
