@@ -1,5 +1,4 @@
 const User = require('../models/admin.model.js');
-const bcrypt = require('bcryptjs');
 
 module.exports.render_admin = async (req, res) => {
     try {

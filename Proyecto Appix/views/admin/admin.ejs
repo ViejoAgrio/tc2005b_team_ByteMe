@@ -64,15 +64,26 @@
                 data-department="<%= resumedProyects[i].departamento %>"
                 data-company="<%= resumedProyects[i].nombreEmpresa %>">
                 <% if (resumedProyects[i].porcentajeRiesgo > 49) { %>
-                <div class="post-it">
+                <div class="post-it hoverable">
                     <div class="row">
                         <div class="col s9">
                             <div class="post-it-header post-it-header-rojo">
                                 <h2><%= resumedProyects[i].nombreProyecto %></h2>
                             </div>
-                            <div class="post-it-risk post-it-risk-rojo">
-                                <h1><%= resumedProyects[i].porcentajeRiesgo %>%</h1>
-                                <h3>Porcentaje de riesgo</h3>
+                            <div class="post-it-left">
+                                <% var colorr = 'post-it-risk-rojo' %>
+                                <div class="post-it-risk <%= colorr %>">
+                                    <h3>Porcentaje de riesgo</h3>
+                                    <h1><%= resumedProyects[i].porcentajeRiesgo %>%</h1>
+                                </div>
+                                <div class="risks">
+                                    <h3 class="left-align post-it-risk-rojo">Riesgos:</h3>
+                                    <div class="riesgos">
+                                        <% for (let j = 0; j < resumedProyects[i].riesgos.length; j++) { %>
+                                        <div class="icon-error"><i class="tiny material-icons">error</i><h3><%= resumedProyects[i].riesgos[j].descripcionRiesgo %></h3></div> </li>
+                                        <% } %>
+                                    </div>
+                                </div>
                             </div>
                             <div class="post-it-status">
                                 <h3><%= resumedProyects[i].estatus %></h3>

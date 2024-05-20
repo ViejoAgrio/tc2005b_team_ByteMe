@@ -106,7 +106,6 @@ body {
 .post-it h3{
     font-size: 14px;
     margin: 0;
-    padding: 10px;
 }
 
 .post-it:hover {
@@ -167,15 +166,24 @@ body {
     background-color: var(--color-info-negro);
 }
 
-.post-it-risk {
+.post-it-left {
     display: flex;
     flex-direction: column;
     height: 170px;
     width: 336px;
-    justify-content: center;
-    align-items: center;
-    border-bottom: 1px solid #ccc;
     margin: 0;
+    padding: 0;
+    overflow: scroll;
+}
+
+.post-it-risk {
+    display: flex;
+    flex-direction: column;
+    width: 336px;
+    height: 170px;
+    align-items: center;
+    margin: 0;
+    padding-top: 10px;
 }
 
 .post-it-risk-rojo {
@@ -194,6 +202,20 @@ body {
     color: var(--color-info-negro);
 }
 
+.risks {
+    list-style-type: square;
+    width: 336px;
+    color: black;
+}
+
+.risks h3 {
+    font-size: 14px;
+    margin: 0;
+    margin-left: 5px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
 .post-it-status {
     display: flex;
     height: 40px;
@@ -201,6 +223,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border-top: 2px solid #ccc;
     margin: 0;
     padding: 5px;
 }
