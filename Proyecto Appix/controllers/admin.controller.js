@@ -19,8 +19,7 @@ module.exports.render_admin = async (req, res) => {
             proyecto.fechaInicio = formatearFecha(proyecto.fechaInicio);
             proyecto.fechaFinal = formatearFecha(proyecto.fechaFinal);
           });
-          
-        // Mostrar los proyectos con fechas formateadas
+
         console.log('RESUMED:', resumed);
         
         const empresas = await newUser.saveEmpresas();
