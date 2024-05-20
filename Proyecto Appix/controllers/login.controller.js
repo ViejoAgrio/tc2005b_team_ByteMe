@@ -24,6 +24,7 @@ module.exports.do_login = async(req,res) =>{
         console.log(usuario.password);
 
         if(!doMatch) {
+            console.error('Contraseña incorrecta.');
             res.render("login",{
                 error: "Contraseña incorrecta."
             });
