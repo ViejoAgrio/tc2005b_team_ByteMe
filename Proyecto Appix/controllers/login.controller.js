@@ -43,6 +43,8 @@ module.exports.do_login = async(req,res) =>{
 
         req.session.username = usuario.username;
         req.session.isLoggedIn = true;
+        req.session.roles = permisos[0].rol === 0 ? "Admin" : "User";
+        req.session.user = usuario;        
 
         // Comprueba el rol para decidir qué vista renderizar
         if (permisos[0].rol === 0) { 

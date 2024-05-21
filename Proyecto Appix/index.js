@@ -25,15 +25,19 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 
+const isLoggedIn = require('./utils/is-auth');
+const isUser = require('./utils/is-user');
+const isAdmin = require('./utils/is-admin');
+
 app.get('/', async(req, res, next) => {
     res.render('login'); 
 });
 
 const rutasUsuarios = require('./routes/usuarios.routes');
-app.use('/usuarios', rutasUsuarios);
+app.use('/usuarios', isUser, rutasUsuarios);
 
 const rutasAdmin = require('./routes/admin.routes');
-app.use('/admin', rutasAdmin);
+app.use('/admin', isAdmin, rutasAdmin);
 
 const rutasDetalles = require('./routes/detalles.routes');
 app.use('/detalles', rutasDetalles);
