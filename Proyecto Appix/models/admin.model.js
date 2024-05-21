@@ -11,7 +11,8 @@ module.exports = class User {
             const connection = await db(); // Obtener conexión a la base de datos
             const query = `SELECT proyecto.*, cliente.nombreEmpresa
             FROM proyecto
-            JOIN cliente ON proyecto.idCliente = cliente.idCliente;`
+            JOIN cliente ON proyecto.idCliente = cliente.idCliente
+            ORDER BY porcentajeRiesgo DESC;`
             const resumed = await connection.execute(query);
             await connection.release(); // Liberar la conexión
             return resumed; // Devolver el resultado de la consulta
