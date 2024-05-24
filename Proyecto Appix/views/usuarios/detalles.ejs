@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Infoppix</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="/css/detalles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -38,21 +40,32 @@
                         <%= project.descripcionProyecto %>
                     </p>
                     <h3>Pendientes:</h3>
-                    <ul>
-                        <% if (project.descripcionAccion) { %>
-                            <li><%= project.descripcionAccion %></li>
-                        <% } else { %>
-                            <li>No hay pendientes</li>
-                        <% } %>
-                    </ul>
+                    <form action="#">
+                        <% if (acciones.length < 1) { %>
+                            <p>No hay pendientes por hacer</p>
+                        <% } else { for (let j = 0; j < acciones.length; j++) {
+                            const checked = acciones[j].estadoRealizacion ? 'checked' : '';%>
+                        <p>
+                          <label>
+                            <input type="checkbox" data-id="<%= acciones[j].idAccion %>" onchange="updateCheckbox(this)" <%= checked %> />
+                            <span class="custom-checkbox-label"><%= acciones[j].descripcionAccion %></span>
+                          </label>
+                        </p>
+                        <% }} %>
+                    </form>
                     <h3>Riesgos:</h3>
-                    <ul>
-                        <% if (project.descripcionRiesgo) { %>
-                            <li><%= project.descripcionRiesgo %></li>
-                        <% } else { %>
-                            <li>No hay riesgos</li>
-                        <% } %>
-                    </ul>
+                    <form>
+                        <% if (riesgos.length < 1) { %>
+                            <p>No hay pendientes</p>
+                        <% } else { for (let j = 0; j < riesgos.length; j++) {%>
+                        <p>
+                        <label>
+                          <input type="checkbox" disabled="disabled" />
+                          <span class="custom-checkbox-label"><%= riesgos[j].descripcionRiesgo %></span>
+                        </label>
+                        </p>
+                        <% }} %>
+                    </form>
                 </div>
                 <div class="clearfix"></div>
                 <div class="status">
@@ -63,6 +76,37 @@
         <div class="button-container">
             <button onclick="history.back()">Regresar</button>
         </div>
+        <script>
+            function updateCheckbox(checkbox) {
+                console.log('Checkbox change detected');
+                const idAccion = checkbox.getAttribute('data-id');
+                const isChecked = checkbox.checked;
+            
+                fetch('/detalles/update-checkbox', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        idAccion: idAccion,
+                        isChecked: isChecked
+                    }),
+                })
+                .then(response => {
+                    console.log('Response received:', response);
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Success:', data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+            }
+            </script>                        
     <script src="/js/detalles.js"></script>
 </body>
 </html>

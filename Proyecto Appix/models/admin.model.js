@@ -9,23 +9,23 @@ module.exports = class User {
         try {
             const connection = await db(); // Obtener conexión a la base de datos
             const query = `SELECT 
-            p.*,
-            c.nombreEmpresa,
-            IFNULL(JSON_ARRAYAGG(
-                JSON_OBJECT(
-                    'idRiesgo', r.idRiesgo,
-                    'descripcionRiesgo', r.descripcionRiesgo,
-                    'nivelRiesgo', r.nivelRiesgo
-                )
-            ), '[]') AS riesgos
-        FROM 
-            proyecto p
-        JOIN 
-            cliente c ON p.idCliente = c.idCliente
-        LEFT JOIN 
-            riesgo r ON p.idProyecto = r.idProyecto
-        GROUP BY 
-            p.idProyecto
+                p.*,
+                c.nombreEmpresa,
+                IFNULL(JSON_ARRAYAGG(
+                    JSON_OBJECT(
+                        'idRiesgo', r.idRiesgo,
+                        'descripcionRiesgo', r.descripcionRiesgo,
+                        'nivelRiesgo', r.nivelRiesgo
+                    )
+                ), '[]') AS riesgos
+            FROM 
+                proyecto p
+            JOIN 
+                cliente c ON p.idCliente = c.idCliente
+            LEFT JOIN 
+                riesgo r ON p.idProyecto = r.idProyecto
+            GROUP BY 
+                p.idProyecto
             ORDER BY porcentajeRiesgo DESC;`
             var resumed = await connection.execute(query);
             resumed.forEach(proyecto => {

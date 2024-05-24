@@ -82,10 +82,10 @@
                 <div class="post-it hoverable">
                     <div class="row">
                         <div class="col s9">
-                            <div class="post-it-header <%= colorLeft %>">
+                            <div class="post-it-header <%= colorLeft %>" onclick="detalles(<%= resumedProyects[i].idProyecto %>)">
                                 <h2><%= resumedProyects[i].nombreProyecto %></h2>
                             </div>
-                            <div class="post-it-left">
+                            <div class="post-it-left" onclick="detalles(<%= resumedProyects[i].idProyecto %>)">
                                 <div class="post-it-risk <%= colorLetra %>">
                                     <h3>Porcentaje de riesgo</h3>
                                     <h1><%= resumedProyects[i].porcentajeRiesgo %>%</h1>
@@ -93,12 +93,11 @@
                                 <div class="risks">
                                     <h3>Riesgos:</h3>
                                     <div class="riesgos">
-                                        <% for (let j = 0; j < resumedProyects[i].riesgos.length; j++) {
-                                        if (resumedProyects[i].riesgos[j].descripcionRiesgo === null) { %>
+                                        <% if (resumedProyects[i].riesgos.length < 1 || resumedProyects[i].riesgos[0].descripcionRiesgo == null) {%>
                                             <div class="icon-error">
                                                 <h3> No hay riesgos registrados para este proyecto</h3>
                                             </div>
-                                        <% } else { %>
+                                        <% } else { for (let j = 0; j < resumedProyects[i].riesgos.length; j++) {%>
                                         <div class="icon-error">
                                             <i class="tiny material-icons">error</i>
                                             <h3><%= resumedProyects[i].riesgos[j].descripcionRiesgo %></h3>
@@ -107,7 +106,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="post-it-status">
+                            <div class="post-it-status" onclick="detalles(<%= resumedProyects[i].idProyecto %>)">
                                 <h3><%= resumedProyects[i].estatus %></h3>
                             </div>
                         </div>
@@ -121,11 +120,11 @@
                                         <div class="icon-copy"><i class="material-icons">content_copy</i></div>
                                     </div>
                                     <div class="col s4">
-                                        <div class="icon-delete"><i class="material-icons">delete</i></div>
+                                        <div class="icon-delete"><i class="material-icons" onclick="location.href='/admin/change-password'">delete</i></div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="post-it-dates <%= colorRight %>">
+                            <div class="post-it-dates <%= colorRight %>" onclick="detalles(<%= resumedProyects[i].idProyecto %>)">
                                 <h2>Inicio</h2>
                                 <h3><%= resumedProyects[i].fechaInicio %></h3>
                                 <p><br></p>
@@ -140,6 +139,23 @@
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script>
+            function detalles(idProyecto) {
+                fetch(`/detalles/${idProyecto}`, { 
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ idProyecto: idProyecto }),
+                }).then(data => {
+                    console.log('Success:', data);
+                    window.location.href = `/detalles/detalles/${idProyecto}`; 
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+            }
+        </script>
         <script>
             $(document).ready(function(){
                 $('select').formSelect();
@@ -174,7 +190,21 @@
 </body>
 <footer> 
     <div class="row">
-        <div class="col s4"></div>
+        <div class="col s4">
+            <ul class="pagination">
+                <li class="<%= paginaActual === 1 ? 'disabled' : 'waves-effect' %>">
+                    <a href="?page=<%= paginaActual - 1 %>"><i class="material-icons">chevron_left</i></a>
+                </li>
+                <% for (let i = 1; i <= totalPaginas; i++) { %>
+                <li class="<%= paginaActual === i ? 'active' : 'waves-effect' %>">
+                    <a href="?page=<%= i %>"><%= i %></a>
+                </li>
+                <% } %>
+                <li class="<%= paginaActual === totalPaginas ? 'disabled' : 'waves-effect' %>">
+                    <a href="?page=<%= paginaActual + 1 %>"><i class="material-icons">chevron_right</i></a>
+                </li>
+            </ul>
+        </div>
         <div class="col s5"><div class="button-centered">Derechos de autor © 2024 Empresa Appix. Todos los derechos reservados.</div></div>
         <div class="col s2"></div>
         <div class="col s1"><div class="button-centered"><button onclick="location.href='/../login/logout'">Cerrar Sesión</button></div></div>

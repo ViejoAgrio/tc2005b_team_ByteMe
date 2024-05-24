@@ -238,6 +238,20 @@ footer {
     height: 70px;
 }
 
+.pagination li.active {
+    background-color: rgb(49, 131, 214); /* Color de fondo del elemento activo */
+}
+.pagination li.active a {
+    color: #ffffff; /* Color del texto del elemento activo */
+}
+.pagination li a {
+    color: #ffffff; /* Color del texto de los elementos */
+}
+.pagination li a:hover {
+    background-color: rgb(49, 131, 214); /* Color de fondo al pasar el ratón por encima */
+    color: #ffffff; /* Color del texto al pasar el ratón por encima */
+}
+
 .button-centered {
     display: flex;
     height: 70px;

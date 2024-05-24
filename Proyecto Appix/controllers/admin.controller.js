@@ -1,18 +1,11 @@
 const User = require('../models/admin.model.js');
+const { formatearFecha } = require("../public/js/controllerFuncionts.js");
 
 module.exports.render_admin = async (req, res) => {
     try {
 
         const newUser = new User(1);
         const resumed = await newUser.saveResumed();
-        
-        function formatearFecha(fechaISO) {
-            const fecha = new Date(fechaISO); // Crear objeto Date a partir de la cadena ISO 8601
-            const dia = fecha.getDate();
-            const mes = fecha.getMonth() + 1; // Meses son indexados desde 0 (enero) hasta 11 (diciembre)
-            const anio = fecha.getFullYear();
-            return `${dia < 10 ? '0' + dia : dia} / ${mes < 10 ? '0' + mes : mes} / ${anio}`;
-          }
           
         resumed.forEach(proyecto => {
             proyecto.fechaInicio = formatearFecha(proyecto.fechaInicio);
@@ -23,10 +16,18 @@ module.exports.render_admin = async (req, res) => {
         
         const empresas = await newUser.saveEmpresas();
 
-        console.log('Empresas:', empresas);
+        const proyectosPorPagina = 9;
+        const totalPaginas = Math.ceil(resumed.length / proyectosPorPagina);
+        const paginaActual = parseInt(req.query.page) || 1;
+        const startIndex = (paginaActual - 1) * proyectosPorPagina;
+        const endIndex = startIndex + proyectosPorPagina;
+      
+        const proyectosPaginados = resumed.slice(startIndex, endIndex);
 
         res.render("admin/admin", {
-            resumedProyects: resumed,
+            resumedProyects: proyectosPaginados,
+            paginaActual: paginaActual,
+            totalPaginas: totalPaginas,
             empresas: empresas
         });
 

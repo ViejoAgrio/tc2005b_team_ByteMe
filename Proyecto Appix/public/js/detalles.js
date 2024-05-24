@@ -3,9 +3,9 @@ var dataValue = parseInt(document.getElementById('percentage-label').getAttribut
 
 // Función para determinar el color basado en el valor
 function getColor(value) {
-    if (value > 0 && value <= 35) {
+    if (value > 0 && value <= 33) {
         return '#00508F'; // Verde
-    } else if (value > 35 && value <= 49) {
+    } else if (value > 33 && value <= 49) {
         return 'rgb(226, 173, 14)'; // Amarillo
     } else {
         return 'rgb(176, 14, 14)'; // Rojo
@@ -14,9 +14,9 @@ function getColor(value) {
 
 // Función para determinar el color de fondo basado en el valor
 function getBackgroundColor(value) {
-    if (value > 0 && value <= 35) {
+    if (value > 0 && value <= 33) {
         return '#00508F'; // Verde
-    } else if (value > 35 && value <= 49) {
+    } else if (value > 33 && value <= 49) {
         return 'rgb(226, 173, 14)'; // Amarillo
     } else {
         return 'rgb(176, 14, 14)'; // Rojo
