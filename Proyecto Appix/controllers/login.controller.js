@@ -18,10 +18,9 @@ module.exports.do_login = async(req,res) =>{
 
         const usuario = usuarios[0];
         console.log(usuario);
-        const hashedPass = await bcrypt.hash(usuario.password, 12)
-        const doMatch = await bcrypt.compare(req.body.password, hashedPass);
-        console.log(req.body.password);
-        console.log(usuario.password);
+        //const hashedPass = await bcrypt.hash(usuario.password, 12);
+        //const doMatch = await bcrypt.compare(req.body.password, hashedPass);
+        const doMatch = req.body.password === usuario.password;
 
         if(!doMatch) {
             console.error('Contraseña incorrecta.');
@@ -33,49 +32,45 @@ module.exports.do_login = async(req,res) =>{
 
         // Se agrega método para obtener el permiso del usuario
         const permisos = await model.User.getPermisos(usuario.nombreUsuario);
-        console.log(permisos);
+        
         if (permisos.length == 0) {
             req.session.error = "Usuario y/o contraseña incorrectos";
             res.render("login", {
-                registro: false
+                error: "Usuario y/o contraseña incorrectos"
             });
             return;
         }
 
         req.session.username = usuario.username;
         req.session.isLoggedIn = true;
+        req.session.roles = permisos[0].rol === 0 ? "Admin" : "User";
+        req.session.user = usuario;        
 
         // Comprueba el rol para decidir qué vista renderizar
         if (permisos[0].rol === 0) { 
             req.session.roles = "Admin";
-            console.log('ERES ADMIN DASHBOARD');
-            /*res.render('admin/admin', { // Vista del dashboard del admin
-                username: usuario.nombreUsuario
-            });*/
+            req.session.user = usuario;
+            res.redirect('admin/admin');
         } else if (permisos[0].rol === 1) {  
-            req.session.roles = "Usuario";
-            console.log('ERES USER DASHBOARD');
-            /*res.render('usuarios/usuario', { // Vista del dashboard del usuario
-                username: usuario.nombreUsuario
-            });*/
+            req.session.roles = "User";
+            req.session.user = usuario; 
+            return res.redirect('/usuarios/usuario');
         } else {
             // Manejo de casos donde el rol no es reconocido
             res.render("login", {
-                error: "Rol no reconocido.",
-                registro: false
+                error: "Rol no reconocido."
             });
         }
     } catch (error) {
         console.error('error en el proceso de login', error);
         res.render("login", {
-            error: "Error interno del servidor.",
-            registro: false
+            error: "Error interno del servidor."
         });
     } 
 } 
 
 module.exports.get_logout = (request, response, next) => {
     request.session.destroy(() => {
-        response.redirect('/'); 
+        response.redirect('/login'); 
     })
 };
