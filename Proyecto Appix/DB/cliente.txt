@@ -1,0 +1,11 @@
+idCliente,nombreEncargado,nombreEmpresa
+1,Juan Pérez,ABC Company
+2,Maria González,XYZ Corporation
+3,Carlos Martínez,Global Solutions Inc.
+4,Laura Ramírez,Quick Logistics
+5,Pablo Sánchez,Innovative Designs
+6,Ana Gutiérrez,Prime Services
+7,Luis Hernández,Swift Enterprises
+8,Elena Torres,Fast Forward Inc.
+9,Diego Castillo,Dynamic Solutions
+10,Sofía López,Elite Ventures

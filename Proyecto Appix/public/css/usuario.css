@@ -106,7 +106,6 @@ body {
 .post-it h3{
     font-size: 14px;
     margin: 0;
-    padding: 10px;
 }
 
 .post-it:hover {
@@ -125,20 +124,32 @@ body {
     margin: 0;
 }
 
-.post-it-header-rojo {
+.post-it-rojo {
     background-color: var(--color-rojo); 
 }
 
-.post-it-header-amarillo {
+.post-it-amarillo {
     background-color: var(--color-amarillo); 
 }
 
-.post-it-header-azul {
+.post-it-azul {
     background-color: var(--color-back-azul); 
 }
 
-.post-it-header-negro {
+.post-it-negro {
     background-color: var(--color-negro); 
+}
+
+.post-it-rojo-letra {
+    color: var(--color-rojo); 
+}
+
+.post-it-amarillo-letra {
+    color: var(--color-amarillo); 
+}
+
+.post-it-azul-letra {
+    color: var(--color-back-azul); 
 }
 
 .post-it-dates-full {
@@ -151,47 +162,53 @@ body {
     align-items: center;
 }
 
-.post-it-dates-rojo {
+.post-it-rojo-claro {
     background-color: var(--color-info-rojo);
 }
 
-.post-it-dates-amarillo {
+.post-it-amarillo-claro {
     background-color: var(--color-info-amarillo);
 }
 
-.post-it-dates-azul {
+.post-it-azul-claro {
     background-color: var(--color-info-azul);
 }
 
-.post-it-dates-negro {
+.post-it-negro-claro {
     background-color: var(--color-info-negro);
+}
+
+.post-it-left {
+    display: flex;
+    flex-direction: column;
+    height: 170px;
+    width: 336px;
+    margin: 0;
+    padding: 0;
+    overflow: scroll;
 }
 
 .post-it-risk {
     display: flex;
     flex-direction: column;
-    height: 170px;
     width: 336px;
-    justify-content: center;
+    height: 170px;
     align-items: center;
-    border-bottom: 1px solid #ccc;
     margin: 0;
+    padding-top: 10px;
 }
 
-.post-it-risk-rojo {
-    color: var(--color-info-rojo);
+.risks {
+    width: 336px;
+    color: black;
 }
 
-.post-it-risk-amarillo {
-    color: var(--color-info-amarillo);
-}
-
-.post-it-risk-azul {
-    color: var(--color-info-azul);
-}
-
-.post-it-risk-negro {
-    color: var(--color-info-negro);
+.risks h3 {
+    font-size: 14px;
+    margin: 0;
+    margin-left: 5px;
+    margin-bottom: 10px;
+    font-weight: bold;
 }
 
 .post-it-status {
@@ -201,8 +218,14 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border-top: 2px solid #ccc;
     margin: 0;
     padding: 5px;
+    font-weight: bold;
+}
+
+.post-it-status h3 {
+    font-weight: bold;
 }
 
 footer {
@@ -213,6 +236,20 @@ footer {
     bottom: 0;
     width: 100%;
     height: 70px;
+}
+
+.pagination li.active {
+    background-color: rgb(49, 131, 214); /* Color de fondo del elemento activo */
+}
+.pagination li.active a {
+    color: #ffffff; /* Color del texto del elemento activo */
+}
+.pagination li a {
+    color: #ffffff; /* Color del texto de los elementos */
+}
+.pagination li a:hover {
+    background-color: rgb(49, 131, 214); /* Color de fondo al pasar el ratón por encima */
+    color: #ffffff; /* Color del texto al pasar el ratón por encima */
 }
 
 .button-centered {
