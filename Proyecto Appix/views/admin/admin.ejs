@@ -27,36 +27,38 @@
                 </div>
             </div>
         </header>
-        <div class="selectors">
-            <div class="input-field">
-                <select id="lista-estatus">
-                  <option value="Todos">Todos</option>
-                  <option value="En proceso">En proceso</option>
-                  <option value="Atrasado">Atrasado</option>
-                  <option value="En planeación">En planeación</option>
-                  <option value="En espera">En espera</option>
-                  <option value="Finalizado">Finalizado</option>
-                </select>
-                <label>Estatus del proyecto</label>
-            </div>
-            <div class="input-field">
-                <select id="lista-departamento">
-                    <option value="Todos">Todos</option>
-                  <option value="Desarrollo web">Desarrollo web</option>
-                  <option value="Diseño web">Diseño web</option>
-                </select>
-                <label>Departamento del proyecto</label>
-            </div>
-            <div class="input-field">
-                <select id="lista-empresa">
-                    <option value="Todos">Todos</option>
-                  <% for (let i = 0; i <= empresas.length - 1; i++) { %>
-                  <option value="<%= empresas[i].nombreEmpresa %>"><%= empresas[i].nombreEmpresa %></option>
-                  <% } %>
-                </select>
-                <label>Empresa del proyecto</label>
-            </div>
-        </div>
+        <form id="filters-form" method="POST" action="/admin/admin">
+            <div class="selectors">
+                <div class="input-field">
+                    <select id="lista-estatus" name="estatus">
+                        <option value="Todos" <%= selectedEstatus === 'Todos' ? 'selected' : '' %>>Todos</option>
+                        <option value="En proceso" <%= selectedEstatus === 'En proceso' ? 'selected' : '' %>>En proceso</option>
+                        <option value="Atrasado" <%= selectedEstatus === 'Atrasado' ? 'selected' : '' %>>Atrasado</option>
+                        <option value="En planeación" <%= selectedEstatus === 'En planeación' ? 'selected' : '' %>>En planeación</option>
+                        <option value="En espera" <%= selectedEstatus === 'En espera' ? 'selected' : '' %>>En espera</option>
+                        <option value="Finalizado" <%= selectedEstatus === 'Finalizado' ? 'selected' : '' %>>Finalizado</option>
+                    </select>
+                    <label>Estatus del proyecto</label>
+                </div>
+                <div class="input-field">
+                    <select id="lista-departamento" name="departamento">
+                        <option value="Todos" <%= selectedDepartamento === 'Todos' ? 'selected' : '' %>>Todos</option>
+                        <option value="Desarrollo web" <%= selectedDepartamento === 'Desarrollo web' ? 'selected' : '' %>>Desarrollo web</option>
+                        <option value="Diseño web" <%= selectedDepartamento === 'Diseño web' ? 'selected' : '' %>>Diseño web</option>
+                    </select>
+                    <label>Departamento del proyecto</label>
+                </div>
+                <div class="input-field">
+                    <select id="lista-empresa" name="empresa">
+                        <option value="Todos" <%= selectedEmpresa === 'Todos' ? 'selected' : '' %>>Todos</option>
+                        <% for (let i = 0; i <= empresas.length - 1; i++) { %>
+                        <option value="<%= empresas[i].nombreEmpresa %>" <%= selectedEmpresa === empresas[i].nombreEmpresa ? 'selected' : '' %>><%= empresas[i].nombreEmpresa %></option>
+                        <% } %>
+                    </select>
+                    <label>Empresa del proyecto</label>
+                </div>
+            </div>            
+        </form>        
         <div class="row">
             <% for (let i = 0; i <= resumedProyects.length - 1; i++) {
                 if (resumedProyects[i].porcentajeRiesgo > 49) { 
@@ -156,54 +158,67 @@
                 });
             }
         </script>
-        <script>
-            $(document).ready(function(){
-                $('select').formSelect();
+<script>
+    $(document).ready(function(){
+        $('select').formSelect();
 
-                // Función para aplicar los filtros combinados
-                function applyFilters() {
-                    const selectedStatus = $('#lista-estatus').val();
-                    const selectedDepartment = $('#lista-departamento').val();
-                    const selectedCompany = $('#lista-empresa').val();
+        function updateURLWithFilters() {
+            var estatus = $('#lista-estatus').val();
+            var departamento = $('#lista-departamento').val();
+            var empresa = $('#lista-empresa').val();
 
-                    $('.project-card').each(function() {
-                        const cardStatus = $(this).data('status');
-                        const cardDepartment = $(this).data('department');
-                        const cardCompany = $(this).data('company');
+            console.log('Updating URL with values:', { estatus, departamento, empresa });
 
-                        const statusMatch = (selectedStatus === 'Todos' || cardStatus === selectedStatus);
-                        const departmentMatch = (selectedDepartment === 'Todos' || cardDepartment === selectedDepartment);
-                        const companyMatch = (selectedCompany === 'Todos' || cardCompany === selectedCompany);
+            var url = new URL(window.location.href);
+            url.searchParams.set('estatus', estatus);
+            url.searchParams.set('departamento', departamento);
+            url.searchParams.set('empresa', empresa);
+            url.searchParams.set('page', 1); // Resetea la paginación a la primera página
 
-                        if (statusMatch && departmentMatch && companyMatch) {
-                            $(this).show();
-                        } else {
-                            $(this).hide();
-                        }
-                    });
-                }
-                $('#lista-estatus').on('change', applyFilters);
-                $('#lista-departamento').on('change', applyFilters);
-                $('#lista-empresa').on('change', applyFilters);
+            window.location.href = url.toString();
+        }
+
+        // Asociar el evento de cambio a los selectores
+        $('#lista-estatus').change(updateURLWithFilters);
+        $('#lista-departamento').change(updateURLWithFilters);
+        $('#lista-empresa').change(updateURLWithFilters);
+
+        // Añadir los filtros a los enlaces de paginación al cargar la página
+        function addFiltersToPagination() {
+            var estatus = $('#lista-estatus').val();
+            var departamento = $('#lista-departamento').val();
+            var empresa = $('#lista-empresa').val();
+
+            $('.pagination a').each(function() {
+                var url = new URL($(this).attr('href'), window.location.origin);
+                url.searchParams.set('estatus', estatus);
+                url.searchParams.set('departamento', departamento);
+                url.searchParams.set('empresa', empresa);
+                $(this).attr('href', url.toString());
             });
-        </script>
+        }
+
+        addFiltersToPagination();
+    });
+</script>
+
 </body>
 <footer> 
     <div class="row">
         <div class="col s4">
             <ul class="pagination">
                 <li class="<%= paginaActual === 1 ? 'disabled' : 'waves-effect' %>">
-                    <a href="?page=<%= paginaActual - 1 %>"><i class="material-icons">chevron_left</i></a>
+                    <a href="/admin/admin?page=<%= paginaActual - 1 %>&estatus=<%= selectedEstatus %>&departamento=<%= selectedDepartamento %>&empresa=<%= selectedEmpresa %>"><i class="material-icons">chevron_left</i></a>
                 </li>
                 <% for (let i = 1; i <= totalPaginas; i++) { %>
                 <li class="<%= paginaActual === i ? 'active' : 'waves-effect' %>">
-                    <a href="?page=<%= i %>"><%= i %></a>
+                    <a href="/admin/admin?page=<%= i %>&estatus=<%= selectedEstatus %>&departamento=<%= selectedDepartamento %>&empresa=<%= selectedEmpresa %>"><%= i %></a>
                 </li>
                 <% } %>
                 <li class="<%= paginaActual === totalPaginas ? 'disabled' : 'waves-effect' %>">
-                    <a href="?page=<%= paginaActual + 1 %>"><i class="material-icons">chevron_right</i></a>
+                    <a href="/admin/admin?page=<%= paginaActual + 1 %>&estatus=<%= selectedEstatus %>&departamento=<%= selectedDepartamento %>&empresa=<%= selectedEmpresa %>"><i class="material-icons">chevron_right</i></a>
                 </li>
-            </ul>
+            </ul>                                  
         </div>
         <div class="col s5"><div class="button-centered">Derechos de autor © 2024 Empresa Appix. Todos los derechos reservados.</div></div>
         <div class="col s2"></div>

@@ -3,32 +3,49 @@ const { formatearFecha } = require("../public/js/controllerFuncionts.js");
 
 module.exports.render_admin = async (req, res) => {
     try {
-
         const newUser = new User(1);
         const resumed = await newUser.saveResumed();
-          
+        
+        // Formatear las fechas
         resumed.forEach(proyecto => {
             proyecto.fechaInicio = formatearFecha(proyecto.fechaInicio);
             proyecto.fechaFinal = formatearFecha(proyecto.fechaFinal);
-          });
-
-        console.log('RESUMED:', resumed);
+        });
         
         const empresas = await newUser.saveEmpresas();
 
+        // Obtener los valores de los selectores de la URL (GET request)
+        const estatus = req.query.estatus || 'Todos';
+        const departamento = req.query.departamento || 'Todos';
+        const empresa = req.query.empresa || 'Todos';
+
+        console.log('Filters received:', { estatus, departamento, empresa });
+
+        // Filtrar los proyectos según los selectores
+        const proyectosFiltrados = resumed.filter(proyecto => {
+            return (estatus === 'Todos' || proyecto.estatus === estatus) &&
+                   (departamento === 'Todos' || proyecto.departamento === departamento) &&
+                   (empresa === 'Todos' || proyecto.nombreEmpresa === empresa);
+        });
+
+        console.log('Filtered projects:', proyectosFiltrados);
+
         const proyectosPorPagina = 9;
-        const totalPaginas = Math.ceil(resumed.length / proyectosPorPagina);
+        const totalPaginas = Math.ceil(proyectosFiltrados.length / proyectosPorPagina);
         const paginaActual = parseInt(req.query.page) || 1;
         const startIndex = (paginaActual - 1) * proyectosPorPagina;
         const endIndex = startIndex + proyectosPorPagina;
       
-        const proyectosPaginados = resumed.slice(startIndex, endIndex);
+        const proyectosPaginados = proyectosFiltrados.slice(startIndex, endIndex);
 
         res.render("admin/admin", {
             resumedProyects: proyectosPaginados,
             paginaActual: paginaActual,
             totalPaginas: totalPaginas,
-            empresas: empresas
+            empresas: empresas,
+            selectedEstatus: estatus,
+            selectedDepartamento: departamento,
+            selectedEmpresa: empresa
         });
 
     } catch (error) {
@@ -36,6 +53,7 @@ module.exports.render_admin = async (req, res) => {
         res.status(500).send('Error al obtener registro de la base de datos');
     }
 };
+
 
 
 module.exports.render_nuevo_proyecto = async(req,res) =>{
