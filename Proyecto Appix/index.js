@@ -23,9 +23,10 @@ app.set('views', 'views');
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const isLoggedIn = require('./utils/is-auth');
+const isAuth = require('./utils/is-auth');
 const isUser = require('./utils/is-user');
 const isAdmin = require('./utils/is-admin');
 
@@ -40,7 +41,7 @@ const rutasAdmin = require('./routes/admin.routes');
 app.use('/admin', isAdmin, rutasAdmin);
 
 const rutasDetalles = require('./routes/detalles.routes');
-app.use('/detalles', rutasDetalles);
+app.use('/detalles', isAuth, rutasDetalles);
 
 const rutasLogin = require('./routes/login.routes');
 app.use('/login', rutasLogin);

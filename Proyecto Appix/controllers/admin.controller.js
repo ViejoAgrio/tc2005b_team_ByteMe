@@ -19,12 +19,8 @@ module.exports.render_admin = async (req, res) => {
             proyecto.fechaInicio = formatearFecha(proyecto.fechaInicio);
             proyecto.fechaFinal = formatearFecha(proyecto.fechaFinal);
           });
-
-        console.log('RESUMED:', resumed);
         
         const empresas = await newUser.saveEmpresas();
-
-        console.log('Empresas:', empresas);
 
         res.render("admin/admin", {
             resumedProyects: resumed,
@@ -45,3 +41,25 @@ module.exports.render_nuevo_proyecto = async(req,res) =>{
 module.exports.render_change_password = async(req, res) => {
     res.render('admin/change-password');
 }
+
+module.exports.post_change_password = async (req, res) => {
+    const { username, newPassword, confirmedPassword } = req.body;
+
+    if (newPassword !== confirmedPassword) {
+        return res.status(400).json({ message: 'Passwords do not match' });
+    }
+
+    try {
+        const user = await User.findUser(username);
+        
+        if (!user) {
+            return res.status(400).json({ message: 'User not found' });
+        }
+    
+        await User.newPassword(username, newPassword);
+        return res.status(200).json({ message: 'Password changed successfully' });
+    } catch (err) {
+        console.error('Error changing password:', err);
+        return res.status(500).json({ message: 'Error changing password' });
+    }
+};
