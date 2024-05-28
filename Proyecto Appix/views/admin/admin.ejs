@@ -99,7 +99,7 @@
                                             <div class="icon-error">
                                                 <h3> No hay riesgos registrados para este proyecto</h3>
                                             </div>
-                                        <% } else { for (let j = 0; j < resumedProyects[i].riesgos.length; j++) {%>
+                                        <% } else { for (let j = 0; j < resumedProyects[i].riesgos.length && j < 5; j++) {%>
                                         <div class="icon-error">
                                             <i class="tiny material-icons">error</i>
                                             <h3><%= resumedProyects[i].riesgos[j].descripcionRiesgo %></h3>

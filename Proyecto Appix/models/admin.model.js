@@ -9,24 +9,31 @@ module.exports = class User {
         try {
             const connection = await db(); // Obtener conexión a la base de datos
             const query = `SELECT 
-                p.*,
-                c.nombreEmpresa,
-                IFNULL(JSON_ARRAYAGG(
-                    JSON_OBJECT(
-                        'idRiesgo', r.idRiesgo,
-                        'descripcionRiesgo', r.descripcionRiesgo,
-                        'nivelRiesgo', r.nivelRiesgo
+            p.*,
+            c.nombreEmpresa,
+            IFNULL((
+                SELECT 
+                    JSON_ARRAYAGG(
+                        JSON_OBJECT(
+                            'idRiesgo', r.idRiesgo,
+                            'descripcionRiesgo', r.descripcionRiesgo,
+                            'nivelRiesgo', r.nivelRiesgo
+                        )
+                        ORDER BY r.nivelRiesgo DESC
                     )
-                ), '[]') AS riesgos
-            FROM 
-                proyecto p
-            JOIN 
-                cliente c ON p.idCliente = c.idCliente
-            LEFT JOIN 
-                riesgo r ON p.idProyecto = r.idProyecto
-            GROUP BY 
-                p.idProyecto
-            ORDER BY porcentajeRiesgo DESC;`
+                FROM 
+                    riesgo r
+                WHERE 
+                    r.idProyecto = p.idProyecto
+            ), '[]') AS riesgos
+        FROM 
+            proyecto p
+        JOIN 
+            cliente c ON p.idCliente = c.idCliente
+        GROUP BY 
+            p.idProyecto, c.nombreEmpresa
+        ORDER BY 
+            p.porcentajeRiesgo DESC;`
             var resumed = await connection.execute(query);
             resumed.forEach(proyecto => {
                 // Convertir el atributo riesgos de string a JSON
