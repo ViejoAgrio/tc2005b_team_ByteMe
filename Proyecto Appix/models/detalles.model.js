@@ -29,8 +29,6 @@ module.exports = class Project {
             p.fechaInicio,
             p.fechaFinal,
             p.porcentajeRiesgo,
-            a.descripcionAccion,
-            r.descripcionRiesgo,
             c.nombreEncargado,
             c.nombreEmpresa
         FROM 
@@ -52,5 +50,51 @@ module.exports = class Project {
             console.error('Error al ejecutar consulta:', error);
             throw error; // Re-throw para manejar el error fuera de la clase
         }
+    }
+    async saveRisks(id_proyect) {
+        try {
+            const connection = await db(); // Obtener conexión a la base de datos
+            const query = `SELECT r.* FROM riesgo r WHERE r.idProyecto = ?;`
+            const riesgos = await connection.execute(query, [id_proyect]);
+            await connection.release(); // Liberar la conexión
+            console.log('RIESGOS INFO', riesgos);
+            return riesgos; // Devolver el resultado de la consulta
+        } catch (error) {
+            console.error('Error al ejecutar consulta:', error);
+            throw error; // Re-throw para manejar el error fuera de la clase
+        } 
+    }
+    async saveAccions(id_proyect) {
+        try {
+            const connection = await db(); // Obtener conexión a la base de datos
+            const query = `SELECT a.* FROM accion a WHERE a.idProyecto = ?;`
+            const acciones = await connection.execute(query, [id_proyect]);
+            await connection.release(); // Liberar la conexión
+            console.log('RIESGOS INFO', acciones);
+            return acciones; // Devolver el resultado de la consulta
+        } catch (error) {
+            console.error('Error al ejecutar consulta:', error);
+            throw error; // Re-throw para manejar el error fuera de la clase
+        } 
+    }
+    async updateCheckbox(idAccion, isChecked) {
+        try {
+            const connection = await db(); // Obtener conexión a la base de datos
+            const query = 'UPDATE accion SET estadoRealizacion = ? WHERE idAccion = ?';
+            connection.query(query, [isChecked, idAccion], (error, results) => {
+                if (error) {
+                    console.log('MAL');
+                    console.error('Error al actualizar el estado del checkbox:', error);
+                    res.status(500).json({ success: false, message: 'Error al actualizar el estado del checkbox' });
+                } else {
+                    console.log('BIEN');
+                    res.json({ success: true, message: 'Estado del checkbox actualizado correctamente' });
+                }
+            });
+            await connection.release();
+        } catch (error) {
+            console.error('Error al ejecutar consulta:', error);
+            throw error; // Re-throw para manejar el error fuera de la clase
+        } 
     }
 };
