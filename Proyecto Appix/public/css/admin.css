@@ -29,3 +29,17 @@
 .icon-delete:hover {
     color: black;
 }
+
+.icon-error {
+    display: flex;
+    padding-left: 15px;
+    color: rgb(205, 73, 73);;
+    border-top: 2px solid #ccc;
+    align-items: center;
+}
+
+.icon-error h3 {
+    color: black;
+    padding-right: 10px;
+    padding-top: 10px;
+}

@@ -60,6 +60,12 @@ header {
 .content h2 {
     color: #00508F;
     margin-top: 0;
+    font-size: 40px;
+}
+
+.content h3 {
+    margin-top: 0;
+    font-size: 30px;
 }
 
 .left {
@@ -70,6 +76,8 @@ header {
 .right {
     float: right;
     width: 70%;
+    height: 450px;
+    overflow: scroll;
 }
 
 .clearfix {
@@ -149,3 +157,19 @@ button{
     transition:800ms ease all;
   }
 
+  .custom-checkbox-label {
+    color: black; /* Cambiar a tu color preferido */
+}
+
+.icon-error {
+    display: flex;
+    flex-direction: row;
+    color: rgb(205, 73, 73);
+    align-items: center;
+    padding-top: 10px;
+}
+
+.icon-error h4 {
+    color: black;
+    font-size: 15px;
+}
