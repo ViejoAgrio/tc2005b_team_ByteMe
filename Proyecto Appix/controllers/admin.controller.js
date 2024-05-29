@@ -46,20 +46,20 @@ module.exports.post_change_password = async (req, res) => {
     const { username, newPassword, confirmedPassword } = req.body;
 
     if (newPassword !== confirmedPassword) {
-        return res.status(400).json({ message: 'Passwords do not match' });
+        return res.status(400).json({ message: 'La contraseña no coincide' });
     }
 
     try {
         const user = await User.findUser(username);
         
         if (!user) {
-            return res.status(400).json({ message: 'User not found' });
+            return res.status(400).json({ message: 'Usuario no encontrado' });
         }
     
         await User.newPassword(username, newPassword);
-        return res.status(200).json({ message: 'Password changed successfully' });
+        return res.status(200).json({ message: 'La contraseña ha sido cambiada' });
     } catch (err) {
         console.error('Error changing password:', err);
-        return res.status(500).json({ message: 'Error changing password' });
+        return res.status(500).json({ message: 'Error al cambiar la contraseña' });
     }
 };
