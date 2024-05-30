@@ -3,23 +3,27 @@ var dataValue = parseInt(document.getElementById('percentage-label').getAttribut
 
 // Función para determinar el color basado en el valor
 function getColor(value) {
-    if (value > 0 && value <= 33) {
-        return '#00508F'; // Verde
-    } else if (value > 33 && value <= 49) {
-        return 'rgb(226, 173, 14)'; // Amarillo
+    if (value > 49) {
+        return 'rgb(176, 14, 14)';
+    } else if (value > 33) {
+        return 'rgb(226, 173, 14)';
+    } else if (value > 0) {
+        return '#00508F'; 
     } else {
-        return 'rgb(176, 14, 14)'; // Rojo
+        return 'rgba(0, 0, 0, 0.836)'
     }
 }
 
 // Función para determinar el color de fondo basado en el valor
 function getBackgroundColor(value) {
-    if (value > 0 && value <= 33) {
-        return '#00508F'; // Verde
-    } else if (value > 33 && value <= 49) {
-        return 'rgb(226, 173, 14)'; // Amarillo
+    if (value > 49) {
+        return 'rgb(176, 14, 14)';
+    } else if (value > 33) {
+        return 'rgb(226, 173, 14)';
+    } else if (value > 0) {
+        return '#00508F'; 
     } else {
-        return 'rgb(176, 14, 14)'; // Rojo
+        return 'rgba(0, 0, 0, 0.836)'
     }
 }
 
