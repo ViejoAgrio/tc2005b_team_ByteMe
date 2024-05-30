@@ -37,3 +37,16 @@ module.exports.update_checkbox = async (req, res) => {
         res.status(500).send('Error interno del servidor');
     }
 };
+
+module.exports.eliminarProyecto = async (req, res) => {
+    const { idProyecto } = req.body;
+    try {
+        const project = new Project(idProyecto);
+        await project.deleteProject(idProyecto);
+        
+        res.status(200).json({ message: 'Proyecto eliminado correctamente' });
+    } catch (error) {
+        console.error('Error al eliminar el proyecto:', error);
+        res.status(500).json({ message: 'Error al eliminar el proyecto' });
+    }
+};

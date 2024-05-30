@@ -19,11 +19,14 @@ header {
     padding: 10px;
     display: flex;
     align-items: center;
+    width: 100%;
+    height: 70px;
 }
 
 .header-title {
     font-size: 24px; /* Tamaño de fuente del título */
     margin: 0; /* Elimina el margen por defecto del H1 */
+    width: 100%;
 }
 
 .logo-header {
@@ -51,6 +54,7 @@ header {
     padding: 10px;
     text-align: center;
     font-size: 18px;
+    height: 45px;
 }
 
 .content {
@@ -73,7 +77,7 @@ header {
     width: 30%;
 }
 
-.right {
+.rightt {
     float: right;
     width: 70%;
     height: 450px;
@@ -89,7 +93,9 @@ header {
 }
 
 .info div {
-    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 9px;
 }
 
 .chart {
@@ -116,9 +122,7 @@ header {
 }
 
 .button-container {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
+    margin: 10px;
 }
 
 button{
@@ -161,15 +165,128 @@ button{
     color: black; /* Cambiar a tu color preferido */
 }
 
+.buttonBlue{
+    color: black;
+    border:none;
+    position:relative;
+    height:35px;
+    width: 130px;
+    cursor:pointer;
+    transition:800ms ease all;
+    outline:none;
+  }
+  .buttonBlue:hover{
+    background:#fff;
+    color:rgb(49, 131, 214);
+  }
+  .buttonBlue:before,.buttonBlue:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: rgb(49, 131, 214);
+    transition:400ms ease all;
+  }
+  .buttonBlue:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+  }
+  .buttonBlue:hover:before,.buttonBlue:hover:after{
+    width:100%;
+    transition:800ms ease all;
+  }
+
+  .custom-checkbox-label {
+    color: black; /* Cambiar a tu color preferido */
+}
+
+.buttonRed{
+    color: black;
+    border:none;
+    position:relative;
+    height:35px;
+    width: 130px;
+    cursor:pointer;
+    transition:800ms ease all;
+    outline:none;
+  }
+  .buttonRed:hover{
+    background:#fff;
+    color:rgb(176, 14, 14);
+  }
+  .buttonRed:before,.buttonRed:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: rgb(176, 14, 14);
+    transition:400ms ease all;
+  }
+  .buttonRed:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+  }
+  .buttonRed:hover:before,.buttonRed:hover:after{
+    width:100%;
+    transition:800ms ease all;
+  }
+
+  .custom-checkbox-label {
+    color: black; /* Cambiar a tu color preferido */
+}
+
+
+.strong {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.icons {
+    height: 45px;
+    width: 112px;
+    padding-left: 10px;
+    padding-top: 6px;
+    color: #fff;
+}
+
+.icon-edit:hover {
+    color: black;
+}
+
+.icon-copy:hover {
+    color: black;
+}
+
+.icon-delete:hover {
+    color: black;
+}
+
 .icon-error {
     display: flex;
-    flex-direction: row;
-    color: rgb(205, 73, 73);
+    padding-left: 15px;
+    color: rgb(205, 73, 73);;
+    border-top: 2px solid #ccc;
     align-items: center;
+}
+
+.icon-error h3 {
+    color: black;
+    padding-right: 10px;
     padding-top: 10px;
 }
 
-.icon-error h4 {
+.modal-content h4{
     color: black;
-    font-size: 15px;
+}
+
+.modal-content p{
+    color: black;
 }

@@ -10,90 +10,117 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-        <header>
-            <div class="logo-header"></div>
-            <h1 class="header-title">RISK-MANAGER</h1>
-        </header>
-        <div class="container">
-            <div class="title">
-                <%= project.nombreProyecto %>
-            </div>
-            <div class="content">
-                <div class="left">
-                    <div class="info">
-                        <div><strong>Encargado:</strong> <%= project.nombreEncargado %></div>
-                        <div><strong>Empresa:</strong> <%= project.nombreEmpresa %></div>
-                        <div><strong>Departamento:</strong> <%= project.departamento %></div>
-                        <div><strong>Inicio:</strong> <%= project.fechaInicio %></div>
-                        <div><strong>Deadline:</strong> <%= project.fechaFinal %></div>
-                    </div>
-                    <div class="chart">
-                        <!-- Contenedor para el porcentaje -->
-                        <div id="percentage-label" data-value="<%= project.porcentajeRiesgo %>"><%= project.porcentajeRiesgo %>%</div>
-                        <!-- Gráfico circular -->
-                        <canvas id="myPieChart"></canvas>
-                    </div>
-                </div>
-                <div class="right">
-                    <h2><%= project.nombreProyecto %></h2>
-                    <p>
-                        <%= project.descripcionProyecto %>
-                    </p>
-                    <h3>Pendientes:</h3>
-                    <form action="#">
-                        <% if (acciones.length < 1) { %>
-                            <p>No hay pendientes por hacer</p>
-                        <% } else { for (let j = 0; j < acciones.length; j++) {
-                            const checked = acciones[j].estadoRealizacion ? 'checked' : '';%>
-                        <p>
-                          <label>
-                            <input type="checkbox" data-id="<%= acciones[j].idAccion %>" onchange="updateCheckbox(this)" <%= checked %> />
-                            <span class="custom-checkbox-label"><%= acciones[j].descripcionAccion %></span>
-                          </label>
-                        </p>
-                        <% }} %>
-                    </form>
-                    <h3>Riesgos:</h3>
-                    <form>
-                        <% if (riesgos.length < 1) { %>
-                            <p>No hay pendientes</p>
-                        <% } else { for (let j = 0; j < riesgos.length; j++) {%>
-                        <p>
-                        <label>
-                          <input type="checkbox" disabled="disabled" />
-                          <span class="custom-checkbox-label"><%= riesgos[j].descripcionRiesgo %></span>
-                        </label>
-                        </p>
-                        <% }} %>
-                    </form>
-                </div>
-                <div class="clearfix"></div>
-                <div class="status">
-                    <%= project.estatus %>
-                </div>
-            </div>
-        </div>
-        <div class="button-container">
+    <header>
+        <div class="logo-header"></div>
+        <h1 class="header-title">RISK-MANAGER</h1>
+        <div class="button-container right">
             <button onclick="history.back()">Regresar</button>
         </div>
-        <script>
-            function updateCheckbox(checkbox) {
-                console.log('Checkbox change detected');
-                const idAccion = checkbox.getAttribute('data-id');
-                const isChecked = checkbox.checked;
-            
-                fetch('/detalles/update-checkbox', {
+    </header>
+    <div class="container">
+        <div class="title">
+            <div class="row right">
+                <div class="col s4">
+                    <div class="icon-edit"><i class="material-icons">edit</i></div>
+                </div>
+                <div class="col s4">
+                    <div class="icon-copy"><i class="material-icons">content_copy</i></div>
+                </div>
+                <div class="col s4">
+                    <div class="icon-delete"><i class="material-icons modal-trigger" data-target="delete-modal" data-id="<%= project.idProyecto %>">delete</i></div>
+                    <div id="delete-modal" class="modal">
+                        <div class="modal-content">
+                            <h4>Confirmar Eliminación</h4>
+                            <p>Está a punto de eliminar este proyecto permanentemente. ¿Desea continuar?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button href="#!" class="buttonBlue modal-close waves-effect waves-blue btn-flat">Cancelar</button>
+                            <button href="#!" id="confirm-delete" class="buttonRed modal-close waves-effect waves-red btn-flat" data-id="">Aceptar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="left">
+                <div class="info">
+                    <div><div class="strong">Encargado: </div> <%= project.nombreEncargado %></div>
+                    <div><div class="strong">Empresa:</div> <%= project.nombreEmpresa %></div>
+                    <div><div class="strong">Departamento:</div> <%= project.departamento %></div>
+                    <div><div class="strong">Inicio:</div> <%= project.fechaInicio %></div>
+                    <div><div class="strong">Deadline:</div> <%= project.fechaFinal %></div>
+                </div>
+                <div class="chart">
+                    <!-- Contenedor para el porcentaje -->
+                    <div id="percentage-label" data-value="<%= project.porcentajeRiesgo %>"><%= project.porcentajeRiesgo %>%</div>
+                    <!-- Gráfico circular -->
+                    <canvas id="myPieChart"></canvas>
+                </div>
+            </div>
+            <div class="rightt">
+                <h2><%= project.nombreProyecto %></h2>
+                <p>
+                    <%= project.descripcionProyecto %>
+                </p>
+                <h3>Pendientes:</h3>
+                <form action="#">
+                    <% if (acciones.length < 1) { %>
+                        <p>No hay pendientes por hacer</p>
+                    <% } else { for (let j = 0; j < acciones.length; j++) {
+                        const checked = acciones[j].estadoRealizacion ? 'checked' : '';%>
+                    <p>
+                      <label>
+                        <input type="checkbox" data-id="<%= acciones[j].idAccion %>" onchange="updateCheckbox(this)" <%= checked %> />
+                        <span class="custom-checkbox-label"><%= acciones[j].descripcionAccion %></span>
+                      </label>
+                    </p>
+                    <% }} %>
+                </form>
+                <h3>Riesgos:</h3>
+                <form>
+                    <% if (riesgos.length < 1) { %>
+                        <p>No hay pendientes</p>
+                    <% } else { for (let j = 0; j < riesgos.length; j++) {%>
+                    <p>
+                    <label>
+                      <input type="checkbox" disabled="disabled" />
+                      <span class="custom-checkbox-label"><%= riesgos[j].descripcionRiesgo %></span>
+                    </label>
+                    </p>
+                    <% }} %>
+                </form>
+            </div>
+            <div class="clearfix"></div>
+            <div class="status">
+                <%= project.estatus %>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar el modal
+            var elems = document.querySelectorAll('.modal');
+            var instances = M.Modal.init(elems);
+
+            document.querySelector('.icon-delete .material-icons').addEventListener('click', function() {
+                var idProyecto = this.getAttribute('data-id');
+                document.getElementById('confirm-delete').setAttribute('data-id', idProyecto);
+            });
+
+            // Manejar el clic en el botón de confirmar eliminación
+            document.querySelector('#confirm-delete').addEventListener('click', function() {
+                var idProyecto = this.getAttribute('data-id');
+                // Lógica para eliminar el proyecto
+                fetch('/detalles/eliminar', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({
-                        idAccion: idAccion,
-                        isChecked: isChecked
-                    }),
+                    body: JSON.stringify({ idProyecto: idProyecto }),
                 })
                 .then(response => {
-                    console.log('Response received:', response);
                     if (!response.ok) {
                         throw new Error('Network response was not ok ' + response.statusText);
                     }
@@ -101,12 +128,45 @@
                 })
                 .then(data => {
                     console.log('Success:', data);
+                    // Redirigir o actualizar la página después de la eliminación
+                    window.location.href = '/admin/admin';
                 })
                 .catch((error) => {
                     console.error('Error:', error);
                 });
-            }
-            </script>                        
+            });
+        });
+
+        function updateCheckbox(checkbox) {
+            console.log('Checkbox change detected');
+            const idAccion = checkbox.getAttribute('data-id');
+            const isChecked = checkbox.checked;
+        
+            fetch('/detalles/update-checkbox', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    idAccion: idAccion,
+                    isChecked: isChecked
+                }),
+            })
+            .then(response => {
+                console.log('Response received:', response);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
     <script src="/js/detalles.js"></script>
 </body>
 </html>
