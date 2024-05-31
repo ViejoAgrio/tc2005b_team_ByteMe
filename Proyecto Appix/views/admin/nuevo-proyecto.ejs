@@ -5,8 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nuevo proyecto</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.umd.js"></script>
+    <script src="https://unpkg.com/@emotion/css/dist/emotion-css.umd.min.js"></script>
+    <script src="https://unpkg.com/gridjs/plugins/selection/dist/selection.umd.js"></script>
     <link rel="stylesheet" href="/css/nuevo-proyecto.css">
-    <link rel="stylesheet" href="/css/admin.css">
 </head>
 <body>
     <header class="header">
@@ -21,9 +25,7 @@
     </header>
     <div class="container">
         <h2>Nuevo proyecto</h2>
-        <form id="nuevo-proyecto-form">
-            <%- include('formulario') %>
-        </form>
+        <%- include('formulario') %>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="/js/funNewProject.js"></script>

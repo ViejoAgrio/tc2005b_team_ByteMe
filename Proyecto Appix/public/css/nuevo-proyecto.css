@@ -1,5 +1,6 @@
 /* Estilos generales */
 
+
 h2 {
     text-align: center;
     font-size: 4em; /* Letras más grandes */
@@ -34,6 +35,36 @@ body {
     min-height: 100vh;
 }
 
+.header {
+    display: flex;
+    background-color: #00508F; /* Color de fondo azul */
+    color: #fff;
+    height: 70px;
+}
+
+.logo-header {
+    width: 70px; /* Ajusta esto al tamaño de tu logo */
+    height: 70px; /* Ajusta esto al tamaño de tu logo */
+    background-image: url('/images/logo-appix-blanco.png'); 
+    background-size: contain; /* Asegura que el logo se ajuste dentro de las dimensiones */
+    margin-bottom: 20px;
+}
+
+.header-title {
+    display: flex;
+    font-size: 24px; /* Tamaño de fuente del título */
+    margin: 0; /* Elimina el margen por defecto del H1 */
+    height: 70px;
+    align-items: center;
+}
+
+.row {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
 .container {
     max-width: 800px;
     margin: 20px auto;
@@ -51,10 +82,6 @@ body {
     font-weight: bold;
 }
 
-.risk-catalog {
-    margin-top: 20px;
-}
-
 .risk {
     display: flex;
     justify-content: space-between;
@@ -62,9 +89,6 @@ body {
     margin-bottom: 10px;
 }
 
-.risk-checkbox {
-    margin-right: 10px;
-}
 
 .button-container-np{
     margin-bottom: 10px;
@@ -79,15 +103,6 @@ body {
 .save-button {
     background-color: #00df07; /* Color verde */
     width: 30%;
-}
-
-/* Estilos para la tabla invisible */
-.invisible-table {
-    display: none;
-}
-
-.selected-risk {
-    background-color: #e0e0e0; /* Cambia el color de fondo a gris claro */
 }
 
 .input-group {
@@ -135,9 +150,6 @@ body {
     margin-left: 10px;
 }
 
-
-
-
 .eliminar-plan-btn:hover img {
     filter: brightness(80%); /* Reduce el brillo de la imagen al pasar el mouse sobre el botón */
 }
@@ -163,3 +175,47 @@ body {
     margin-left: 20px;
     margin-bottom: 0;
 }
+
+.button-centered {
+    display: flex;
+    height: 70px;
+    width: 100%;
+    align-items: center;
+    margin: 0;
+}
+
+.button{
+    background:rgb(38,166,154);
+    color:#fff;
+    border:none;
+    position:relative;
+    height:35px;
+    width: 100%;
+    cursor:pointer;
+    transition:800ms ease all;
+    outline:none;
+  }
+  .button:hover{
+    background:#fff;
+    color:rgb(49, 131, 214);
+  }
+  .button:before,button:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: rgb(49, 131, 214);
+    transition:400ms ease all;
+  }
+  .button:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+  }
+  .button:hover:before,.button:hover:after{
+    width:100%;
+    transition:800ms ease all;
+  }

@@ -37,7 +37,15 @@ app.use('/usuarios', rutasUsuarios);
 const rutasAdmin = require('./routes/admin.routes');
 app.use('/admin', rutasAdmin);
 
+const rutasNewProject = require('./routes/new_project.routes.js');
+app.use('/admin/nuevo-proyecto', rutasNewProject);
+
 const server = http.createServer( (request, response) => {    
     console.log(request.url);
 });
-app.listen(3000);
+
+//app.listen(3000);
+
+app.listen(3000, '192.168.1.68', () => {
+  console.log(`Server is running on http://192.168.1.68:3000`);
+});

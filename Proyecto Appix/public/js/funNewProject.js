@@ -1,16 +1,8 @@
-//document.addEventListener('DOMContentLoaded', function() {
-    // JavaScript para mostrar/ocultar la tabla de riesgos existentes
-    //document.getElementById('show-existing-risks-btn').addEventListener('click', function() {
-    //    var existingRisksTable = document.querySelector('.invisible-table');
-    //    if (existingRisksTable.style.display === 'none') {
-    //        existingRisksTable.style.display = 'table';
-    //    } else {
-    //        existingRisksTable.style.display = 'none';
-    //    }
-    //});
+// Manejar el envío del formulario de nuevo proyecto
+document.addEventListener('DOMContentLoaded', function() {
+    form = document.getElementById('nuevo-proyecto-form');
 
-    // Manejar el envío del formulario de nuevo proyecto
-    document.addEventListener('DOMContentLoaded', function() {
+    if(form){
         document.getElementById('nuevo-proyecto-form').addEventListener('submit', async function(event) {
             event.preventDefault();
             
@@ -21,9 +13,9 @@
             const nombreEncargado = document.getElementById('encargado').value;
             const descripcionProyecto = document.getElementById('descripcion-proyecto').value;
             const descripcionAccion = document.getElementById('descripcion-accion').value;
-    
+
             try {
-                const response = await fetch('/nuevo-proyecto', {
+                const response = await fetch('/admin/nuevo-proyecto', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -38,7 +30,7 @@
                         descripcionAccion 
                     })
                 });
-    
+
                 if (response.ok) {
                     alert('Proyecto guardado exitosamente');
                     // Redirigir o realizar alguna acción después de guardar el proyecto
@@ -50,7 +42,76 @@
                 alert('Error al guardar el proyecto');
             }
         });
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    $(document).ready(function() {
+        $('#add-client-btn').click(function() {
+            // Remove button and dropdown
+            var buttonDiv = $(this).parent();
+            var dropdownDiv = $('#clients-lst').parent();
+            buttonDiv.hide();
+            dropdownDiv.hide();
+
+            // Create textboxes and new button
+            var textboxEnc = $('<input type="text" id="encargado-txt" name="encargado-txt" required>');
+            var textboxEmp = $('<input type="text" id="empresa-txt" name="empresa-txt" required>');
+            var labelEnc = $('<label for="encargado-txt">Encargado:</label>');
+            var labelEmp = $('<label for="empresa-txt">Empresa:</label>');
+            var newButton = $('<button id="list-btn" class="waves-effect waves-light btn" type="button">Ver Lista</button>');
+
+            // Append new elements
+            var textboxDivEnc = $('<div style="width: 35%;"></div>').append(labelEnc, textboxEnc);
+            var textboxDivEmp = $('<div style="width: 35%;"></div>').append(labelEmp, textboxEmp);
+            var newButtonDiv = $('<div style="width: 20%;"></div>').append(newButton);
+
+            $('#clients-div').append(textboxDivEnc, textboxDivEmp, newButtonDiv);
+
+            // Add event listener for the new button
+            newButton.click(function() {
+                // Remove textboxes and new button
+                textboxDivEnc.remove();
+                textboxDivEmp.remove();
+                newButtonDiv.remove();
+
+                // Show original button and dropdown
+                buttonDiv.show();
+                dropdownDiv.show();
+            });
+        });
     });
+});
+
+// Fill clients dropdown with database info
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('nuevo-proyecto/clients')
+        .then(response => response.json())
+        .then(message => {
+            const dropdown = document.getElementById("clients-lst");
+            dropdown.innerHTML = '';
+
+            const dfltOption = document.createElement('option');
+            dfltOption.value = "";
+            dfltOption.textContent = `Seleccione un cliente`;
+            dfltOption.disabled = true;
+            dfltOption.selected = true;
+            dropdown.appendChild(dfltOption)
+
+            for (let key in message){
+                const option = document.createElement('option');
+                
+                // Set the value and text of the option element
+                option.value = message[key]['idCliente'];
+                option.textContent = `${message[key]['nombreEncargado']} - ${message[key]['nombreEmpresa']}`;
+                
+                // Append the option to the dropdown menu
+                dropdown.appendChild(option);
+            }
+        })
+        .catch(error => console.log('Error fetching clients:', error));
+});
+
 document.addEventListener('DOMContentLoaded', function() {
     // Función para buscar riesgos
     document.getElementById('search-risk').addEventListener('input', function() {
