@@ -14,36 +14,40 @@ module.exports = class User {
         try {
             const connection = await db(); // Obtener conexión a la base de datos
             const query = `SELECT 
-            p.*,
-            c.nombreEmpresa,
-            IFNULL((
-                SELECT 
-                    JSON_ARRAYAGG(
-                        JSON_OBJECT(
-                            'idRiesgo', r.idRiesgo,
-                            'descripcionRiesgo', r.descripcionRiesgo,
-                            'nivelRiesgo', r.nivelRiesgo
-                        )
-                        ORDER BY r.nivelRiesgo DESC
-                    )
-                FROM 
-                    riesgo r
-                WHERE 
-                    r.idProyecto = p.idProyecto
-            ), '[]') AS riesgos
+            p.idProyecto,
+            p.nombreProyecto,
+            p.descripcionProyecto,
+            p.departamento,
+            p.estatus,
+            p.fechaInicio,
+            p.fechaFinal,
+            p.porcentajeRiesgo,
+            e.nombreEmpresa,
+            JSON_ARRAYAGG(
+                JSON_OBJECT(
+                    'idRiesgoProyecto', rp.idRiesgoProyecto,
+                    'nivelRiesgo', rp.nivelRiesgo,
+                    'idRiesgo', r.idRiesgo,
+                    'descripcionRiesgo', r.descripcionRiesgo
+                ) ORDER BY rp.nivelRiesgo DESC
+            ) AS riesgos
         FROM 
             proyecto p
-        JOIN 
-            cliente c ON p.idCliente = c.idCliente
+        LEFT JOIN 
+            riesgoProyecto rp ON p.idProyecto = rp.idProyecto
+        LEFT JOIN 
+            riesgo r ON rp.idRiesgo = r.idRiesgo
+        LEFT JOIN 
+            empresaCliente ec ON p.idProyecto = ec.idProyecto
+        LEFT JOIN 
+            empresa e ON ec.idEmpresa = e.idEmpresa
         GROUP BY 
-            p.idProyecto, c.nombreEmpresa
+            p.idProyecto
         ORDER BY 
-            p.porcentajeRiesgo DESC;`
+            p.porcentajeRiesgo DESC;           
+        `;
             var resumed = await connection.execute(query);
-            resumed.forEach(proyecto => {
-                // Convertir el atributo riesgos de string a JSON
-                proyecto.riesgos = JSON.parse(proyecto.riesgos);
-            });
+            console.log('BBBBBB', resumed);
             await connection.release(); // Liberar la conexión
             return resumed; // Devolver el resultado de la consulta
         } catch (error) {
@@ -54,7 +58,7 @@ module.exports = class User {
     async saveEmpresas() {
         try {
             const connection = await db(); // Obtener conexión a la base de datos
-            const query = `SELECT nombreEmpresa from cliente;`
+            const query = `SELECT nombreEmpresa from empresa;`
             const empresas = await connection.execute(query);
             await connection.release(); // Liberar la conexión
             return empresas; // Devolver el resultado de la consulta
