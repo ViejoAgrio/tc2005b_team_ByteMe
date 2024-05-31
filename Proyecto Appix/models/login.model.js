@@ -2,7 +2,7 @@ const db = require('../utils/database.js');
 const bcrypt = require('bcryptjs');
 
 
-exports.User = class {
+module.exports.User = class {
     //Constructor de la clase. Sirve para crear un nuevo objeto, y en él se definen las propiedades del modelo
     constructor(my_username, my_password, my_role) {
         this.nombreUsuario = my_username;

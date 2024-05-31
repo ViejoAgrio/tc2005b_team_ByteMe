@@ -1,0 +1,171 @@
+<form action="/admin/nuevo-proyecto" method="POST">
+    <label for="nombreProyecto">Nombre del proyecto:</label>
+    <input type="text" id="nombreProyecto" name="nombreProyecto" required> <!-- Cambiar name a "nombreProyecto" -->
+
+    <div style="display: flex; justify-content: space-between;">
+        <div style="width: 48%;">
+            <label for="fechaInicio">Fecha de Inicio:</label>
+            <input type="date" id="fechaInicio" name="fechaInicio" required 
+                   min="<?php echo date('Y-m-d'); ?>" onchange="setFechaFinalMin()">
+        </div>
+        <div style="width: 48%;">
+            <label for="fechaFinal">Fecha de entrega:</label>
+            <input type="date" id="fechaFinal" name="fechaFinal" required 
+                   min="<?php echo date('Y-m-d'); ?>">
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('fechaInicio').setAttribute('min', today);
+            document.getElementById('fechaFinal').setAttribute('min', today);
+        });
+    
+        function setFechaFinalMin() {
+            const fechaInicio = document.getElementById('fechaInicio').value;
+            document.getElementById('fechaFinal').setAttribute('min', fechaInicio);
+        }
+    </script>
+    
+    <div style="display: flex; justify-content: space-between;">
+        <div style="width: 48%;">
+            <label for="estatus">Estatus del proyecto:</label>
+                <select id="estatus" name="estatus" class="new-risk-department browser-default" required>
+                    <option value="" disabled selected>Seleccione un estatus</option>
+                    <option value="En proceso">En proceso</option>
+                    <option value="En planeacion">En planeacion</option>
+                    <option value="En espera">En espera</option>
+                    <option value="Atrasado">Atrasado</option>
+                    <option value="Finalizado">Finalizado</option>
+                </select>
+            
+        </div>
+        <div style="width: 48%;">
+            <label for="departamento">Departamento:</label>
+            <select id="departamento" name="departamento" class="new-risk-department browser-default" required>
+                <option value="" disabled selected>Seleccione un departamento</option>
+                <option value="Desarrollo Web">Desarrollo web</option>
+                <option value="Aplicaciones Web">Aplicaciones web</option>
+            </select>
+        </div>
+    </div>
+
+    <label for="porcentajeRiesgo">Porcentaje de riesgo:</label>
+    <input type="number" id="porcentajeRiesgo" name="porcentajeRiesgo" min="1" max="100" required> <!-- Cambiar name a "encargado" -->            
+
+    <label for="descripcionProyecto">Descripción:</label>
+    <input type="text" id="descripcionProyecto" name="descripcionProyecto" maxlength="250" required> <!-- Cambiar name a "descripcion" -->
+    <div class="char-count">
+        <span id="current-count">0</span>/250 caracteres
+    </div>
+    <script>
+        const descripcionInput = document.getElementById('descripcionProyecto');
+        const currentCount = document.getElementById('current-count');
+
+        descripcionInput.addEventListener('input', () => {
+            currentCount.textContent = descripcionInput.value.length;
+        });
+    </script>
+
+    <div style="display: flex; justify-content: space-between;" name="clients-div" id="clients-div">
+        <div style="width: 48%;">
+            <button id="add-client-btn" name="add-client-btn" class="waves-effect waves-light btn button" type="button">
+                Agregar Nuevo Cliente
+            </button>
+        </div>
+
+        <div style="width: 48%;">
+            <select id="clients-lst" name="clients-lst" class="new-risk-department browser-default" required>
+                <option value="" disabled selected>Seleccione un cliente</option>
+            </select>
+        </div>
+    </div>
+
+    <script>
+        // Testing javascript
+    </script>
+    
+    <section id="plan-de-accion"></section>
+    <header>
+        <h3 class="titulo-secciones">Plan de acción</h3>
+    </header>
+
+    <label for="planAccion">Agrega los planes de acción para tu proyecto:</label>
+    <div class="input-group" style="display: flex; justify-content: flex-end;">
+        <input type="text" id="planAccion" name="planAccion">
+        <input id="agregarPlanAccion" class="waves-effect waves-light btn button" type="button" value="Agregar">
+    </div>
+
+    <div id="listado">
+        <header>
+            <h4 class="titulo-listado">Listado:</h4>
+        </header>
+        <ol id="lista-planes-accion" class="enumerated-list"></ol>
+    </div>
+    </section>
+
+    <!--<script>
+    //    $(document).ready(function() {
+    //        $('#agregarPlanAccion').on('click', function(event) {
+    //            event.preventDefault();
+    //            
+    //            const text = document.getElementById('planAccion').value;
+    //            
+    //            fetch(`nuevo-proyecto/getNewActionPlan?descProyecto=${encodeURIComponent(text)}`)
+    //            .then(response => response.text())
+    //            .then(textRes => {
+    //                alert(textRes);
+    //                if(textRes == 'true'){
+    //                    
+    //                }
+    //            })
+    //            .catch(error => console.error('Error al guardar un nuevo plan:', error));
+    //        });
+    //    });
+    //</script>-->
+
+    <div id="jsGridAcc" class="no-materialize-checkbox"></div>
+
+    <section>
+        <div class="new-risks">
+            <h3 class="titulo-secciones">Riesgos</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nuevo riesgo</th>
+                        <th>Nivel (0-9)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" id="nuevo-nombre" class="new-risk-Nuevoriesgo"></td>
+                        <td>
+                            <select id="nuevo-nivel" name="nuevo-nivel" class="new-risk-level browser-default">
+                                <option value="" disabled selected>Seleccione un nivel</option>
+                                <option value="0">0 (Mínimo)</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9 (Máximo)</option>
+                            </select>
+                        </td>
+                        <td><button class="waves-effect waves-light btn button" onclick="agregarNuevoRiesgo()">Agregar</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="jsGridRsg" class="no-materialize-checkbox"></div> <!-- Contenedor para Grid.js -->
+    </section>
+
+    <div class="button-container button-container-np" style="display: flex; justify-content: flex-end;">
+        <input class="btn waves-effect waves-light save-button" type="submit" value="Guardar">
+        <button class="btn waves-effect waves-light cancel-button" type="submit" onclick="cancelarProyecto()">Cancelar</button>
+    </div>
+
+</form>

@@ -109,6 +109,7 @@ body {
 
 .post-it:hover {
     transform: translateY(-5px);
+    cursor: pointer;
 }
 
 .post-it-header {
