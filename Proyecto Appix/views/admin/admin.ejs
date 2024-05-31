@@ -68,7 +68,7 @@
                 </div>            
             </form>        
             <div class="row">
-                <% for (let i = 0; i <= resumedProyects.length - 1; i++) {
+                <% for (let i = 0; i < resumedProyects.length; i++) {
                     if (resumedProyects[i].porcentajeRiesgo > 49) { 
                         var colorLeft = 'post-it-rojo';
                         var colorRight = 'post-it-rojo-claro';
@@ -147,6 +147,8 @@
                 </div>
                 <% } %>
             </div>
+            
+            <!-- Delete Modal -->
             <div id="delete-modal" class="modal">
                 <div class="modal-content">
                     <h4>Confirmar Eliminación</h4>
@@ -250,44 +252,52 @@
                 addFiltersToPagination();
             });
         </script>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                // Inicializar el modal
-                var elems = document.querySelectorAll('.modal');
-                var instances = M.Modal.init(elems);
-    
-                document.querySelector('.icon-delete .material-icons').addEventListener('click', function() {
-                    var idProyecto = this.getAttribute('data-id');
-                    document.getElementById('confirm-delete').setAttribute('data-id', idProyecto);
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Inicializar el modal
+        var elems = document.querySelectorAll('.modal');
+        var instances = M.Modal.init(elems);
+
+        // Event delegation for delete icons
+        document.body.addEventListener('click', function(event) {
+            if (event.target.closest('.icon-delete')) {
+                var idProyecto = event.target.closest('.icon-delete').querySelector('i').getAttribute('data-id');
+                document.getElementById('confirm-delete').setAttribute('data-id', idProyecto);
+            }
+        });
+
+        // Manejar el clic en el botón de confirmar eliminación
+        document.querySelector('#confirm-delete').addEventListener('click', function() {
+            var idProyecto = this.getAttribute('data-id');
+            if (idProyecto) {
+                // Lógica para eliminar el proyecto
+                fetch('/admin/eliminar', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ idProyecto: idProyecto }),
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Success:', data);
+                    // Redirigir o actualizar la página después de la eliminación
+                    window.location.href = '/admin/admin';
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
                 });
-    
-                // Manejar el clic en el botón de confirmar eliminación
-                document.querySelector('#confirm-delete').addEventListener('click', function() {
-                    var idProyecto = this.getAttribute('data-id');
-                    // Lógica para eliminar el proyecto
-                    fetch('/admin/eliminar', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ idProyecto: idProyecto }),
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok ' + response.statusText);
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        console.log('Success:', data);
-                        // Redirigir o actualizar la página después de la eliminación
-                        window.location.href = '/admin/admin';
-                    })
-                    .catch((error) => {
-                        console.error('Error:', error);
-                    });
-                });
-            });
-        </script>
+            } else {
+                console.error('ID de proyecto no encontrado.');
+            }
+        });
+    });
+</script>
+
 </body>
 </html>
