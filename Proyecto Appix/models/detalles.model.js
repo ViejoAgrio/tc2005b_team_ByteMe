@@ -21,27 +21,27 @@ module.exports = class Project {
     async saveResumed(id_proyect) {
         try {
             const connection = await db(); // Obtener conexión a la base de datos
-            const query = `SELECT 
-            p.nombreProyecto,
-            p.descripcionProyecto,
-            p.departamento,
-            p.estatus,
-            p.fechaInicio,
-            p.fechaFinal,
-            p.porcentajeRiesgo,
-            c.nombreEncargado,
-            c.nombreEmpresa
-        FROM 
-            proyecto p
-        LEFT JOIN 
-            accion a ON p.idProyecto = a.idProyecto
-        LEFT JOIN 
-            riesgo r ON p.idProyecto = r.idProyecto
-        LEFT JOIN 
-            cliente c ON p.idCliente = c.idCliente
-        WHERE 
-            p.idProyecto = ?;
-        `;
+            const query = `SELECT
+                    p.idProyecto, 
+                    p.nombreProyecto,
+                    p.descripcionProyecto,
+                    p.departamento,
+                    p.estatus,
+                    p.fechaInicio,
+                    p.fechaFinal,
+                    p.porcentajeRiesgo,
+                    c.nombreEncargado,
+                    c.nombreEmpresa
+                FROM 
+                    proyecto p
+                LEFT JOIN 
+                    accion a ON p.idProyecto = a.idProyecto
+                LEFT JOIN 
+                    riesgo r ON p.idProyecto = r.idProyecto
+                LEFT JOIN 
+                    cliente c ON p.idCliente = c.idCliente
+                WHERE 
+                    p.idProyecto = ?;`;
             const [resumed] = await connection.execute(query, [id_proyect]);
             await connection.release(); // Liberar la conexión
             console.log('PROYECTO INFO', resumed);
@@ -96,5 +96,27 @@ module.exports = class Project {
             console.error('Error al ejecutar consulta:', error);
             throw error; // Re-throw para manejar el error fuera de la clase
         } 
+    }
+    async deleteProject(id_proyect) {
+        try {
+            const connection = await db();
+            
+            // Eliminar riesgos asociados al proyecto
+            const deleteRiesgosQuery = 'DELETE FROM riesgo WHERE idProyecto = ?';
+            await connection.execute(deleteRiesgosQuery, [id_proyect]);
+
+            // Eliminar acciones asociadas al proyecto
+            const deleteAccionesQuery = 'DELETE FROM accion WHERE idProyecto = ?';
+            await connection.execute(deleteAccionesQuery, [id_proyect]);
+
+            // Eliminar el proyecto
+            const deleteProyectoQuery = 'DELETE FROM proyecto WHERE idProyecto = ?';
+            await connection.execute(deleteProyectoQuery, [id_proyect]);
+
+            await connection.release();
+        } catch (error) {
+            console.error('Error al ejecutar consulta:', error);
+            throw error;
+        }
     }
 };

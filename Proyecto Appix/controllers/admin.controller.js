@@ -28,7 +28,7 @@ module.exports.render_admin = async (req, res) => {
                    (empresa === 'Todos' || proyecto.nombreEmpresa === empresa);
         });
 
-        console.log('Filtered projects:', proyectosFiltrados);
+        //console.log('Filtered projects:', proyectosFiltrados);
 
         const proyectosPorPagina = 9;
         const totalPaginas = Math.ceil(proyectosFiltrados.length / proyectosPorPagina);
@@ -77,5 +77,18 @@ module.exports.post_change_password = async (req, res) => {
     } catch (err) {
         console.error('Error changing password:', err);
         return res.status(500).json({ message: 'Error al cambiar la contraseña' });
+    }
+};
+
+module.exports.eliminarProyecto = async (req, res) => {
+    const { idProyecto } = req.body;
+    try {
+        const project = new User(idProyecto);
+        await project.deleteProject(idProyecto);
+        console.log('AAAAAAAAAAAAAA', idProyecto);
+        res.status(200).json({ message: 'Proyecto eliminado correctamente' });
+    } catch (error) {
+        console.error('Error al eliminar el proyecto:', error);
+        res.status(500).json({ message: 'Error al eliminar el proyecto' });
     }
 };

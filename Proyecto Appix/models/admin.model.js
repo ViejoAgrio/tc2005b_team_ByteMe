@@ -86,4 +86,27 @@ module.exports = class User {
             throw error; // Re-throw the error for proper handling
         }
     }
+
+    async deleteProject(id_proyect) {
+        try {
+            const connection = await db();
+            
+            // Eliminar riesgos asociados al proyecto
+            const deleteRiesgosQuery = 'DELETE FROM riesgo WHERE idProyecto = ?';
+            await connection.execute(deleteRiesgosQuery, [id_proyect]);
+
+            // Eliminar acciones asociadas al proyecto
+            const deleteAccionesQuery = 'DELETE FROM accion WHERE idProyecto = ?';
+            await connection.execute(deleteAccionesQuery, [id_proyect]);
+
+            // Eliminar el proyecto
+            const deleteProyectoQuery = 'DELETE FROM proyecto WHERE idProyecto = ?';
+            await connection.execute(deleteProyectoQuery, [id_proyect]);
+
+            await connection.release();
+        } catch (error) {
+            console.error('Error al ejecutar consulta:', error);
+            throw error;
+        }
+    }
 }
