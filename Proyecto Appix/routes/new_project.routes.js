@@ -6,6 +6,7 @@ router.get('/', controller.render_newProject);
 router.get('/clients', controller.getClients);
 router.get('/riesgos', controller.getRiesgos);
 router.get('/planAccion', controller.getPlanAccion);
+//router.get('/getNewActionPlan', controller.getNewActionPlan);
 router.post('/', controller.postNewProject); 
 //router.put('/', controller.putNewProject);
 router.delete('/', controller.deleteNewProject);

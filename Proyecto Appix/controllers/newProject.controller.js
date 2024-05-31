@@ -9,8 +9,8 @@ module.exports.render_newProject = async (req, res) => {
 module.exports.getClients = async (req, res) => {
     try {
         // Send a response back to the client
-        objProject = new np.Project();
-        clientList = await objProject.getClients();
+        objClient = new np.Client();
+        clientList = await objClient.get_Client();
         res.json(clientList);
     } catch (error) {
         console.error('Error:', error);
@@ -21,8 +21,8 @@ module.exports.getClients = async (req, res) => {
 module.exports.getRiesgos = async (req, res) => {
     try{
         // Send a response back to the riesgos
-        const objProject = new np.Project();
-        const riesgosTable  = await objProject.get_Riesgo();
+        const objRiesgo = new np.Riesgo();
+        const riesgosTable  = await objRiesgo.get_Riesgo();
         res.json(riesgosTable);
     }
     catch (error) {
@@ -34,8 +34,8 @@ module.exports.getRiesgos = async (req, res) => {
 module.exports.getPlanAccion = async (req, res) => {
     try{
         // Send a response back to the plan de accion
-        const objProject = new np.Project();
-        const planAccionTable  = await objProject.get_PlanAccion();
+        const objPlanAccion = new np.PlanAccion();
+        const planAccionTable  = await objPlanAccion.get_PlanAccion();
         res.json(planAccionTable);
     }
     catch (error) {
@@ -50,32 +50,30 @@ module.exports.postNewProject = async (req, res) => {
         //const test = req.body.estatus;
         //res.status(test);
         const nombreProyecto      = req.body.nombreProyecto;
-        const descripcionProyecto = req.body.descripcionProyecto;
-        const departamento        = req.body['departamento'];
-        const selectedEstatus     = req.body['estatus'];
         const fechaInicio         = req.body.fechaInicio;
-        const fechaFinal          = req.body.fechaFinal;
+        const fechaFin            = req.body.fechaFinal;
+        const selectedEstatus     = req.body['estatus'];
+        const departamento        = req.body['departamento'];
+        const descripcionProyecto = req.body.descripcionProyecto;
         const porcentajeRiesgo    = req.body.porcentajeRiesgo;
-        //const empresa             = req.body.empresa;
-        //const encargado           = req.body.encargado;        
-
-        const objProject = new np.Project(nombreProyecto,
+        const clienteSeleccionado = req.body['clients-lst'];
+        
+        const objProject = new np.Project(clienteSeleccionado,
+                                          nombreProyecto,
                                           descripcionProyecto,
                                           departamento,
                                           selectedEstatus, 
                                           fechaInicio, 
-                                          fechaFinal,
+                                          fechaFin,
                                           porcentajeRiesgo);
         const saveProj = await objProject.save_Project(res,req);
-        
-        //await np.saveNewProject(res, nombreProyecto/*idProyecto, descripcionRiesgo, nivelRiesgo*/);
-        
     }
     catch (error) {
         //console.error('Error al guardar el proyecto:', error);
         res.status(500).send(`Error al guardar el proyecto: ${error}`);
     }
 };
+
 
 module.exports.duplicateNewProject = (req, res) => {
     res.send('Duplicate');

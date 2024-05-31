@@ -2,14 +2,16 @@ const db = require('../utils/database.js');
 const bcrypt = require('bcryptjs');
 
 module.exports.Project = class {
-    constructor (my_nombreProyecto,
+    constructor (my_cliente,
+                 my_nombreProyecto,
                  my_descripcionProyecto,
                  my_departamento,
                  my_selectedEstatus, 
                  my_fechaInicio, 
                  my_fechaFinal,
                  my_porcentajeRiesgo){
-
+        
+        this.clienteProyecto     = my_cliente;
         this.nombreProyecto      = my_nombreProyecto;
         this.fechaInicio         = my_fechaInicio;
         this.fechaFinal          = my_fechaFinal;
@@ -35,7 +37,7 @@ module.exports.Project = class {
                              fechaFinal,
                              porcentajeRiesgo)
                            VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
-            const value = [2,
+            const value = [this.clienteProyecto,
                            this.nombreProyecto,
                            this.descripcionProyecto,
                            this.departamento,
@@ -45,64 +47,46 @@ module.exports.Project = class {
                            this.porcentajeRiesgo
                            ];
             const resNewProject = await connection.query(query, value);
+            await connection.release();
             res.status(201).redirect("/admin/admin")
             return resNewProject;
         }
         catch (error) {
-            console.error('Error al ejecutar consulta:', error);
-            throw error; // Re-throw para manejar el error fuera de la clase
+            //console.error('Error al guardar el proyecto:', error);
+            res.status(500).send(`Error al guardar el proyecto: ${error}`);
         }
     };
+}
 
-    /*async save_ActionPlan(res, req) {
-        try {
-            const connection = await db.pool.getConnection();
-            const query = `INSERT INTO accion 
-                            (idProyecto,
-                             descripcionAccion,
-                             estadoRealizacion)
-                           VALUES (?, ?, ?, ?)`;
-            const values = [
-                1,
-                this.descripcionAccion,
-                0
-            ];
-            const resNewActionPlan = await connection.query(query, values);
-            return resNewActionPlan;
-        } catch (error) {
-            console.error('Error al ejecutar consulta:', error);
-            throw error; // Re-throw para manejar el error fuera de la clase
-        }
-    };*/
-    
-
-    async getClients(){
-        try{
-            const connection = await db();
-            const queryClient = `SELECT *
-                                 FROM cliente`;
-            const resClient = await connection.query(queryClient);
-            return resClient;
-        }
-        catch (error) {
-            //console.error('Error al guardar el proyecto:', error);
-            res.status(500).send(`Error al guardar el proyecto: ${error}`);
-        }
+module.exports.PlanAccion = class {
+    constructor (my_descripcionAccion)
+    {
+        this.descripcionAccion = my_descripcionAccion;
     }
 
-    async get_Riesgo(){
-        try{
-            const connection = await db();
-            const queryRiesgo = `SELECT idRiesgo, descripcionRiesgo, nivelRiesgo
-                                 FROM riesgo`;
-            const resRiesgo = await connection.query(queryRiesgo);
-            return resRiesgo;
-        }
-        catch (error) {
-            //console.error('Error al guardar el proyecto:', error);
-            res.status(500).send(`Error al guardar el proyecto: ${error}`);
-        }
-    }
+    //MÉTODOS 
+    //async save_PlanAccion(res, req) {
+    //    try {
+    //        const connection = await db();
+    //        const query = `INSERT INTO accion 
+    //                        (idProyecto,
+    //                         descripcionAccion,
+    //                         estadoRealizacion)
+    //                       VALUES (?, ?, ?)`;
+    //        const values = [
+    //            1,
+    //            this.descripcionAccion,
+    //            0
+    //        ];
+//
+    //        const resplanAccion = await connection.query(query,values);
+    //        return resplanAccion;
+    //    }
+    //    catch (error) {
+    //        //console.error('Error al guardar el proyecto:', error);
+    //        return false;
+    //    }
+    //};
 
     async get_PlanAccion(){
         try{
@@ -110,11 +94,12 @@ module.exports.Project = class {
             const queryPlanAccion = `SELECT idAccion, descripcionAccion
                                      FROM accion`;
             const resPlanAccion = await connection.query(queryPlanAccion);
+            await connection.release();
             return resPlanAccion;
         }
         catch (error) {
             //console.error('Error al guardar el proyecto:', error);
-            res.status(500).send(`Error al guardar el proyecto: ${error}`);
+            res.status(500).send(`Error al obtener el plan de acción: ${error}`);
         }
     }
 }
@@ -122,8 +107,64 @@ module.exports.Project = class {
 
 
 
+module.exports.Client = class {
+    constructor (my_idCliente,
+                 my_nombreEncargado,
+                 my_nombreEmpresa
+                ){
+
+        this.idCliente           = my_idCliente;
+        this.nombreEncargado     = my_nombreEncargado;
+        this.nombreEmpresa       = my_nombreEmpresa;
+    }
+
+    //MÉTODOS 
+
+    async get_Client(){
+        try{
+            const connection = await db();
+            const queryClient = `SELECT *
+                                 FROM cliente`;
+            const resClient = await connection.query(queryClient);
+            await connection.release();
+            return resClient;
+        }
+        catch (error) {
+            //console.error('Error al guardar el proyecto:', error);
+            res.status(500).send(`Error al obtener el cliente: ${error}`);
+        }
+    }
+}
 
 
+module.exports.Riesgo = class {
+    constructor (my_idRiesgo,
+                 my_descripcionRiesgo,
+                 my_nivelRiesgo
+                ){
+
+        this.idRiesgo               = my_idRiesgo;
+        this.descripcionRiesgo      = my_descripcionRiesgo;
+        this.nivelRiesgo            = my_nivelRiesgo;
+    }
+
+    //MÉTODOS 
+    async get_Riesgo(){
+        try{
+            const connection = await db();
+            const queryRiesgo = `SELECT idRiesgo, descripcionRiesgo, nivelRiesgo
+                                 FROM riesgo`;
+            const resRiesgo = await connection.query(queryRiesgo);
+            await connection.release();
+            return resRiesgo;
+        }
+        catch (error) {
+            //console.error('Error al guardar el proyecto:', error);
+            res.status(500).send(`Error al obtener el riesgo: ${error}`);
+        }
+    }
+
+}
 
 
 

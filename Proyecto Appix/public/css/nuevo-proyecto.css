@@ -124,20 +124,6 @@ body {
     justify-content: center; /* Centrar horizontalmente el botón */
 }
 
-.enumerated-list {
-    list-style-type: none; /* Quita los números predeterminados */
-    counter-reset: plan; /* Resetea el contador */
-    padding-left: 0; /* Elimina el espacio en blanco predeterminado */
-}
-
-.enumerated-list li::before {
-    content: counter(plan) ". "; /* Agrega el contador */
-    counter-increment: plan; /* Incrementa el contador */
-    font-weight: bold; /* Hace que el número sea negrita */
-    color: #000000; /* Color del número */
-    margin-right: 5px; /* Espacio entre el número y el texto */
-}
-
 .eliminar-plan-btn {
     background-color: #ffffff;
     border: none; /* Quita el borde del botón */
@@ -194,12 +180,12 @@ body {
     cursor:pointer;
     transition:800ms ease all;
     outline:none;
-  }
-  .button:hover{
+}
+.button:hover{
     background:#fff;
     color:rgb(49, 131, 214);
-  }
-  .button:before,button:after{
+}
+.button:before,button:after{
     content:'';
     position:absolute;
     top:0;
@@ -208,14 +194,36 @@ body {
     width:0;
     background: rgb(49, 131, 214);
     transition:400ms ease all;
-  }
-  .button:after{
+}
+.button:after{
     right:inherit;
     top:inherit;
     left:0;
     bottom:0;
-  }
-  .button:hover:before,.button:hover:after{
+}
+.button:hover:before,.button:hover:after{
     width:100%;
     transition:800ms ease all;
-  }
+}
+
+.no-materialize-checkbox{
+    margin-top: 10px;
+    margin-bottom: 25px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1);
+}
+.no-materialize-checkbox input[type="checkbox"] {
+    opacity: 1;
+    position: static;
+    pointer-events: auto;
+}
+
+.no-materialize-checkbox label {
+    pointer-events: none;
+}
+
+.no-materialize-checkbox label:before, 
+.no-materialize-checkbox label:after {
+    display: none;
+}
