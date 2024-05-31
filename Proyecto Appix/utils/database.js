@@ -13,6 +13,7 @@ module.exports = async () => {
         const connection = await pool.getConnection();
         return connection;
     } catch (error) {
-        throw error; // Re-throw the error for proper handling
+        console.error('Error al conectar a la base de datos:', error);
+        throw error;
     }
 };

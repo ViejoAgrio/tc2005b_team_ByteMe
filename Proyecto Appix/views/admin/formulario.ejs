@@ -1,0 +1,282 @@
+<form action="/admin/nuevo-proyecto" method="POST">
+    <label for="nombreProyecto">Nombre del proyecto:</label>
+    <input type="text" id="nombreProyecto" name="nombreProyecto" required> <!-- Cambiar name a "nombreProyecto" -->
+
+    <div style="display: flex; justify-content: space-between;">
+        <div style="width: 48%;">
+            <label for="fechaInicio">Fecha de Inicio:</label>
+            <input type="date" id="fechaInicio" name="fechaInicio" required> <!-- Cambiar name a "fechaInicio" -->
+        </div>
+        <div style="width: 48%;">
+            <label for="fechaFinal">Fecha de entrega:</label required>
+            <input type="date" id="fechaFinal" name="fechaFinal"> <!-- Cambiar name a "fechaFin" -->
+        </div>
+    </div>
+    <div style="display: flex; justify-content: space-between;">
+        <div style="width: 48%;">
+            <label for="estatus">Estatus del proyecto:</label>
+                <select id="estatus" name="estatus" class="new-risk-department browser-default">
+                    <option value="" disabled selected>Seleccione un estatus</option>
+                    <option value="En proceso">En proceso</option>
+                    <option value="En planeacion">En planeacion</option>
+                    <option value="En espera">En espera</option>
+                    <option value="Atrasado">Atrasado</option>
+                    <option value="Finalizado">Finalizado</option>
+                </select>
+            
+        </div>
+        <div style="width: 48%;">
+            <label for="departamento">Departamento:</label>
+            <select id="departamento" name="departamento" class="new-risk-department browser-default">
+                <option value="" disabled selected>Seleccione un departamento</option>
+                <option value="Desarrollo Web">Desarrollo web</option>
+                <option value="Aplicaciones Web">Aplicaciones web</option>
+            </select>
+        </div>
+    </div>
+
+    <label for="porcentajeRiesgo">Porcentaje de riesgo:</label>
+    <input type="number" id="porcentajeRiesgo" name="porcentajeRiesgo"> <!-- Cambiar name a "encargado" -->            
+
+    <label for="descripcionProyecto">Descripción:</label>
+    <input type="text" id="descripcionProyecto" name="descripcionProyecto"> <!-- Cambiar name a "descripcion" -->
+
+    <div style="display: flex; justify-content: space-between;" name="clients-div" id="clients-div">
+        <div style="width: 48%;">
+            <button id="add-client-btn" name="add-client-btn" class="waves-effect waves-light btn button" type="button">
+                Agregar Nuevo Cliente
+            </button>
+        </div>
+
+        <div style="width: 48%;">
+            <select id="clients-lst" name="clients-lst" class="new-risk-department browser-default" required>
+                <option value="" disabled selected>Seleccione un cliente</option>
+            </select>
+        </div>
+    </div>
+
+    <script>
+        // Testing javascript
+    </script>
+    
+    <section id="plan-de-accion"></section>
+    <header>
+        <h3 class="titulo-secciones">Plan de acción</h3>
+    </header>
+    <label for="plan-accion">Agrega los planes de acción para tu proyecto:</label>
+    <div class="input-group" style="display: flex; justify-content: flex-end;">
+        <input type="text" id="plan-accion" name="plan-accion">
+        <button id="agregar-plan-btn" class="waves-effect waves-light btn button" type="button" onclick="agregarPlanAccion()">Agregar</button>
+    </div>
+    <div id="listado">
+        <header>
+            <h4 class="titulo-listado">Listado:</h4>
+        </header>
+        <ol id="lista-planes-accion" class="enumerated-list"></ol>
+    </div>
+    </section>
+
+    <div id="grid-plan-accion"></div>
+
+    <section>
+        <div class="new-risks">
+            <h3 class="titulo-secciones">Riesgos</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nuevo riesgo</th>
+                        <th>Nivel (0-9)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" id="nuevo-nombre" class="new-risk-Nuevoriesgo"></td>
+                        <td>
+                            <select id="nuevo-nivel" name="nuevo-nivel" class="new-risk-level browser-default">
+                                <option value="" disabled selected>Seleccione un nivel</option>
+                                <option value="0">0 (Mínimo)</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9 (Máximo)</option>
+                            </select>
+                        </td>
+                        <td><button class="waves-effect waves-light btn button" onclick="agregarNuevoRiesgo()">Agregar</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="risk-catalog">
+            <h3 class="titulo-secciones">Riesgos</h3>
+            <input type="text" id="search-risk" placeholder="Buscar riesgos...">
+        </div>
+
+        <div id="grid"></div> <!-- Contenedor para Grid.js -->
+    </section>
+
+    <div class="button-container button-container-np" style="display: flex; justify-content: flex-end;">
+        <input class="btn waves-effect waves-light save-button" type="submit" value="Guardar">
+        <button class="btn waves-effect waves-light cancel-button" type="submit" onclick="cancelarProyecto()">Cancelar</button>
+    </div>
+    
+    
+    <script>
+
+        let selectedRows = new Set();
+
+        function updateSelectedRows(checkbox, id) {
+            if (checkbox.checked) {
+                selectedRows.add(id);
+            } else {
+                selectedRows.delete(id);
+            }
+        }
+
+        function restoreSelections() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                const rowId = checkbox.dataset.id;
+                checkbox.checked = selectedRows.has(rowId);
+            });
+        }
+
+        fetch('nuevo-proyecto/riesgos')
+            .then(response => response.json())
+            .then(data => {
+                const grid = new gridjs.Grid({
+                    columns: [
+                        {
+                            name: 'Select',
+                            formatter: (_, row) => gridjs.html(`
+                            <label>
+                            <input type="checkbox" data-id="${row.cells[1].data}"/>
+                            <span></span>
+                            </label>`)
+                        },
+                        'Descripción',
+                        'Nivel'
+                    ],
+                    data: data.map(riesgo => [
+                        null,
+                        riesgo.descripcionRiesgo,
+                        riesgo.nivelRiesgo
+                    ]),
+                    resizable: true,
+                    pagination: {
+                        enabled: true,
+                        limit: 5
+                    },
+                    search: {
+                        enabled: true
+                    },
+                    sort: {
+                        enabled: true
+                    },
+                    language: {
+                        search: {
+                            placeholder: 'Buscar riesgos...'
+                        }
+                    }
+                }).render(document.getElementById('grid'));
+                grid.on('update', () => {
+                    // Initially restore selections
+                    restoreSelections();
+
+                    // Add change event listeners to checkboxes
+                    document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                        checkbox.addEventListener('change', (event) => {
+                            const rowId = event.target.dataset.id;
+                            updateSelectedRows(event.target, rowId);
+                        });
+                    });
+                })
+            })
+            
+            .then(data => {
+                $(document).ready(function() {
+                    // Función para procesar los botones
+                    function processButtons() {
+                        var buttons = $('.gridjs-pages').find('button');
+                        buttons.each(function(index, button) {
+                            button.setAttribute('type', 'button');
+                        });
+                    }
+                
+                    // Ejecuta la función inicialmente para capturar los botones existentes
+                    processButtons();
+                
+                    // Crea un observador de mutaciones para detectar cambios en el DOM
+                    var observer = new MutationObserver(function(mutations) {
+                        mutations.forEach(function(mutation) {
+                            // Vuelve a procesar los botones cuando hay cambios en el DOM
+                            processButtons();
+                        });
+                    });
+                
+                    // Configura el observador para observar el contenedor específico
+                    observer.observe(document.querySelector('.gridjs-pages'), {
+                        childList: true,
+                        subtree: true
+                    });
+                });
+            })
+
+            .catch(error => console.error('Error al cargar los riesgos:', error));
+    </script>
+
+    <script>
+        fetch('nuevo-proyecto/planAccion')
+            .then(response => response.json())
+            .then(data => {
+                new gridjs.Grid({
+                    columns: ['ID','Descripción'],
+                    data: data.map(planAccion => [
+                        planAccion.idAccion,
+                        planAccion.descripcionAccion
+                    ]),
+                    resizable: true,
+                    pagination: {
+                        enabled: true,
+                        limit: 5
+                    },
+                    search: {
+                        enabled: true
+                    },
+                    sort: {
+                        enabled: true
+                    },
+                    language: {
+                        search: {
+                            placeholder: 'Buscar plan de acción...'
+                        }
+                    }
+                }).render(document.getElementById('grid-plan-accion'));
+            })
+        
+            .catch(error => console.error('Error al cargar los planes de accion:', error));
+    </script>
+
+
+
+
+    <!--
+    <script>
+        new gridjs.Grid({
+            columns: ['Name', 'Email', 'Phone Number'],
+            pagination: {
+              limit: 1
+            },
+            data: [
+              ['John', 'john@example.com', '(353) 01 222 3333'],
+              ['Mark', 'mark@gmail.com',   '(01) 22 888 4444']
+            ],
+          }).render(document.getElementById("grid"));
+    </script>
+    -->
+</form>

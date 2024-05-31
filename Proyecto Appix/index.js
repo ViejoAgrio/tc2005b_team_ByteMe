@@ -24,8 +24,8 @@ app.set('views', 'views');
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 
 const isAuth = require('./utils/is-auth');
 const isUser = require('./utils/is-user');
@@ -39,10 +39,13 @@ const rutasUsuarios = require('./routes/usuarios.routes');
 app.use('/usuarios', isUser, rutasUsuarios);
 
 const rutasAdmin = require('./routes/admin.routes');
-app.use('/admin', isAdmin, rutasAdmin);
+app.use('/admin', rutasAdmin);
 
 const rutasDetalles = require('./routes/detalles.routes');
 app.use('/detalles', isAuth, rutasDetalles);
+
+const rutasNewProject = require('./routes/new_project.routes');
+app.use('/admin/nuevo-proyecto', rutasNewProject);
 
 const rutasLogin = require('./routes/login.routes');
 app.use('/login', rutasLogin);
@@ -51,3 +54,7 @@ const server = http.createServer( (request, response) => {
     console.log(request.url);
 });
 app.listen(3000);
+
+//app.listen(3000, '192.168.1.68', () => {
+//  console.log(`Server is running on http://192.168.1.68:3000`);
+//});
