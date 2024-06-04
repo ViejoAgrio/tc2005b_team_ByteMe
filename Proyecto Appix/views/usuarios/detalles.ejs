@@ -44,8 +44,8 @@
         <div class="content">
             <div class="left">
                 <div class="info">
-                    <div><div class="strong">Encargado: </div> <%= project.nombreEncargado %></div>
-                    <div><div class="strong">Empresa:</div> <%= project.nombreEmpresa %></div>
+                    <div><div class="strong">Encargado: </div> <%= encargado.nombreEncargado %></div>
+                    <div><div class="strong">Empresa:</div> <%= empresa.nombreEmpresa %></div>
                     <div><div class="strong">Departamento:</div> <%= project.departamento %></div>
                     <div><div class="strong">Inicio:</div> <%= project.fechaInicio %></div>
                     <div><div class="strong">Deadline:</div> <%= project.fechaFinal %></div>
@@ -67,7 +67,7 @@
                     <% if (acciones.length < 1) { %>
                         <p>No hay pendientes por hacer</p>
                     <% } else { for (let j = 0; j < acciones.length; j++) {
-                        const checked = acciones[j].estadoRealizacion ? 'checked' : '';%>
+                        const checked = acciones[j].estatusAccion ? 'checked' : '';%>
                     <p>
                       <label>
                         <input type="checkbox" data-id="<%= acciones[j].idAccion %>" onchange="updateCheckbox(this)" <%= checked %> />

@@ -78,8 +78,8 @@ body {
     display: flex;
     flex-direction: column;
     height: 250px;
-    background-color: #fff; /* Color de fondo blanco */
-    margin: 20px; /* Espacio entre los post-its */
+    background-color: #fff;
+    margin: 20px; 
     border-radius: 10px 10px 10px 0;
     transition: transform 0.3s ease;
     border: 1px solid #ccc;
