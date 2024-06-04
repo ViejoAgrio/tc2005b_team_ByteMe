@@ -124,3 +124,26 @@
     color: black;
     text-align: center;
 }
+
+.fixed-action-btn {
+  position:relative;
+  margin-top: 30px;
+  background-color: var(--color-back-azul);
+}
+
+.fixed-action-btn a{
+  box-shadow: none;
+}
+
+.darkBlue {
+  background-color: var(--color-back-azul);
+}
+
+.darkBlue:hover{
+  background-color: var(--color-back-azul);
+  box-shadow: none;
+}
+
+.tooltipped {
+  font-size: 8px;
+}

@@ -14,38 +14,37 @@ module.exports = class User {
         try {
             const connection = await db(); // Obtener conexión a la base de datos
             const query = `SELECT 
-            p.idProyecto,
-            p.nombreProyecto,
-            p.descripcionProyecto,
-            p.departamento,
-            p.estatus,
-            p.fechaInicio,
-            p.fechaFinal,
-            p.porcentajeRiesgo,
-            e.nombreEmpresa,
-            JSON_ARRAYAGG(
-                JSON_OBJECT(
-                    'idRiesgoProyecto', rp.idRiesgoProyecto,
-                    'nivelRiesgo', rp.nivelRiesgo,
-                    'idRiesgo', r.idRiesgo,
-                    'descripcionRiesgo', r.descripcionRiesgo
-                ) ORDER BY rp.nivelRiesgo DESC
-            ) AS riesgos
-        FROM 
-            proyecto p
-        LEFT JOIN 
-            riesgoProyecto rp ON p.idProyecto = rp.idProyecto
-        LEFT JOIN 
-            riesgo r ON rp.idRiesgo = r.idRiesgo
-        LEFT JOIN 
-            empresaCliente ec ON p.idProyecto = ec.idProyecto
-        LEFT JOIN 
-            empresa e ON ec.idEmpresa = e.idEmpresa
-        GROUP BY 
-            p.idProyecto
-        ORDER BY 
-            p.porcentajeRiesgo DESC;           
-        `;
+                p.idProyecto,
+                p.nombreProyecto,
+                p.descripcionProyecto,
+                p.departamento,
+                p.estatus,
+                p.fechaInicio,
+                p.fechaFinal,
+                p.porcentajeRiesgo,
+                e.nombreEmpresa,
+                JSON_ARRAYAGG(
+                    JSON_OBJECT(
+                        'idRiesgoProyecto', rp.idRiesgoProyecto,
+                        'nivelRiesgo', rp.nivelRiesgo,
+                        'idRiesgo', r.idRiesgo,
+                        'descripcionRiesgo', r.descripcionRiesgo
+                    ) ORDER BY rp.nivelRiesgo DESC
+                ) AS riesgos
+            FROM 
+                proyecto p
+            LEFT JOIN 
+                riesgoProyecto rp ON p.idProyecto = rp.idProyecto
+            LEFT JOIN 
+                riesgo r ON rp.idRiesgo = r.idRiesgo
+            LEFT JOIN 
+                empresaCliente ec ON p.idProyecto = ec.idProyecto
+            LEFT JOIN 
+                empresa e ON ec.idEmpresa = e.idEmpresa
+            GROUP BY 
+                p.idProyecto
+            ORDER BY 
+                p.porcentajeRiesgo DESC;`;
             var resumed = await connection.execute(query);
             console.log('BBBBBB', resumed);
             await connection.release(); // Liberar la conexión
@@ -94,16 +93,16 @@ module.exports = class User {
     async deleteProject(id_proyect) {
         try {
             const connection = await db();
+
+            const deleteClienteQuery = 'DELETE FROM empresaCliente WHERE idProyecto = ?';
+            await connection.execute(deleteClienteQuery, [id_proyect]);
             
-            // Eliminar riesgos asociados al proyecto
-            const deleteRiesgosQuery = 'DELETE FROM riesgo WHERE idProyecto = ?';
+            const deleteRiesgosQuery = 'DELETE FROM riesgoProyecto WHERE idProyecto = ?';
             await connection.execute(deleteRiesgosQuery, [id_proyect]);
 
-            // Eliminar acciones asociadas al proyecto
-            const deleteAccionesQuery = 'DELETE FROM accion WHERE idProyecto = ?';
+            const deleteAccionesQuery = 'DELETE FROM accionProyecto WHERE idProyecto = ?';
             await connection.execute(deleteAccionesQuery, [id_proyect]);
 
-            // Eliminar el proyecto
             const deleteProyectoQuery = 'DELETE FROM proyecto WHERE idProyecto = ?';
             await connection.execute(deleteProyectoQuery, [id_proyect]);
 

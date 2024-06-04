@@ -23,15 +23,20 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col s3"></div>
-                    <div class="col s2">
-                        <div class="button-centered"><button onclick = "window.location.href = '/admin/nuevo-proyecto'">Crear Proyecto</button></div>
-                    </div>
-                    <div class="col s2">
-                        <div class="button-centered"><button onclick="location.href='/admin/change-password'">Administrar cuentas</button></div>
-                    </div>
-                    <div class="col s2">
-                        <div class="button-centered"><button onclick="location.href='/../login/logout'">Cerrar Sesión</button></div>
+                    <div class="col s9">                   
+                        <div class="fixed-action-btn right">
+                            <a class="btn-floating btn-large darkBlue">
+                            <i class="large material-icons">dehaze</i>
+                            </a>
+                            <ul>
+                            <li><a class="btn-floating yellow darken-1"><i class="material-icons tooltipped" data-position="bottom" data-tooltip="Cerrar sesión" onclick="location.href='/../login/logout'">exit_to_app</i></a></li>
+                            <li><a class="btn-floating red"><i class="material-icons tooltipped" data-position="bottom" data-tooltip="Administrar riesgos">error</i></a></li>
+                            <li><a class="btn-floating green"><i class="material-icons tooltipped" data-position="bottom" data-tooltip="Administrar pendientes">notifications_active</i></a></li>
+                            <li><a class="btn-floating purple"><i class="material-icons tooltipped" data-position="bottom" data-tooltip="Administrar clientes">group_add</i></a></li>
+                            <li><a class="btn-floating grey"><i class="material-icons tooltipped" data-position="bottom" data-tooltip="Administrar contraseñas" onclick="location.href='/admin/change-password'">remove_red_eye</i></a></li>
+                            <li><a class="btn-floating blue"><i class="material-icons tooltipped" data-position="bottom" data-tooltip="Crear proyecto" onclick = "window.location.href = '/admin/nuevo-proyecto'">library_add</i></a></li>
+                            </ul>
+                        </div>  
                     </div>
                 </div>
             </header>
@@ -212,6 +217,7 @@
         <script>
             $(document).ready(function(){
                 $('select').formSelect();
+                $('.fixed-action-btn').floatingActionButton();
 
                 function updateURLWithFilters() {
                     var estatus = $('#lista-estatus').val();
@@ -253,8 +259,17 @@
             });
         </script>
 <script>
+      document.addEventListener('DOMContentLoaded', function() {
+    
+  });
     document.addEventListener('DOMContentLoaded', function() {
-        // Inicializar el modal
+        var elems = document.querySelectorAll('.fixed-action-btn');
+        var instances = M.FloatingActionButton.init(elems, {
+            direction: 'left',
+            hoverEnabled: false
+        });
+        var elems = document.querySelectorAll('.tooltipped');
+        var instances = M.Tooltip.init(elems);
         var elems = document.querySelectorAll('.modal');
         var instances = M.Modal.init(elems);
 

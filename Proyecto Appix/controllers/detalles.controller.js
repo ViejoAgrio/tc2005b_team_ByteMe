@@ -5,7 +5,9 @@ module.exports.render_detalles = async (req, res) => {
     const projectId = req.params.id; // Obtiene el ID del proyecto desde la URL
     try {
         const newUser = new Project(projectId);
-        const project = await newUser.saveResumed(projectId);
+        const project = await newUser.saveProyecto(projectId);
+        const encargado = await newUser.saveEncargado(projectId);
+        const empresa = await newUser.saveEmpresa(projectId);
         const riesgos = await newUser.saveRisks(projectId);
         const acciones = await newUser.saveAccions(projectId);
 
@@ -15,9 +17,10 @@ module.exports.render_detalles = async (req, res) => {
         // Formatear las fechas antes de pasarlas a la vista
         project.fechaInicio = formatearFecha(project.fechaInicio);
         project.fechaFinal = formatearFecha(project.fechaFinal);
-
         res.render('usuarios/detalles', { 
             project: project,
+            encargado: encargado,
+            empresa: empresa,
             riesgos: riesgos,
             acciones: acciones
         });
@@ -31,6 +34,7 @@ module.exports.update_checkbox = async (req, res) => {
     const { idAccion, isChecked } = req.body;
     try {
         const newUser = new Project(0);
+        console.log('Checked', isChecked, 'idAccion', typeof idAccion);
         const check = await newUser.updateCheckbox(idAccion, isChecked);
     } catch (error) {
         console.error(`Error en render_detalles: ${error}`);
