@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riesgos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://unpkg.com/jsgrid/dist/jsgrid.min.css" rel="stylesheet" />
+    <link href="https://unpkg.com/jsgrid/dist/jsgrid-theme.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/jsgrid/dist/jsgrid.min.js"></script>
+    <link rel="stylesheet" href="/css/newProject.css">
+</head>
+<body>
+    <header class="header">
+        <div class="row">
+            <div class="col s1">
+                <div class="logo-header"></div>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <form action="/admin/riesgos/add" method="POST">
+            <section>
+                <div class="new-risks">
+                    <h3 class="titulo-secciones">Riesgos</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nuevo riesgo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" name="nuevoNombre" id="nuevo-nombre" class="new-risk-Nuevoriesgo" required></td>
+                                <td><button class="waves-effect waves-light btn button" type="submit">Agregar</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="jsGridRsg" class="no-materialize-checkbox"></div> <!-- Contenedor para Grid.js -->
+            </section>
+        </form>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const riesgosTable = <%- riesgosTable %>; 
+
+            const fullDataMappedRsg = riesgosTable.map(riesgo => ({
+                dsc: riesgo.descripcionRiesgo
+            }));
+
+            $("#jsGridRsg").jsGrid({
+                height: "400px",
+                width: "100%",
+                sorting: true,
+                filtering: true,
+                editing: true,
+                paging: false,
+                deleteConfirm: "Do you really want to delete the risk?",
+
+                data: fullDataMappedRsg,
+                controller: {
+                    loadData: function(filter) {
+                        return $.grep(fullDataMappedRsg, function(eachData) {
+                            return (!filter.dsc || eachData.dsc.indexOf(filter.dsc) > -1);
+                        });
+                    }
+                },
+
+                fields: [
+                    { name: "dsc", type: "text", title: "Descripción", width: 150},
+                    { type: "control" }
+                ]
+            });
+
+            // Add keyup event handler to filter inputs
+            $(".jsgrid-filter-row input").on("keyup", function() {
+                $("#jsGridRsg").jsGrid("loadData");
+            });
+        });
+    </script>
+</body>
+</html>
+

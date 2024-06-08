@@ -29,14 +29,14 @@ app.use(express.static('public'));
 
 const isAuth = require('./utils/is-auth');
 const isUser = require('./utils/is-user');
-const isAdmin = require('./utils/is-admin');
+//const isAdmin = require('./utils/is-admin');
 
 app.get('/', async(req, res, next) => {
     res.render('login'); 
 });
 
 const rutasUsuarios = require('./routes/usuarios.routes');
-app.use('/usuarios', isUser, rutasUsuarios);
+app.use('/usuarios', rutasUsuarios);
 
 const rutasAdmin = require('./routes/admin.routes');
 app.use('/admin', rutasAdmin);
@@ -46,6 +46,15 @@ app.use('/detalles', isAuth, rutasDetalles);
 
 const rutasNewProject = require('./routes/new_project.routes');
 app.use('/admin/nuevo-proyecto', rutasNewProject);
+
+const rutasRiesgos = require('./routes/riesgos.routes');
+app.use('/admin/riesgos', rutasRiesgos);
+
+const rutasPendientes = require('./routes/pendientes.routes');
+app.use('/admin/pendientes', rutasPendientes);
+
+const rutasClienteEmpresa = require('./routes/cliente-empresa.routes');
+app.use('/admin/cliente-empresa', rutasClienteEmpresa);
 
 const rutasLogin = require('./routes/login.routes');
 app.use('/login', rutasLogin);
