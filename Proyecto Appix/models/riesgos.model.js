@@ -1,10 +1,8 @@
 const db = require('../utils/database.js');
 
 module.exports.Riesgo = class {
-    constructor(my_idRiesgo, my_descripcionRiesgo, my_nivelRiesgo) {
-        this.idRiesgo = my_idRiesgo;
+    constructor(my_descripcionRiesgo) {
         this.descripcionRiesgo = my_descripcionRiesgo;
-        this.nivelRiesgo = my_nivelRiesgo;
     }
 
     // MÉTODOS 

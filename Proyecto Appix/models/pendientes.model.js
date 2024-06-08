@@ -1,34 +1,32 @@
 const db = require('../utils/database.js');
 
-module.exports.Riesgo = class {
-    constructor(my_idRiesgo, my_descripcionRiesgo, my_nivelRiesgo) {
-        this.idRiesgo = my_idRiesgo;
-        this.descripcionRiesgo = my_descripcionRiesgo;
-        this.nivelRiesgo = my_nivelRiesgo;
+module.exports.Pendiente = class {
+    constructor(my_descripcionAccion) {
+        this.descripcionAccion = my_descripcionAccion;
     }
 
     // MÉTODOS 
-    async get_Riesgo() {
+    async get_Pendiente() {
         try {
             const connection = await db();
-            const queryRiesgo = `SELECT descripcionRiesgo FROM riesgo`;
-            const resRiesgo = await connection.query(queryRiesgo);
+            const query = `SELECT descripcionAccion FROM accion`;
+            const res = await connection.query(query);
             await connection.release();
-            return resRiesgo;
+            return res;
         } catch (error) {
-            console.error('Error al obtener el riesgo:', error);
+            console.error('Error al obtener el pendiente:', error);
             throw error;
         }
     }
 
-    async add(descripcionRiesgo) {
+    async add(descripcionAccion) {
         try {
             const connection = await db();
-            const query = `INSERT INTO riesgo (descripcionRiesgo) VALUES (?)`;
-            await connection.query(query, [descripcionRiesgo]);
+            const query = `INSERT INTO accion (descripcionAccion) VALUES (?)`;
+            await connection.query(query, [descripcionAccion]);
             await connection.release();
         } catch (error) {
-            console.error('Error al agregar el riesgo:', error);
+            console.error('Error al agregar el pendiente:', error);
             throw error;
         }
     }

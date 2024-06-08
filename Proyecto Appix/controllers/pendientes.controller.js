@@ -2,39 +2,39 @@ const np = require('../models/pendientes.model.js');
 
 module.exports.render_pendientes = async (req, res) => {
     try {
-        const objRiesgo = new np.Riesgo();
-        const riesgosTable = await objRiesgo.get_Riesgo();
+        const objPendiente = new np.Pendiente();
+        const pendientesTable = await objPendiente.get_Pendiente();
         res.render('admin/pendientes', 
             { 
-                riesgosTable: JSON.stringify(riesgosTable) 
+                pendientesTable: JSON.stringify(pendientesTable)
             }
         );
     } catch (error) {
-        console.error('Error al obtener los riesgos:', error);
-        res.status(500).send('Error al obtener los riesgos');
+        console.error('Error al obtener los pendientes:', error);
+        res.status(500).send('Error al obtener los pendientes');
     }
 };
 
 module.exports.get_pendientes = async (req, res) => {
     try {
-        const objRiesgo = new np.Riesgo();
-        const riesgosTable = await objRiesgo.get_Riesgo();
-        res.json(riesgosTable);
+        const objPendiente = new np.Pendiente();
+        const pendientesTable = await objPendiente.get_Pendiente();
+        res.json(pendientesTable);
     } catch (error) {
-        console.error('Error al obtener los riesgos:', error);
-        res.status(500).send('Error al obtener los riesgos');
+        console.error('Error al obtener los pendientes:', error);
+        res.status(500).send('Error al obtener los pendientes');
     }
 };
 
 module.exports.add_pendientes= async (req, res) => {
     try {
         const { nuevoNombre } = req.body;
-        const objRisk = new np.Riesgo();
-        await objRisk.add(nuevoNombre);
-        const riesgosTable = await objRisk.get_Riesgo();
+        const objPendiente = new np.Pendiente();
+        await objPendiente.add(nuevoNombre);
+        const pendientesTable = await objPendiente.get_Pendiente();
         res.redirect('/admin/pendientes');
     } catch (error) {
-        console.error('Error al agregar el riesgo:', error);
-        res.status(500).send('Error al agregar el riesgo');
+        console.error('Error al agregar el pendiente:', error);
+        res.status(500).send('Error al agregar el pendiente');
     }
 };

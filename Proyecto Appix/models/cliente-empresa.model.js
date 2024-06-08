@@ -1,34 +1,64 @@
 const db = require('../utils/database.js');
 
-module.exports.Riesgo = class {
-    constructor(my_idRiesgo, my_descripcionRiesgo, my_nivelRiesgo) {
-        this.idRiesgo = my_idRiesgo;
-        this.descripcionRiesgo = my_descripcionRiesgo;
-        this.nivelRiesgo = my_nivelRiesgo;
+module.exports.Cliente = class {
+    constructor(my_nombreEncargado) {
+        this.nombreEncargado = my_nombreEncargado;
     }
 
     // MÉTODOS 
-    async get_Riesgo() {
+    async get_Cliente() {
         try {
             const connection = await db();
-            const queryRiesgo = `SELECT descripcionRiesgo FROM riesgo`;
-            const resRiesgo = await connection.query(queryRiesgo);
+            const query = `SELECT nombreEncargado FROM cliente`;
+            const res = await connection.query(query);
             await connection.release();
-            return resRiesgo;
+            return res;
         } catch (error) {
-            console.error('Error al obtener el riesgo:', error);
+            console.error('Error al obtener cliente:', error);
             throw error;
         }
     }
 
-    async add(descripcionRiesgo) {
+    async add(nombreEncargado) {
         try {
             const connection = await db();
-            const query = `INSERT INTO riesgo (descripcionRiesgo) VALUES (?)`;
-            await connection.query(query, [descripcionRiesgo]);
+            const query = `INSERT INTO cliente (nombreEncargado) VALUES (?)`;
+            await connection.query(query, [nombreEncargado]);
             await connection.release();
         } catch (error) {
-            console.error('Error al agregar el riesgo:', error);
+            console.error('Error al agregar cliente:', error);
+            throw error;
+        }
+    }
+}
+
+module.exports.Empresa = class {
+    constructor(my_nombreEmpresa) {
+        this.nombreEmpresa = my_nombreEmpresa;
+    }
+
+    // MÉTODOS 
+    async get_Empresa() {
+        try {
+            const connection = await db();
+            const query = `SELECT nombreEmpresa FROM empresa`;
+            const res = await connection.query(query);
+            await connection.release();
+            return res;
+        } catch (error) {
+            console.error('Error al obtener empresa:', error);
+            throw error;
+        }
+    }
+
+    async add(nombreEmpresa) {
+        try {
+            const connection = await db();
+            const query = `INSERT INTO empresa (nombreEmpresa) VALUES (?)`;
+            await connection.query(query, [nombreEmpresa]);
+            await connection.release();
+        } catch (error) {
+            console.error('Error al agregar empresa:', error);
             throw error;
         }
     }

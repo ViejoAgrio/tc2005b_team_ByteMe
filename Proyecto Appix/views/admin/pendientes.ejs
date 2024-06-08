@@ -38,20 +38,20 @@
                         </tbody>
                     </table>
                 </div>
-                <div id="jsGridRsg" class="no-materialize-checkbox"></div> <!-- Contenedor para Grid.js -->
+                <div id="jsGridAcc" class="no-materialize-checkbox"></div> <!-- Contenedor para Grid.js -->
             </section>
         </form>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const riesgosTable = <%- riesgosTable %>; 
+            const pendientesTable = <%- pendientesTable %>; 
 
-            const fullDataMappedRsg = riesgosTable.map(riesgo => ({
-                dsc: riesgo.descripcionRiesgo
+            const fullDataMappedAcc = pendientesTable.map(pendiente => ({
+                dsc: pendiente.descripcionAccion
             }));
 
-            $("#jsGridRsg").jsGrid({
+            $("#jsGridAcc").jsGrid({
                 height: "400px",
                 width: "100%",
                 sorting: true,
@@ -60,10 +60,10 @@
                 paging: false,
                 deleteConfirm: "Do you really want to delete the risk?",
 
-                data: fullDataMappedRsg,
+                data: fullDataMappedAcc,
                 controller: {
                     loadData: function(filter) {
-                        return $.grep(fullDataMappedRsg, function(eachData) {
+                        return $.grep(fullDataMappedAcc, function(eachData) {
                             return (!filter.dsc || eachData.dsc.indexOf(filter.dsc) > -1);
                         });
                     }
@@ -77,7 +77,7 @@
 
             // Add keyup event handler to filter inputs
             $(".jsgrid-filter-row input").on("keyup", function() {
-                $("#jsGridRsg").jsGrid("loadData");
+                $("#jsGridAcc").jsGrid("loadData");
             });
         });
     </script>
