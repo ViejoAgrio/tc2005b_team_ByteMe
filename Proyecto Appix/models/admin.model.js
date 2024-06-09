@@ -2,17 +2,14 @@ const db = require('../utils/database.js');
 const bcrypt = require('bcryptjs');
 
 module.exports = class User {
-    //Constructor de la clase. Sirve para crear un nuevo objeto, y en él se definen las propiedades del modelo
     constructor(my_id_proyect, my_username, my_password) {
         this.id_proyect = my_id_proyect
         this.nombreUsuario = my_username;
         this.password = my_password;
     }
-    //Este método servirá para buscar un usuario por username
-    //Es estático ya que a diferencia de save(), el primero se guarda al crear un usuario siempre, pero en este segundo podmeos buscar un usuario sin crear un nuevo objeto usuario.
     async saveResumed() {
         try {
-            const connection = await db(); // Obtener conexión a la base de datos
+            const connection = await db(); 
             const query = `SELECT 
                 p.idProyecto,
                 p.nombreProyecto,
@@ -46,9 +43,8 @@ module.exports = class User {
             ORDER BY 
                 p.porcentajeRiesgo DESC;`;
             var resumed = await connection.execute(query);
-            console.log('BBBBBB', resumed);
-            await connection.release(); // Liberar la conexión
-            return resumed; // Devolver el resultado de la consulta
+            await connection.release();
+            return resumed; 
         } catch (error) {
             console.error('Error al ejecutar consulta:', error);
             throw error; // Re-throw para manejar el error fuera de la clase
@@ -108,7 +104,7 @@ module.exports = class User {
 
             await connection.release();
         } catch (error) {
-            console.error('Error al ejecutar consulta:', error);
+            console.error('Error al ejecutar eliminación:', error);
             throw error;
         }
     }
