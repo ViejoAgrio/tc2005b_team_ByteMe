@@ -80,12 +80,11 @@ module.exports.post_change_password = async (req, res) => {
     }
 };
 
-module.exports.eliminarProyecto = async (req, res) => {
+module.exports.eliminar_proyecto = async (req, res) => {
     const { idProyecto } = req.body;
     try {
         const project = new User(idProyecto);
         await project.deleteProject(idProyecto);
-        console.log('AAAAAAAAAAAAAA', idProyecto);
         res.status(200).json({ message: 'Proyecto eliminado correctamente' });
     } catch (error) {
         console.error('Error al eliminar el proyecto:', error);

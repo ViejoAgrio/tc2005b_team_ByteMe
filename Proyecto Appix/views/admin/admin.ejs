@@ -89,6 +89,7 @@
                     } else {
                         var colorLeft = 'post-it-negro'; 
                         var colorRight = 'post-it-negro-claro';
+                        var colorLetra = 'post-it-negro-letra';
                     } %>
                 <div class="col s4 project-card" 
                     data-status="<%= resumedProyects[i].estatus %>" 
@@ -259,9 +260,6 @@
             });
         </script>
 <script>
-      document.addEventListener('DOMContentLoaded', function() {
-    
-  });
     document.addEventListener('DOMContentLoaded', function() {
         var elems = document.querySelectorAll('.fixed-action-btn');
         var instances = M.FloatingActionButton.init(elems, {

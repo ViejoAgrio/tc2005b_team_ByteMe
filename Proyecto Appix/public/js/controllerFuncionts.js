@@ -1,4 +1,4 @@
-// controllerFuncionts.js
+
 function formatearFecha(fechaISO) {
     const fecha = new Date(fechaISO);
     const dia = fecha.getDate();
@@ -9,5 +9,4 @@ function formatearFecha(fechaISO) {
     return `${diaFormateado} / ${mesFormateado} / ${anio}`;
 }
 
-// Exportar la función
 module.exports = { formatearFecha };

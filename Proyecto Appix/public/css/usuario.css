@@ -140,6 +140,10 @@ body {
     background-color: var(--color-negro); 
 }
 
+.post-it-negro-letra {
+    color: var(--color-negro); 
+}
+
 .post-it-rojo-letra {
     color: var(--color-rojo); 
 }
