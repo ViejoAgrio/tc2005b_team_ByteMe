@@ -39,3 +39,32 @@ module.exports.add_riesgos = async (req, res) => {
     }
 };
 
+module.exports.update_riesgo = async (req, res) => {
+    try {
+        const { idRiesgo, descripcionRiesgo } = req.body;
+        console.log('datos obtenidos en controller: ', idRiesgo, descripcionRiesgo);
+        const objRiesgo = new np.Riesgo(idRiesgo, descripcionRiesgo);
+        console.log('obejto riesgo', objRiesgo);
+        await objRiesgo.update(idRiesgo, descripcionRiesgo);
+        const updatedRiesgo = await objRiesgo.get_ById(idRiesgo);
+        console.log('Empresa actualizadooooo', updatedRiesgo);
+        res.json({ riesgo: updatedRiesgo[0] });
+    } catch (error) {
+        console.error('Error al actualizar riesgo:', error);
+        res.status(500).send('Error al actualizar riesgo');
+    }
+};
+    
+module.exports.delete_riesgo = async (req, res) => {
+    try {
+        const { idRiesgo } = req.body;
+        const objRiesgo = new np.Riesgo();
+        await objRiesgo.delete(idRiesgo);
+        const riesgoTable = await objRiesgo.get_Riesgo();
+        res.redirect('/admin/riesgos');
+    } catch (error) {
+        console.error('Error al eliminar riesgo:', error);
+        res.status(500).send('Error al eliminar riesgo');
+    }
+};
+
