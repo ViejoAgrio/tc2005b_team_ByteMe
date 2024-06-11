@@ -40,38 +40,43 @@
                     </div>
                 </div>
             </header>
-            <form id="filters-form" action="/admin/admin">
-                <div class="selectors">
-                    <div class="input-field">
-                        <select id="lista-estatus" name="estatus">
-                            <option value="Todos" <%= selectedEstatus === 'Todos' ? 'selected' : '' %>>Todos</option>
-                            <option value="En proceso" <%= selectedEstatus === 'En proceso' ? 'selected' : '' %>>En proceso</option>
-                            <option value="Atrasado" <%= selectedEstatus === 'Atrasado' ? 'selected' : '' %>>Atrasado</option>
-                            <option value="En planeación" <%= selectedEstatus === 'En planeación' ? 'selected' : '' %>>En planeación</option>
-                            <option value="En espera" <%= selectedEstatus === 'En espera' ? 'selected' : '' %>>En espera</option>
-                            <option value="Finalizado" <%= selectedEstatus === 'Finalizado' ? 'selected' : '' %>>Finalizado</option>
-                        </select>
-                        <label>Estatus del proyecto</label>
-                    </div>
-                    <div class="input-field">
-                        <select id="lista-departamento" name="departamento">
-                            <option value="Todos" <%= selectedDepartamento === 'Todos' ? 'selected' : '' %>>Todos</option>
-                            <option value="Desarrollo web" <%= selectedDepartamento === 'Desarrollo web' ? 'selected' : '' %>>Desarrollo web</option>
-                            <option value="Diseño web" <%= selectedDepartamento === 'Diseño web' ? 'selected' : '' %>>Diseño web</option>
-                        </select>
-                        <label>Departamento del proyecto</label>
-                    </div>
-                    <div class="input-field">
-                        <select id="lista-empresa" name="empresa">
-                            <option value="Todos" <%= selectedEmpresa === 'Todos' ? 'selected' : '' %>>Todos</option>
-                            <% for (let i = 0; i <= empresas.length - 1; i++) { %>
-                            <option value="<%= empresas[i].nombreEmpresa %>" <%= selectedEmpresa === empresas[i].nombreEmpresa ? 'selected' : '' %>><%= empresas[i].nombreEmpresa %></option>
-                            <% } %>
-                        </select>
-                        <label>Empresa del proyecto</label>
-                    </div>
-                </div>            
-            </form>        
+            <div class="searchers">
+                <form id="filters-form" action="/admin/admin">
+                    <div class="selectors center">
+                        <div class="input-field">
+                            <select id="lista-estatus" name="estatus">
+                                <option value="Todos" <%= selectedEstatus === 'Todos' ? 'selected' : '' %>>Todos</option>
+                                <option value="En proceso" <%= selectedEstatus === 'En proceso' ? 'selected' : '' %>>En proceso</option>
+                                <option value="Atrasado" <%= selectedEstatus === 'Atrasado' ? 'selected' : '' %>>Atrasado</option>
+                                <option value="En planeación" <%= selectedEstatus === 'En planeación' ? 'selected' : '' %>>En planeación</option>
+                                <option value="En espera" <%= selectedEstatus === 'En espera' ? 'selected' : '' %>>En espera</option>
+                                <option value="Finalizado" <%= selectedEstatus === 'Finalizado' ? 'selected' : '' %>>Finalizado</option>
+                            </select>
+                            <label>Estatus del proyecto</label>
+                        </div>
+                        <div class="input-field">
+                            <select id="lista-departamento" name="departamento">
+                                <option value="Todos" <%= selectedDepartamento === 'Todos' ? 'selected' : '' %>>Todos</option>
+                                <option value="Desarrollo web" <%= selectedDepartamento === 'Desarrollo web' ? 'selected' : '' %>>Desarrollo web</option>
+                                <option value="Diseño web" <%= selectedDepartamento === 'Diseño web' ? 'selected' : '' %>>Diseño web</option>
+                            </select>
+                            <label>Departamento del proyecto</label>
+                        </div>
+                        <div class="input-field">
+                            <select id="lista-empresa" name="empresa">
+                                <option value="Todos" <%= selectedEmpresa === 'Todos' ? 'selected' : '' %>>Todos</option>
+                                <% for (let i = 0; i <= empresas.length - 1; i++) { %>
+                                <option value="<%= empresas[i].nombreEmpresa %>" <%= selectedEmpresa === empresas[i].nombreEmpresa ? 'selected' : '' %>><%= empresas[i].nombreEmpresa %></option>
+                                <% } %>
+                            </select>
+                            <label>Empresa del proyecto</label>
+                        </div>
+                    </div>            
+                </form>  
+                <div class="input-field searcher right">
+                    <input type="text" id="search" placeholder="Buscar proyectos por título">
+                </div>
+            </div>      
             <div class="row">
                 <% for (let i = 0; i < resumedProyects.length; i++) {
                     if (resumedProyects[i].porcentajeRiesgo > 49) { 
@@ -99,7 +104,7 @@
                         <div class="row">
                             <div class="col s9">
                                 <div class="post-it-header <%= colorLeft %>" data-id-proyecto="<%= resumedProyects[i].idProyecto %>">
-                                    <h2><%= resumedProyects[i].nombreProyecto %></h2>
+                                    <span class="card-title"><h2><%= resumedProyects[i].nombreProyecto %></h2></span>
                                 </div>
                                 <div class="post-it-left" data-id-proyecto="<%= resumedProyects[i].idProyecto %>">
                                     <div class="post-it-risk <%= colorLetra %>">
@@ -203,7 +208,7 @@
             postItHeader.forEach(postIt => {
                 postIt.addEventListener('click', function() {
                     const idProyecto = this.getAttribute('data-id-proyecto');
-                    const url = `/detalles/detalles?rol=1&idProyecto=${idProyecto}`;
+                    const url = `/detalles/detalles?rol=0&idProyecto=${idProyecto}`;
                     window.location.href = url;
                 });
             });
@@ -211,7 +216,7 @@
             postItLeft.forEach(postIt => {
                 postIt.addEventListener('click', function() {
                     const idProyecto = this.getAttribute('data-id-proyecto');
-                    const url = `/detalles/detalles?rol=1&idProyecto=${idProyecto}`;
+                    const url = `/detalles/detalles?rol=0&idProyecto=${idProyecto}`;
                     window.location.href = url;
                 });
             });
@@ -219,7 +224,7 @@
             postItRight.forEach(postIt => {
                 postIt.addEventListener('click', function() {
                     const idProyecto = this.getAttribute('data-id-proyecto');
-                    const url = `/detalles/detalles?rol=1&idProyecto=${idProyecto}`;
+                    const url = `/detalles/detalles?rol=0&idProyecto=${idProyecto}`;
                     window.location.href = url;
                 });
             });
@@ -227,7 +232,7 @@
             postItStatus.forEach(postIt => {
                 postIt.addEventListener('click', function() {
                     const idProyecto = this.getAttribute('data-id-proyecto');
-                    const url = `/detalles/detalles?rol=1&idProyecto=${idProyecto}`;
+                    const url = `/detalles/detalles?rol=0&idProyecto=${idProyecto}`;
                     window.location.href = url;
                 });
             });
@@ -287,6 +292,18 @@
         var instances = M.Tooltip.init(elems);
         var elems = document.querySelectorAll('.modal');
         var instances = M.Modal.init(elems);
+
+        $('#search').on('input', function() {
+                var searchTerm = $(this).val().toLowerCase();
+                $('.project-card').each(function() {
+                    var title = $(this).find('.card-title').text().toLowerCase();
+                    if (title.includes(searchTerm)) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+        });
 
         // Event delegation for delete icons
         document.body.addEventListener('click', function(event) {

@@ -121,4 +121,16 @@ module.exports = class Project {
             throw error;
         }
     }
+    async savePorcentajesRiesgos() {
+        try {
+            const connection = await db();
+            const query = `SELECT porcentajeRiesgo FROM proyecto`
+            const porcentajesRiesgos = await connection.execute(query);
+            await connection.release(); 
+            return porcentajesRiesgos; 
+        } catch (error) {
+            console.error('Error al ejecutar consulta:', error);
+            throw error; // Re-throw para manejar el error fuera de la clase
+        } 
+    }
 }

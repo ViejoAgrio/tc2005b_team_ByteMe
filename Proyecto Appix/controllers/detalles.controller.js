@@ -11,11 +11,18 @@ module.exports.render_detalles = async (req, res) => {
         const empresa = await newUser.saveEmpresa(idProyecto);
         const riesgos = await newUser.saveRisks(idProyecto);
         const acciones = await newUser.saveAccions(idProyecto);
-        console.log('ASDASDADS', idProyecto); 
+        const porcentajesRiesgos = await newUser.savePorcentajesRiesgos();
+        var riesgoTotal = 0;
+        for (let i = 0; i < porcentajesRiesgos.length; i++){
+            riesgoTotal = riesgoTotal + porcentajesRiesgos[i].porcentajeRiesgo; 
+        }
+        var porcentajeRiesgoTotal = (project.porcentajeRiesgo * 100)/riesgoTotal;
+        porcentajeRiesgoTotal = Math.round(porcentajeRiesgoTotal);
         // Formatear las fechas antes de pasarlas a la vista
         project.fechaInicio = formatearFecha(project.fechaInicio);
         project.fechaFinal = formatearFecha(project.fechaFinal);
         res.render('detalles', { 
+            porcentajeRiesgoTotal: porcentajeRiesgoTotal,
             rol: rol,
             project: project,
             encargado: encargado,
