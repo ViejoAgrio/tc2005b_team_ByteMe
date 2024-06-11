@@ -2,22 +2,28 @@ const Project = require('../models/detalles.model.js');
 const { formatearFecha } = require("../public/js/controllerFuncionts.js");
 
 module.exports.render_detalles = async (req, res) => {
-    const projectId = req.params.id; // Obtiene el ID del proyecto desde la URL
+    const idProyecto = req.query.idProyecto;
+    const rol = req.query.rol;
     try {
-        const newUser = new Project(projectId);
-        const project = await newUser.saveProyecto(projectId);
-        const encargado = await newUser.saveEncargado(projectId);
-        const empresa = await newUser.saveEmpresa(projectId);
-        const riesgos = await newUser.saveRisks(projectId);
-        const acciones = await newUser.saveAccions(projectId);
-
-        if (!project) {
-            return res.status(404).send('Proyecto no encontrado');
+        const newUser = new Project(idProyecto);
+        const project = await newUser.saveProyecto(idProyecto);
+        const encargado = await newUser.saveEncargado(idProyecto);
+        const empresa = await newUser.saveEmpresa(idProyecto);
+        const riesgos = await newUser.saveRisks(idProyecto);
+        const acciones = await newUser.saveAccions(idProyecto);
+        const porcentajesRiesgos = await newUser.savePorcentajesRiesgos();
+        var riesgoTotal = 0;
+        for (let i = 0; i < porcentajesRiesgos.length; i++){
+            riesgoTotal = riesgoTotal + porcentajesRiesgos[i].porcentajeRiesgo; 
         }
+        var porcentajeRiesgoTotal = (project.porcentajeRiesgo * 100)/riesgoTotal;
+        porcentajeRiesgoTotal = Math.round(porcentajeRiesgoTotal);
         // Formatear las fechas antes de pasarlas a la vista
         project.fechaInicio = formatearFecha(project.fechaInicio);
         project.fechaFinal = formatearFecha(project.fechaFinal);
-        res.render('usuarios/detalles', { 
+        res.render('detalles', { 
+            porcentajeRiesgoTotal: porcentajeRiesgoTotal,
+            rol: rol,
             project: project,
             encargado: encargado,
             empresa: empresa,

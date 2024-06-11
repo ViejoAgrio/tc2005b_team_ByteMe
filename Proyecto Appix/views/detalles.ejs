@@ -19,6 +19,7 @@
     </header>
     <div class="container">
         <div class="title">
+            <% if(rol == 0) { %>
             <div class="row right">
                 <div class="col s4">
                     <div class="icon-edit"><i class="material-icons">edit</i></div>
@@ -40,6 +41,7 @@
                     </div>
                 </div>
             </div>
+            <% } %>
         </div>
         <div class="content">
             <div class="left">
@@ -48,11 +50,13 @@
                     <div><div class="strong">Empresa:</div> <%= empresa.nombreEmpresa %></div>
                     <div><div class="strong">Departamento:</div> <%= project.departamento %></div>
                     <div><div class="strong">Inicio:</div> <%= project.fechaInicio %></div>
-                    <div><div class="strong">Deadline:</div> <%= project.fechaFinal %></div>
+                    <div><div class="strong">Fecha limite:</div> <%= project.fechaFinal %></div>
+                    <div><div class="strong">Riesgo del proyecto:</div> <%= project.porcentajeRiesgo %>%</div>
+                    <div><div class="strong">Riesgo del total:</div> <%= porcentajeRiesgoTotal %>%</div>
                 </div>
                 <div class="chart">
                     <!-- Contenedor para el porcentaje -->
-                    <div id="percentage-label" data-value="<%= project.porcentajeRiesgo %>"><%= project.porcentajeRiesgo %>%</div>
+                    <div id="percentage-label" riesgoProyecto="<%= project.porcentajeRiesgo %>" riesgoTotal="<%= porcentajeRiesgoTotal %>"></div>
                     <!-- Gráfico circular -->
                     <canvas id="myPieChart"></canvas>
                 </div>

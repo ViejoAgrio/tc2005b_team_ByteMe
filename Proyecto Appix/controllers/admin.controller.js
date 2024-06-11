@@ -19,7 +19,7 @@ module.exports.render_admin = async (req, res) => {
         const departamento = req.query.departamento || 'Todos';
         const empresa = req.query.empresa || 'Todos';
 
-        console.log('Filters received:', { estatus, departamento, empresa });
+        //console.log('Filters received:', { estatus, departamento, empresa });
 
         // Filtrar los proyectos según los selectores
         const proyectosFiltrados = resumed.filter(proyecto => {
