@@ -17,7 +17,7 @@ module.exports.do_login = async(req,res) =>{
         }
 
         const usuario = usuarios[0];
-        console.log(usuario);
+        //console.log(usuario);
         //const hashedPass = await bcrypt.hash(usuario.password, 12);
         //const doMatch = await bcrypt.compare(req.body.password, hashedPass);
         const doMatch = req.body.password === usuario.password;
