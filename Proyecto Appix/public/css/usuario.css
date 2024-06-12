@@ -56,6 +56,7 @@ body {
     height: 70px; /* Ajusta esto al tamaño de tu logo */
     background-image: url('/images/logo-appix-blanco.png'); 
     background-size: contain; /* Asegura que el logo se ajuste dentro de las dimensiones */
+    margin-right: 5px;
     margin-bottom: 20px;
 }
 
@@ -64,6 +65,7 @@ body {
     font-size: 24px; /* Tamaño de fuente del título */
     margin: 0; /* Elimina el margen por defecto del H1 */
     height: 70px;
+    width: 100%;
     align-items: center;
 }
 

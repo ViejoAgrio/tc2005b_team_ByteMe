@@ -23,14 +23,78 @@
             flex-direction: column;
             min-height: 100vh;
         }
+        header {
+    background-color: #004586;
+    color: #fff;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 70px;
+}
+
+.header-title {
+    font-size: 24px; /* Tamaño de fuente del título */
+    margin: 0; /* Elimina el margen por defecto del H1 */
+    width: 100%;
+}
+
+.logo-header {
+    width: 70px; /* Ajusta esto al tamaño de tu logo */
+    height: 70px; /* Ajusta esto al tamaño de tu logo */
+    background-image: url('/images/logo-appix-blanco.png'); 
+    background-size: contain; /* Asegura que el logo se ajuste dentro de las dimensiones */
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 5px; /* Espacio entre el logo y el texto */
+}
+.button-container {
+    margin: 10px;
+}
+
+button{
+    background:rgb(49, 131, 214);
+    color:#fff;
+    border:none;
+    position:relative;
+    height:35px;
+    width: 130px;
+    cursor:pointer;
+    transition:800ms ease all;
+    outline:none;
+  }
+  button:hover{
+    background:#fff;
+    color:rgb(49, 131, 214);
+  }
+  button:before,button:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: rgb(49, 131, 214);
+    transition:400ms ease all;
+  }
+  button:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+  }
+  button:hover:before,button:hover:after{
+    width:100%;
+    transition:800ms ease all;
+  }
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="row">
-            <div class="col s1">
-                <div class="logo-header"></div>
-            </div>
+    <header>
+        <div class="logo-header"></div>
+        <h1 class="header-title">RISK-MANAGER</h1>
+        <div class="button-container right">
+            <button onclick="history.back()">Regresar</button>
         </div>
     </header>
     <div class="container">
