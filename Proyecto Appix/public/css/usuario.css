@@ -67,7 +67,8 @@ body {
     background-image: url('/images/logo-appix-blanco.png'); 
     background-size: contain; /* Asegura que el logo se ajuste dentro de las dimensiones */
     margin-right: 5px;
-    margin-bottom: 20px;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .header-title {

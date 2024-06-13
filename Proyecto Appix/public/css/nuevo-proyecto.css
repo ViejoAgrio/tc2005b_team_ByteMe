@@ -36,10 +36,13 @@ body {
     min-height: 100vh;
 }
 
-.header {
-    display: flex;
-    background-color: #00508F; /* Color de fondo azul */
+header {
+    background-color: #004586;
     color: #fff;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    width: 100%;
     height: 70px;
 }
 
@@ -48,7 +51,9 @@ body {
     height: 70px; /* Ajusta esto al tamaño de tu logo */
     background-image: url('/images/logo-appix-blanco.png'); 
     background-size: contain; /* Asegura que el logo se ajuste dentro de las dimensiones */
-    margin-bottom: 20px;
+    margin-right: 5px;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .header-title {
@@ -56,6 +61,7 @@ body {
     font-size: 24px; /* Tamaño de fuente del título */
     margin: 0; /* Elimina el margen por defecto del H1 */
     height: 70px;
+    width: 100%;
     align-items: center;
     font-family: "Tiny5", sans-serif;
     font-weight: 400;
@@ -94,8 +100,8 @@ body {
 }
 
 
-.button-container-np{
-    margin-bottom: 10px;
+.button-container{
+    margin: 10px;
 }
 
 .cancel-button {
@@ -173,22 +179,22 @@ body {
     margin: 0;
 }
 
-.button{
-    background:rgb(38,166,154);
+button{
+    background:rgb(49, 131, 214);
     color:#fff;
     border:none;
     position:relative;
     height:35px;
-    width: 100%;
+    width: 130px;
     cursor:pointer;
     transition:800ms ease all;
     outline:none;
-}
-.button:hover{
+  }
+  button:hover{
     background:#fff;
     color:rgb(49, 131, 214);
-}
-.button:before,button:after{
+  }
+  button:before,button:after{
     content:'';
     position:absolute;
     top:0;
@@ -197,17 +203,17 @@ body {
     width:0;
     background: rgb(49, 131, 214);
     transition:400ms ease all;
-}
-.button:after{
+  }
+  button:after{
     right:inherit;
     top:inherit;
     left:0;
     bottom:0;
-}
-.button:hover:before,.button:hover:after{
+  }
+  button:hover:before,button:hover:after{
     width:100%;
     transition:800ms ease all;
-}
+  }
 
 .no-materialize-checkbox{
     margin-top: 10px;
