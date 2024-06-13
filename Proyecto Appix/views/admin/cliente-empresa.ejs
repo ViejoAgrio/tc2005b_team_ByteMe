@@ -173,9 +173,12 @@ button{
                 data: clientesTable,
                 controller: {
                     loadData: function(filter) {
-                        console.log('Datos cargados', filter);
+                            function normalizeText(text) {
+                                return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                            }
+                    
                         return $.grep(clientesTable, function(eachData) {
-                            return (!filter.nombreEncargado || eachData.nombreEncargado.indexOf(filter.nombreEncargado) > -1);
+                            return (!filter.nombreEncargado || normalizeText(eachData.nombreEncargado).indexOf(normalizeText(filter.nombreEncargado)) > -1);
                         });
                     },
                     updateItem: function(item) {
@@ -237,9 +240,12 @@ button{
                 data: empresasTable,
                 controller: {
                     loadData: function(filter) {
-                        console.log('Datos cargados', filter);
+                            function normalizeText(text) {
+                                return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                            }
+                    
                         return $.grep(empresasTable, function(eachData) {
-                            return (!filter.nombreEmpresa || eachData.nombreEmpresa.indexOf(filter.nombreEmpresa) > -1);
+                            return (!filter.nombreEmpresa || normalizeText(eachData.nombreEmpresa).indexOf(normalizeText(filter.nombreEmpresa)) > -1);
                         });
                     },
                     updateItem: function(item) {

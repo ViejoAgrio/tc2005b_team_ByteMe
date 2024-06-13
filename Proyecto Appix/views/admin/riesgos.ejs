@@ -151,8 +151,12 @@ button{
                 data: riesgosTable,
                 controller: {
                     loadData: function(filter) {
+                            function normalizeText(text) {
+                                return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                            }
+                    
                         return $.grep(riesgosTable, function(eachData) {
-                            return (!filter.descripcionRiesgo || eachData.descripcionRiesgo.indexOf(filter.descripcionRiesgo) > -1);
+                            return (!filter.descripcionRiesgo || normalizeText(eachData.descripcionRiesgo).indexOf(normalizeText(filter.descripcionRiesgo)) > -1);
                         });
                     },
                     updateItem: function(item) {

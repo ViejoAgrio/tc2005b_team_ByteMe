@@ -152,8 +152,12 @@ button{
                 data: pendientesTable,
                 controller: {
                     loadData: function(filter) {
+                            function normalizeText(text) {
+                                return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                            }
+                    
                         return $.grep(pendientesTable, function(eachData) {
-                            return (!filter.descripcionAccion || eachData.descripcionAccion.indexOf(filter.descripcionAccion) > -1);
+                            return (!filter.descripcionAccion || normalizeText(eachData.descripcionAccion).indexOf(normalizeText(filter.descripcionAccion)) > -1);
                         });
                     },
                     updateItem: function(item) {
