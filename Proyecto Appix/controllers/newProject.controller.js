@@ -6,15 +6,26 @@ module.exports.render_newProject = async (req, res) => {
     res.render('admin/nuevo-proyecto');
 };
 
-module.exports.getClients = async (req, res) => {
+module.exports.getClientes = async (req, res) => {
     try {
         // Send a response back to the client
         objClient = new np.Client();
-        clientList = await objClient.get_Client();
+        clientList = await objClient.getClientes();
         res.json(clientList);
     } catch (error) {
         console.error('Error:', error);
         res.status(500).send('Internal Server Error');
+    }
+};
+
+module.exports.getEmpresas = async (req, res) => {
+    try {
+        const objEmpresa = new np.Empresa();
+        const empresasTable = await objEmpresa.getEmpresas();
+        res.json(empresasTable);
+    } catch (error) {
+        console.error('Error al obtener empresa:', error);
+        res.status(500).send('Error al obtener empresa');
     }
 };
 
@@ -46,9 +57,6 @@ module.exports.getPlanAccion = async (req, res) => {
 
 module.exports.postNewProject = async (req, res) => {
     try {
-        
-        //const test = req.body.estatus;
-        //res.status(test);
         const nombreProyecto      = req.body.nombreProyecto;
         const fechaInicio         = req.body.fechaInicio;
         const fechaFin            = req.body.fechaFinal;
@@ -56,17 +64,79 @@ module.exports.postNewProject = async (req, res) => {
         const departamento        = req.body['departamento'];
         const descripcionProyecto = req.body.descripcionProyecto;
         const porcentajeRiesgo    = req.body.porcentajeRiesgo;
-        const clienteSeleccionado = req.body['clients-lst'];
+        var clienteId             = {};
+        var empresaId             = {};
+        var listaPlanAccionIds    = {};
+        var listaRiesgosIds       = {};
+        var listaRiesgosLevel     = {};
         
-        const objProject = new np.Project(clienteSeleccionado,
-                                          nombreProyecto,
+        var banderaCliente       = false;
+        var banderaEmpresa       = false;
+        var banderaAddPlanAccion = false;
+        var banderaAddRiesgos    = false;
+        
+        // Se obtiene la cliente
+        if(req.body.hiddenClientInput_Chk != null)
+        {
+            clienteId      = req.body.hiddenClientInput_Chk;
+            banderaCliente = true;
+        }
+
+        // Se obtiene la empresa
+        if(req.body.hiddenEmpInput_Chk != null)
+        {
+            empresaId      = req.body.hiddenEmpInput_Chk;
+            banderaEmpresa = true;
+        }
+
+        // Se obtiene la lista de los planes de acción
+        if(req.body.hiddenAccInput_Chk != null)
+        {
+            listaPlanAccionIds   = req.body.hiddenAccInput_Chk;
+            banderaAddPlanAccion = true;
+        }
+
+        // Se obtiene la lista de los riesgos
+        if(req.body.hiddenInput_isChecked != null &
+           req.body.hiddenInput_value != null)
+        {
+            listaRiesgosIds   = req.body.hiddenInput_isChecked;
+            listaRiesgosLevel = req.body.hiddenInput_value;
+            banderaAddRiesgos = true;
+        }
+        
+        const objProject = new np.Project(nombreProyecto,
                                           descripcionProyecto,
                                           departamento,
                                           selectedEstatus, 
                                           fechaInicio, 
                                           fechaFin,
-                                          porcentajeRiesgo);
-        const saveProj = await objProject.save_Project(res,req);
+                                          porcentajeRiesgo,
+                                          clienteId,
+                                          empresaId,
+                                          listaRiesgosIds,
+                                          listaRiesgosLevel,
+                                          listaPlanAccionIds);
+        
+        // Guardado en tabla proyecto y obtención de id del nuevo proyecto
+        const projectArrayId = await objProject.save_Project(res,req);
+        
+        if(banderaCliente && banderaEmpresa)
+        {
+            await objProject.save_clientEmpresaProject(res,req, empresaId, clienteId, projectArrayId.idProyecto);
+        }
+
+        if(banderaAddPlanAccion)
+        {
+            await objProject.save_planAccionProject(res,req,projectArrayId.idProyecto);
+        }
+
+        if(banderaAddRiesgos)
+        {
+            await objProject.save_riskProject(res,req,projectArrayId.idProyecto);
+        }
+
+        res.status(201).redirect("/admin/admin")
     }
     catch (error) {
         //console.error('Error al guardar el proyecto:', error);

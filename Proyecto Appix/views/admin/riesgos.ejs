@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riesgos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://unpkg.com/jsgrid/dist/jsgrid.min.css" rel="stylesheet" />
+    <link href="https://unpkg.com/jsgrid/dist/jsgrid-theme.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/newProject.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/jsgrid/dist/jsgrid.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tiny5&display=swap');
+        body {
+            background-image: url('/images/fondoBlanco.png'); /* Asegúrate de que la ruta sea correcta */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+    background-color: #004586;
+    color: #fff;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 70px;
+}
+
+.header-title {
+    font-size: 24px; /* Tamaño de fuente del título */
+    margin: 0; /* Elimina el margen por defecto del H1 */
+    width: 100%;
+    font-family: "Tiny5", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.logo-header {
+    width: 70px; /* Ajusta esto al tamaño de tu logo */
+    height: 70px; /* Ajusta esto al tamaño de tu logo */
+    background-image: url('/images/logo-appix-blanco.png'); 
+    background-size: contain; /* Asegura que el logo se ajuste dentro de las dimensiones */
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 5px; /* Espacio entre el logo y el texto */
+}
+.button-container {
+    margin: 10px;
+}
+
+button{
+    background:rgb(49, 131, 214);
+    color:#fff;
+    border:none;
+    position:relative;
+    height:35px;
+    width: 130px;
+    cursor:pointer;
+    transition:800ms ease all;
+    outline:none;
+  }
+  button:hover{
+    background:#fff;
+    color:rgb(49, 131, 214);
+  }
+  button:before,button:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: rgb(49, 131, 214);
+    transition:400ms ease all;
+  }
+  button:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+  }
+  button:hover:before,button:hover:after{
+    width:100%;
+    transition:800ms ease all;
+  }
+    </style>
+</head>
+<body>
+    <%- include('./../header.ejs') %>
+    <div class="container">
+        <form action="/admin/riesgos/add" method="POST">
+            <section>
+                <div class="new-risks">
+                    <h3 class="titulo-secciones">Riesgos</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Agregar nuevo riesgo:</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" name="nuevoNombre" id="descripcionProyecto" class="new-risk-Nuevoriesgo" required placeholder="Descripción del riesgo" maxlength="250"></td>
+                                <td>
+                                    <div class="char-count">
+                                        <span id="current-count">0</span>/250 caracteres
+                                    </div>
+                                    <script>
+                                        const descripcionInput = document.getElementById('descripcionProyecto');
+                                        const currentCount = document.getElementById('current-count');
+                                
+                                        descripcionInput.addEventListener('input', () => {
+                                            currentCount.textContent = descripcionInput.value.length;
+                                        });
+                                    </script>
+                                </td>
+                                <td><button class="waves-effect waves-light btn button" type="submit">Agregar</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="jsGridRsg" class="no-materialize-checkbox"></div> <!-- Contenedor para Grid.js -->
+            </section>
+        </form>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const riesgosTable = <%- riesgosTable %>; 
+            console.log('riesgos table:', riesgosTable);
+
+            $("#jsGridRsg").jsGrid({
+                height: "400px",
+                width: "100%",
+                sorting: true,
+                filtering: true,
+                editing: true,
+                paging: true,
+                pageSize: 10,
+                pageButtonCount: 5, 
+                deleteConfirm: "Si continuas, este riesgo será eliminado de todos los proyectos, ¿Está seguro de que desea eliminar este riesgo?",
+
+                data: riesgosTable,
+                controller: {
+                    loadData: function(filter) {
+                            function normalizeText(text) {
+                                return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                            }
+                    
+                        return $.grep(riesgosTable, function(eachData) {
+                            return (!filter.descripcionRiesgo || normalizeText(eachData.descripcionRiesgo).indexOf(normalizeText(filter.descripcionRiesgo)) > -1);
+                        });
+                    },
+                    updateItem: function(item) {
+                        console.log("Datos que se envían para actualización:", item);
+                        return $.ajax({
+                            type: "POST",
+                            url: "/admin/riesgos/update-riesgo",
+                            contentType: "application/json",
+                            data: JSON.stringify({
+                                idRiesgo: item.idRiesgo,
+                                descripcionRiesgo: item.descripcionRiesgo
+                            }),
+                            dataType: "json"
+                        }).done(function(response) {
+                            console.log("Respuesta del servidor:", response);
+                            var updatedItem = response.riesgo;
+                            var itemIndex = riesgosTable.findIndex(data => data.idRiesgo === updatedItem.idRiesgo);
+                            if (itemIndex !== -1) {
+                                riesgosTable[itemIndex] = updatedItem;
+                            }
+                            $("#jsGridRsg").jsGrid("loadData"); 
+                        }).fail(function(jqXHR, textStatus, errorThrown) {
+                            console.error("Error en la solicitud AJAX:", textStatus, errorThrown);
+                        });
+                    },
+                    deleteItem: function(item) {
+                        console.log('Eliminandoooooo');
+                        return $.ajax({
+                            type: "POST",
+                            url: "/admin/riesgos/delete-riesgo",
+                            data: item
+                        });
+                    }
+                },
+                fields: [
+                    { name: "idRiesgo", type: "hidden", css: "hide" },
+                    { name: "descripcionRiesgo", type: "text", title: "Descripción", width: 150 },
+                    { 
+                        type: "control", 
+                        clearFilterButton: false, 
+                        modeSwitchButton: false,
+                    }
+                ]
+                });
+
+            // Add keyup event handler to filter inputs
+            $(".jsgrid-filter-row input").on("keyup", function() {
+                $("#jsGridRsg").jsGrid("loadData");
+            });
+        });
+    </script>
+</body>
+</html>
+
