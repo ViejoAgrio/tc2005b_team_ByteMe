@@ -1,5 +1,5 @@
 /* Estilos generales */
-
+@import url('https://fonts.googleapis.com/css2?family=Tiny5&display=swap');
 
 h2 {
     text-align: center;
@@ -57,6 +57,9 @@ body {
     margin: 0; /* Elimina el margen por defecto del H1 */
     height: 70px;
     align-items: center;
+    font-family: "Tiny5", sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
 .row {
