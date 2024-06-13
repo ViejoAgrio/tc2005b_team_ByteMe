@@ -1,4 +1,9 @@
 <form action="/admin/nuevo-proyecto" method="POST">
+    <script>
+        let checkboxStatesRsg = {};
+        let numberInputStatesRsg = {};
+        let riskLvl = {};
+    </script>
     <label for="nombreProyecto">Nombre del proyecto:</label>
     <input type="text" id="nombreProyecto" name="nombreProyecto" required>
 
@@ -111,6 +116,8 @@
         </table>
     </div>
 
+    <div id="hiddenInputsClientList" style="display: none;"></div>
+
     <section id="empresa"></section>
 
     <header>
@@ -135,6 +142,8 @@
             </td>
         </table>
     </div>
+
+    <div id="hiddenInputsEmpresaList" style="display: none;"></div>
     
     <section id="plan-de-accion"></section>
     <header>
@@ -159,6 +168,8 @@
         </td>
     </table>
     </div>
+
+    <div id="hiddenInputsAccionList" style="display: none;"></div>
 
     </section>
 
@@ -186,29 +197,13 @@
             </div>
         </div>
     </section>
+    
+    <div id="hiddenInputsRiskList" style="display: none;"></div>
 
     <div class="button-container button-container-np" style="display: flex; justify-content: flex-end;">
-        <input class="btn waves-effect waves-light save-button" id="btnGuardar" type="button" value="Guardar">
-        <button class="btn waves-effect waves-light cancel-button" id="btnCancelar" type="submit">Cancel</button>
-        <!--<button class="btn waves-effect waves-light cancel-button" id="btnCancelar" type="button" onclick="location.href='/admin/admin'">Cancel</button>-->
+        <input class="btn waves-effect waves-light save-button" id="btnGuardar" type="submit" value="Guardar">
+        <button class="btn waves-effect waves-light cancel-button" id="btnCancelar" type="button" onclick="location.href='/admin/admin'">Cancel</button>
     </div>
-
-    <script>
-        /*$("#btnCancelar").on("click", function() {
-            if (Object.keys(checkboxStatesRsg).length != 0){
-                // Iterar sobre todos los checkboxes encontrados
-                Object.keys(checkboxStatesRsg).forEach(function(key) {
-                    if(checkboxStatesRsg[key]){
-                        alert(numberInputStatesRsg[key]);
-                    }
-                });
-            }
-        });*/
-    </script>
-
-
-
-
 
     <script>
         $("#btnGuardar").on("click", function() {

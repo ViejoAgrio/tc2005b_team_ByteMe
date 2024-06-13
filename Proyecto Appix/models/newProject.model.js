@@ -2,16 +2,20 @@ const db = require('../utils/database.js');
 const bcrypt = require('bcryptjs');
 
 module.exports.Project = class {
-    constructor (my_cliente,
-                 my_nombreProyecto,
+    constructor (my_nombreProyecto,
                  my_descripcionProyecto,
                  my_departamento,
                  my_selectedEstatus, 
                  my_fechaInicio, 
                  my_fechaFinal,
-                 my_porcentajeRiesgo){
+                 my_porcentajeRiesgo,
+                 my_idCliente,
+                 my_idEmpresa,
+                 my_listaRiesgoId,
+                 my_listaRiesgoLevel,
+                 my_listaPlanAccionId
+                ){
         
-        this.clienteProyecto     = my_cliente;
         this.nombreProyecto      = my_nombreProyecto;
         this.fechaInicio         = my_fechaInicio;
         this.fechaFinal          = my_fechaFinal;
@@ -19,13 +23,42 @@ module.exports.Project = class {
         this.selectedEstatus     = my_selectedEstatus;
         this.porcentajeRiesgo    = my_porcentajeRiesgo;
         this.descripcionProyecto = my_descripcionProyecto;
+        this.idCliente           = my_idCliente;
+        this.idEmpresa           = my_idEmpresa;
+        this.listaRiesgoId       = my_listaRiesgoId;
+        this.listaRiesgoLevel    = my_listaRiesgoLevel;
+        this.listaPlanAccionId   = my_listaPlanAccionId;
     }
 
     //MÉTODOS 
+
+    // Función para calcular el impacto de los riesgos del proyecto
+    calcularImpacto(r, n) {
+        let sumaNivelRiesgo = 0;
+        for (let i = 0; i < r; i++) {
+            sumaNivelRiesgo += n[i];
+        }
+        return sumaNivelRiesgo * (1 + r / 10);
+    }
+
+    // Función para calcular el porcentaje de riesgo del proyecto
+    calcularPorcentaje(estatus, r, n, d, t) {
+        if (estatus === 'finalizado') {
+            return 0;
+        } else if (d <= t) {
+            return 100;
+        } else {
+            let impacto = this.calcularImpacto(r, n);
+            return (5000 / (impacto + 50)) + ((5000 * t) / (impacto + 50) / d) + 100;
+        }
+    }
+    
     async save_Project(res,req){
         try{
+            let insertedId = 0;
+            
             const connection = await db();
-            const query = `INSERT INTO proyecto 
+            const queryProyecto = `INSERT INTO proyecto 
                             (nombreProyecto,
                              descripcionProyecto,
                              departamento,
@@ -34,7 +67,7 @@ module.exports.Project = class {
                              fechaFinal,
                              porcentajeRiesgo)
                            VALUES (?, ?, ?, ?, ?, ?, ?)`;
-            const value = [this.nombreProyecto,
+            const valueProyecto = [this.nombreProyecto,
                            this.descripcionProyecto,
                            this.departamento,
                            this.selectedEstatus,
@@ -42,17 +75,84 @@ module.exports.Project = class {
                            this.fechaFinal,
                            this.porcentajeRiesgo
                            ];
-            const resNewProject = await connection.query(query, value);
+            const resNewProject = await connection.query(
+                queryProyecto,
+                valueProyecto
+            );
+            const queryIdProy = `
+                SELECT idProyecto 
+                FROM proyecto 
+                ORDER BY idProyecto 
+                DESC LIMIT 1;
+            `;
+            const resIdSelect = await connection.query(
+                queryIdProy
+            );
             await connection.release();
-            res.status(201).redirect("/admin/admin")
-            return resNewProject;
+            return resIdSelect[0];
         }
         catch (error) {
             res.status(500).send(`Error al guardar el proyecto: ${error}`);
         }
     };
-}
 
+    async save_riskProject(res,req,idProject){
+        let cntRisk = 0;
+
+        const connection = await db();
+        const query = `
+            INSERT INTO riesgoproyecto (idProyecto, idRiesgo, nivelRiesgo)
+            VALUES (?, ?, ?);
+        `;
+        
+        for (const idRisk of this.listaRiesgoId) {
+            const values = [
+                idProject,
+                idRisk,
+                this.listaRiesgoLevel[cntRisk]
+            ];
+            await connection.query(query, values);
+            cntRisk++;
+        }
+        await connection.release();
+    }
+
+    async save_planAccionProject(res, req, idProject) {
+        let cntPlan = 0;
+
+        const connection = await db();
+        const query = `
+            INSERT INTO accionproyecto (idProyecto, idAccion, estatusAccion)
+            VALUES (?, ?, ?);
+        `;
+        
+        for (const idPlan of this.listaPlanAccionId) {
+            const values = [
+                idProject,
+                idPlan,
+                0
+            ];
+            await connection.query(query, values);
+        }
+        await connection.release();
+    }
+
+    async save_clientEmpresaProject(res, req, idEmpresa, idCliente, idProject) {
+        const connection = await db();
+        const query = `
+            INSERT INTO empresacliente (idEmpresa, idCliente, idProyecto)
+            VALUES (?, ?, ?);
+        `;
+        
+        const values = [
+            idEmpresa,
+            idCliente,
+            idProject
+        ];
+        await connection.query(query, values);
+        await connection.release();
+    }
+}
 
 module.exports.PlanAccion = class {
     constructor (my_descripcionAccion)
@@ -298,3 +398,4 @@ module.exports.Riesgo = class {
 //    });
 //    stmt.finalize();
 //};
+

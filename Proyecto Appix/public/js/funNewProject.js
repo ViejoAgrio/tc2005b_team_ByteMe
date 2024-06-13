@@ -1,40 +1,17 @@
 // Manejar el envío del formulario de nuevo proyecto
 document.addEventListener('DOMContentLoaded', function() {
-    form = document.getElementById('nuevo-proyecto-form');
-    
-    if(form){
-        document.getElementById('nuevo-proyecto-form').addEventListener('submit', async function(event) {
-            event.preventDefault();
-            
-            let riskLvl = [];
-            if (Object.keys(checkboxStatesRsg).length != 0){
-                // Iterar sobre todos los checkboxes encontrados
-                Object.keys(checkboxStatesRsg).forEach(function(key) {
-                    if(checkboxStatesRsg[key]){
-                        riskLvl[key] = numberInputStatesRsg[key];
-                    }
-                });
-            }
+    const form = document.getElementById('nuevo-proyecto-form');
 
-            const formData = {
-                nombreProyecto: form.elements['nombreProyecto'].value,
-                fechaInicio: form.elements['fechaInicio'].value,
-                fechaFinal: form.elements['fechaFinal'].value,
-                estatus: form.elements['estatus'].value,
-                departamento: form.elements['departamento'].value,
-                descripcionProyecto: form.elements['descripcionProyecto'].value,
-                porcentajeRiesgo: form.elements['porcentajeRiesgo'].value,
-                //clienteSeleccionado: form.elements['clients-lst'].value,
-                selectedRisks: riskLvl // Añadir riesgos seleccionados
-            };
+    if (form) {
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault();
 
             try {
                 const response = await fetch('/admin/nuevo-proyecto', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(formData)
+                    }
                 });
 
                 if (response.ok) {
@@ -50,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
 
 document.addEventListener('DOMContentLoaded', function() {
     $(document).ready(function() {
@@ -122,12 +100,43 @@ document.addEventListener('DOMContentLoaded', function() {
 // Clients Table with checkboxes and search implemented
 document.addEventListener('DOMContentLoaded', function() {
     var checkboxStatesClients = {};
+    var hiddenInputsClientData = {};
 
     $("#jsGridClientes").on("change", "input[name='selClient']", function() {
         var isChecked = $(this).prop("checked");
         var itemId = $(this).attr("value");
-        checkboxStatesClients[itemId] = isChecked;
+
+        if (isChecked) {
+            // Desmarcar cualquier otro checkbox seleccionado
+            $("input[name='selClient']").prop("checked", false);
+            // Limpiar estados anteriores
+            checkboxStatesClients = {};
+            hiddenInputsClientData = {};
+            // Marcar el nuevo checkbox
+            $(this).prop("checked", true);
+            checkboxStatesClients[itemId] = true;
+            hiddenInputsClientData[itemId] = { id: itemId };
+        } else {
+            checkboxStatesClients[itemId] = false;
+            delete hiddenInputsClientData[itemId];
+        }
+
+        actualizarListaClienteOculta();
     });
+
+    function actualizarListaClienteOculta() {
+        var hiddenInputsClientList = $("#hiddenInputsClientList"); // ID del elemento div oculto donde almacenarás los datos
+        hiddenInputsClientList.empty(); // Vacía la lista (o ajusta según tu estructura HTML)
+
+        // Recorre los datos y agrega elementos ocultos según tu estructura
+        for (var itemId in hiddenInputsClientData) {
+            if (hiddenInputsClientData.hasOwnProperty(itemId)) {
+                var data = hiddenInputsClientData[itemId];
+                var inputHtml = '<input type="hidden" name="hiddenClientInput_Chk" value="' + data.id + '" />';
+                hiddenInputsClientList.append(inputHtml); // Agrega el input oculto al elemento oculto
+            }
+        }
+    }
 
     fetch('nuevo-proyecto/clientes')
         .then(response => response.json())
@@ -164,7 +173,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     fields: [
                         { name: "encargado", type: "text", title: "Cliente encargado", width: 150},
                         {
-                            type: "checkbox",
                             title: "Selección",
                             sorting: false,
                             editing: true,
@@ -175,11 +183,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                             .attr("value", item.id);
                                 
                                 // Restore checkbox state from checkboxStatesClients object
-                                if (checkboxStatesClients[item.id]) {
-                                    checkbox.prop("checked", true);
-                                } else {
-                                    checkbox.prop("checked", false);
-                                }
+                                checkbox.prop("checked", checkboxStatesClients[item.id] || false);
                     
                                 return checkbox;
                             }
@@ -197,15 +201,47 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+
 // Companies Table with checkboxes and search implemented
 document.addEventListener('DOMContentLoaded', function() {
     var checkboxStatesEmpresas = {};
+    var hiddenInputsEmpresaData = {};
 
     $("#jsGridEmpresas").on("change", "input[name='selEmpresas']", function() {
         var isChecked = $(this).prop("checked");
         var itemId = $(this).attr("value");
         checkboxStatesEmpresas[itemId] = isChecked;
+
+        if(isChecked){
+            $("input[name='selEmpresas']").prop("checked", false);
+            checkboxStatesEmpresas = {};
+            hiddenInputsEmpresaData = {};
+            // Marcar el nuevo checkbox
+            $(this).prop("checked", true);
+            checkboxStatesEmpresas[itemId] = true;
+            hiddenInputsEmpresaData[itemId] = { id: itemId};
+        }
+        else{
+            checkboxStatesEmpresas[itemId] = false;
+            delete hiddenInputsEmpresaData[itemId];
+        }
+
+        actualizarListaEmpOculta();
     });
+
+    function actualizarListaEmpOculta() {
+        var hiddenInputsEmpresaList = $("#hiddenInputsEmpresaList"); // ID del elemento div oculto donde almacenarás los datos
+        hiddenInputsEmpresaList.empty(); // Vacía la lista (o ajusta según tu estructura HTML)
+
+        // Recorre los datos y agrega elementos ocultos según tu estructura
+        for (var itemId in hiddenInputsEmpresaData) {
+            if (hiddenInputsEmpresaData.hasOwnProperty(itemId)) {
+                var data = hiddenInputsEmpresaData[itemId];
+                var inputHtml = '<input type="hidden" name="hiddenEmpInput_Chk" value="' + data.id + '" />';
+                hiddenInputsEmpresaList.append(inputHtml); // Agrega el input oculto al elemento oculto
+            }
+        }
+    }
 
     fetch('nuevo-proyecto/empresas')
         .then(response => response.json())
@@ -242,7 +278,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     fields: [
                         { name: "name", type: "text", title: "Empresa", width: 200},
                         {
-                            type: "checkbox",
                             title: "Selección",
                             sorting: false,
                             editing: true,
@@ -253,11 +288,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                             .attr("value", item.id);
                                 
                                 // Restore checkbox state from checkboxStatesCompanies object
-                                if (checkboxStatesEmpresas[item.id]) {
-                                    checkbox.prop("checked", true);
-                                } else {
-                                    checkbox.prop("checked", false);
-                                }
+                                checkbox.prop("checked", checkboxStatesEmpresas[item.id] || false);
                     
                                 return checkbox;
                             }
@@ -278,20 +309,44 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Action Plan Table with checkboxes and search implemented
 document.addEventListener('DOMContentLoaded', function() {
-    var checkboxStates = {};
+    var checkboxAccStates = {};
+    var hiddenInputsAccionData = {};
 
     $("#jsGridAcc").on("change", "input[name='selAcc']", function() {
         var isChecked = $(this).prop("checked");
         var itemId = $(this).attr("value");
-        checkboxStates[itemId] = isChecked;
+        checkboxAccStates[itemId] = isChecked;
+
+        if(isChecked){
+            hiddenInputsAccionData[itemId] = { id: itemId};
+        }
+        else{
+            delete hiddenInputsAccionData[itemId];
+        }
+
+        actualizarListaAccOculta();
     });
+
+    function actualizarListaAccOculta() {
+        var hiddenInputsAccionList = $("#hiddenInputsAccionList"); // ID del elemento div oculto donde almacenarás los datos
+        hiddenInputsAccionList.empty(); // Vacía la lista (o ajusta según tu estructura HTML)
+
+        // Recorre los datos y agrega elementos ocultos según tu estructura
+        for (var itemId in hiddenInputsAccionData) {
+            if (hiddenInputsAccionData.hasOwnProperty(itemId)) {
+                var data = hiddenInputsAccionData[itemId];
+                var inputHtml = '<input type="hidden" name="hiddenAccInput_Chk" value="' + data.id + '" />';
+                hiddenInputsAccionList.append(inputHtml); // Agrega el input oculto al elemento oculto
+            }
+        }
+    }
 
     fetch('nuevo-proyecto/planAccion')
         .then(response => response.json())
         .then(dataJSON => {
             fullDataMapped = dataJSON.map(planAcc => ({
                 dsc: planAcc.descripcionAccion,
-                idR: planAcc.idAccion
+                idAcc: planAcc.idAccion
             }));
             
             $(function() {
@@ -317,7 +372,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     fields: [
                         { name: "dsc", type: "text", title: "Descripción", width: 150},
                         {
-                            type: "checkbox",
                             title: "Selección",
                             sorting: false,
                             editing: true,
@@ -325,10 +379,10 @@ document.addEventListener('DOMContentLoaded', function() {
                             itemTemplate: function(value, item) {
                                 var checkbox =  $("<input>").attr("type", "checkbox")
                                                             .attr("name", "selAcc")
-                                                            .attr("value", item.idR);
+                                                            .attr("value", item.idAcc);
                                 
-                                // Restore checkbox state from checkboxStates object
-                                if (checkboxStates[item.idR]) {
+                                // Restore checkbox state from checkboxAccStates object
+                                if (checkboxAccStates[item.idAcc]) {
                                     checkbox.prop("checked", true);
                                 } else {
                                     checkbox.prop("checked", false);
@@ -351,6 +405,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Risk Table with checkboxes and search implemented
 document.addEventListener('DOMContentLoaded', function() {
+    var hiddenInputsRiskData = {};
     $("#jsGridRsg").on("change", "input[name='selRsg']", function() {
         var isChecked = $(this).prop("checked");
         var itemId = $(this).attr("value");
@@ -359,12 +414,16 @@ document.addEventListener('DOMContentLoaded', function() {
         if(isChecked)
         {
             numberInputStatesRsg[itemId] = $("#jsGridRsg input[name='lvlRsg'][id='" + itemId + "']").val();
+            hiddenInputsRiskData[itemId] = { id: itemId, value: numberInputStatesRsg[itemId] };
         }
         else
         {
             $("#jsGridRsg input[name='lvlRsg'][id='" + itemId + "']").val(0);
             numberInputStatesRsg[itemId] = 0;
+            delete hiddenInputsRiskData[itemId];
         }
+
+        actualizarListaOculta();
     });
 
     $("#jsGridRsg").on("change", "input[name='lvlRsg']", function() {
@@ -378,7 +437,24 @@ document.addEventListener('DOMContentLoaded', function() {
             $("#jsGridRsg input[name='selRsg'][value='" + inpItmID +"']").prop('checked', true);
             checkboxStatesRsg[inpItmID] = true;
         }
+        hiddenInputsRiskData[inpItmID] = { id: inpItmID, value: itemValue };
+        actualizarListaOculta();
     });
+
+    function actualizarListaOculta() {
+        var hiddenInputsRiskList = $("#hiddenInputsRiskList"); // ID del elemento div oculto donde almacenarás los datos
+        hiddenInputsRiskList.empty(); // Vacía la lista (o ajusta según tu estructura HTML)
+
+        // Recorre los datos y agrega elementos ocultos según tu estructura
+        for (var itemId in hiddenInputsRiskData) {
+            if (hiddenInputsRiskData.hasOwnProperty(itemId)) {
+                var data = hiddenInputsRiskData[itemId];
+                var inputHtml = '<input type="hidden" name="hiddenInput_isChecked" value="' + data.id + '" />';
+                inputHtml += '<input type="hidden" name="hiddenInput_value" value="' + data.value + '" />';
+                hiddenInputsRiskList.append(inputHtml); // Agrega el input oculto al elemento oculto
+            }
+        }
+    }
 
     fetch('nuevo-proyecto/riesgos')
         .then(responseRsg => responseRsg.json())
@@ -475,6 +551,7 @@ document.addEventListener('DOMContentLoaded', function() {
             Object.keys(checkboxStatesRsg).forEach(function(key) {
                 if(checkboxStatesRsg[key]){
                     riskLvl[key] = numberInputStatesRsg[key];
+                    alert(riskLvl[key]);
                 }
             });
         }
