@@ -152,14 +152,13 @@ body {
     font-size: 2em;
 }
 
-.titulo-listado {
+.comentarios-guia {
     color: #000000; /* Color del título del plan de acción */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Estilo de fuente */
     font-size: 16px;
     font-weight: bold;
     margin-top: 15px;
-    margin-left: 20px;
-    margin-bottom: 0;
+    margin-bottom: 15;
 }
 
 .button-centered {
@@ -226,4 +225,8 @@ body {
 .no-materialize-checkbox label:before, 
 .no-materialize-checkbox label:after {
     display: none;
+}
+
+.seccion-formulario {
+    margin-bottom: 50px;
 }

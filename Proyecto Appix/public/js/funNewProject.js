@@ -1,17 +1,40 @@
 // Manejar el envío del formulario de nuevo proyecto
 document.addEventListener('DOMContentLoaded', function() {
     form = document.getElementById('nuevo-proyecto-form');
-
+    
     if(form){
         document.getElementById('nuevo-proyecto-form').addEventListener('submit', async function(event) {
             event.preventDefault();
             
+            let riskLvl = [];
+            if (Object.keys(checkboxStatesRsg).length != 0){
+                // Iterar sobre todos los checkboxes encontrados
+                Object.keys(checkboxStatesRsg).forEach(function(key) {
+                    if(checkboxStatesRsg[key]){
+                        riskLvl[key] = numberInputStatesRsg[key];
+                    }
+                });
+            }
+
+            const formData = {
+                nombreProyecto: form.elements['nombreProyecto'].value,
+                fechaInicio: form.elements['fechaInicio'].value,
+                fechaFinal: form.elements['fechaFinal'].value,
+                estatus: form.elements['estatus'].value,
+                departamento: form.elements['departamento'].value,
+                descripcionProyecto: form.elements['descripcionProyecto'].value,
+                porcentajeRiesgo: form.elements['porcentajeRiesgo'].value,
+                //clienteSeleccionado: form.elements['clients-lst'].value,
+                selectedRisks: riskLvl // Añadir riesgos seleccionados
+            };
+
             try {
                 const response = await fetch('/admin/nuevo-proyecto', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
-                    }
+                    },
+                    body: JSON.stringify(formData)
                 });
 
                 if (response.ok) {
@@ -66,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Fill clients dropdown with database info
+/* Fill clients dropdown with database info
 document.addEventListener('DOMContentLoaded', function() {
     fetch('nuevo-proyecto/clients')
         .then(response => response.json())
@@ -94,6 +117,164 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => console.log('Error fetching clients:', error));
 });
+*/
+
+// Clients Table with checkboxes and search implemented
+document.addEventListener('DOMContentLoaded', function() {
+    var checkboxStatesClients = {};
+
+    $("#jsGridClientes").on("change", "input[name='selClient']", function() {
+        var isChecked = $(this).prop("checked");
+        var itemId = $(this).attr("value");
+        checkboxStatesClients[itemId] = isChecked;
+    });
+
+    fetch('nuevo-proyecto/clientes')
+        .then(response => response.json())
+        .then(dataJSON => {
+            fullDataMappedClients = dataJSON.map(client => ({
+                id: client.idCliente,
+                encargado: client.nombreEncargado
+            }));
+            
+            $(function() {
+                // Define an object to store checkbox states
+            
+                $("#jsGridClientes").jsGrid({
+                    height: "400px",
+                    width: "100%",
+                    sorting: true,
+                    filtering: true,
+                    editing: false,
+                    paging: false,
+                    
+                    data: fullDataMappedClients,
+                    controller: {
+                        loadData: function(filter) {
+                            function normalizeText(text) {
+                                return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                            }
+
+                            return $.grep(fullDataMappedClients, function(eachData) {
+                                return (!filter.encargado || normalizeText(eachData.encargado).indexOf(normalizeText(filter.encargado)) > -1);
+                            });
+                        }
+                    },
+
+                    fields: [
+                        { name: "encargado", type: "text", title: "Cliente encargado", width: 150},
+                        {
+                            type: "checkbox",
+                            title: "Selección",
+                            sorting: false,
+                            editing: true,
+                            width: 25,
+                            itemTemplate: function(value, item) {
+                                var checkbox =  $("<input>").attr("type", "checkbox")
+                                                            .attr("name", "selClient")
+                                                            .attr("value", item.id);
+                                
+                                // Restore checkbox state from checkboxStatesClients object
+                                if (checkboxStatesClients[item.id]) {
+                                    checkbox.prop("checked", true);
+                                } else {
+                                    checkbox.prop("checked", false);
+                                }
+                    
+                                return checkbox;
+                            }
+                        }
+                    ]
+                });
+
+                // Add keyup event handler to filter inputs
+                $(".jsgrid-filter-row input").on("keyup", function() {
+                    $("#jsGridClientes").jsGrid("loadData");
+                });
+            });
+        })
+        .catch(error => console.error('Error al cargar los clientes:', error));
+});
+
+
+// Companies Table with checkboxes and search implemented
+document.addEventListener('DOMContentLoaded', function() {
+    var checkboxStatesEmpresas = {};
+
+    $("#jsGridEmpresas").on("change", "input[name='selEmpresas']", function() {
+        var isChecked = $(this).prop("checked");
+        var itemId = $(this).attr("value");
+        checkboxStatesEmpresas[itemId] = isChecked;
+    });
+
+    fetch('nuevo-proyecto/empresas')
+        .then(response => response.json())
+        .then(dataJSON => {
+            fullDataMappedEmpresas = dataJSON.map(empresa => ({
+                id: empresa.idEmpresa,
+                name: empresa.nombreEmpresa
+            }));
+            
+            $(function() {
+                // Define an object to store checkbox states
+            
+                $("#jsGridEmpresas").jsGrid({
+                    height: "400px",
+                    width: "100%",
+                    sorting: true,
+                    filtering: true,
+                    editing: false,
+                    paging: false,
+
+                    data: fullDataMappedEmpresas,
+                    controller: {
+                        loadData: function(filter) {
+                            function normalizeText(text) {
+                                return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                            }
+
+                            return $.grep(fullDataMappedEmpresas, function(eachData) {
+                                return (!filter.name || normalizeText(eachData.name).indexOf(normalizeText(filter.name)) > -1);
+                            });
+                        }
+                    },
+
+                    fields: [
+                        { name: "name", type: "text", title: "Empresa", width: 200},
+                        {
+                            type: "checkbox",
+                            title: "Selección",
+                            sorting: false,
+                            editing: true,
+                            width: 25,
+                            itemTemplate: function(value, item) {
+                                var checkbox =  $("<input>").attr("type", "checkbox")
+                                                            .attr("name", "selEmpresas")
+                                                            .attr("value", item.id);
+                                
+                                // Restore checkbox state from checkboxStatesCompanies object
+                                if (checkboxStatesEmpresas[item.id]) {
+                                    checkbox.prop("checked", true);
+                                } else {
+                                    checkbox.prop("checked", false);
+                                }
+                    
+                                return checkbox;
+                            }
+                        }
+                    ]
+                });
+
+                // Add keyup event handler to filter inputs
+                $(".jsgrid-filter-row input").on("keyup", function() {
+                    $("#jsGridEmpresas").jsGrid("loadData");
+                });
+            });
+        })
+        .catch(error => console.error('Error al cargar las empresas:', error));
+});
+
+
 
 // Action Plan Table with checkboxes and search implemented
 document.addEventListener('DOMContentLoaded', function() {
@@ -170,12 +351,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Risk Table with checkboxes and search implemented
 document.addEventListener('DOMContentLoaded', function() {
-    var checkboxStatesRsg = {};
-
     $("#jsGridRsg").on("change", "input[name='selRsg']", function() {
         var isChecked = $(this).prop("checked");
         var itemId = $(this).attr("value");
         checkboxStatesRsg[itemId] = isChecked;
+
+        if(isChecked)
+        {
+            numberInputStatesRsg[itemId] = $("#jsGridRsg input[name='lvlRsg'][id='" + itemId + "']").val();
+        }
+        else
+        {
+            $("#jsGridRsg input[name='lvlRsg'][id='" + itemId + "']").val(0);
+            numberInputStatesRsg[itemId] = 0;
+        }
+    });
+
+    $("#jsGridRsg").on("change", "input[name='lvlRsg']", function() {
+        var itemValue = $(this).val();
+        var inpItmID  = $(this).attr("id");
+        numberInputStatesRsg[inpItmID] = itemValue;
+        chkBoxVal = $("#jsGridRsg input[name='selRsg'][value='" + inpItmID + "']").prop('checked');
+        
+        if(!chkBoxVal)
+        {
+            $("#jsGridRsg input[name='selRsg'][value='" + inpItmID +"']").prop('checked', true);
+            checkboxStatesRsg[inpItmID] = true;
+        }
     });
 
     fetch('nuevo-proyecto/riesgos')
@@ -183,7 +385,6 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(dataJSONRsg => {
             fullDataMappedRsg = dataJSONRsg.map(riesgo => ({
                 dsc: riesgo.descripcionRiesgo,
-                rsg: riesgo.nivelRiesgo,
                 idR:  riesgo.idRiesgo
             }));
             
@@ -201,18 +402,41 @@ document.addEventListener('DOMContentLoaded', function() {
                     data: fullDataMappedRsg,
                     controller: {
                         loadData: function(filter) {
+                            function normalizeText(text) {
+                                return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                            }
+
                             return $.grep(fullDataMappedRsg, function(eachData) {
-                                return (!filter.dsc || eachData.dsc.indexOf(filter.dsc) > -1)
-                                    && (!filter.rsg || eachData.rsg === filter.rsg);
+                                return (!filter.dsc || normalizeText(eachData.dsc).indexOf(normalizeText(filter.dsc)) > -1);
                             });
                         }
                     },
 
                     fields: [
                         { name: "dsc", type: "text", title: "Descripción", width: 150},
-                        { name: "rsg", type: "number", title: "Riesgo", width: 25},
                         {
-                            type: "checkbox",
+                            name: "rsg", title: "Nivel", width: 25,
+                            itemTemplate: function(value, item) {
+                                //<input type="number" id="quantity" name="quantity" min="1" max="5">
+                                var numberInput = $("<input>").attr("type","number")
+                                                              .attr("min" ,0)
+                                                              .attr("max" ,9)
+                                                              .attr("name","lvlRsg")
+                                                              .attr("value",0)
+                                                              .attr("id",item.idR)
+                                                              .attr("onKeyDown","return false");
+                                
+                                // Restore checkbox state from checkboxStatesRsg object
+                                if (numberInputStatesRsg[item.idR]) {
+                                    numberInput.prop("value", numberInputStatesRsg[item.idR]);
+                                } else {
+                                    numberInput.prop("value", 0);
+                                }
+
+                                return numberInput;
+                            }
+                        },
+                        {
                             title: "Selección",
                             sorting: false,
                             editing: true,
@@ -243,3 +467,16 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => console.error('Error al cargar los riesgos:', error));
 });
+
+/*document.addEventListener('DOMContentLoaded', function() {
+    $("#btnCancelar").on("click", function() {
+        if (Object.keys(checkboxStatesRsg).length != 0){
+            // Iterar sobre todos los checkboxes encontrados
+            Object.keys(checkboxStatesRsg).forEach(function(key) {
+                if(checkboxStatesRsg[key]){
+                    riskLvl[key] = numberInputStatesRsg[key];
+                }
+            });
+        }
+    });
+});*/

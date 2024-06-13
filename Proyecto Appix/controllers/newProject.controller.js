@@ -6,15 +6,26 @@ module.exports.render_newProject = async (req, res) => {
     res.render('admin/nuevo-proyecto');
 };
 
-module.exports.getClients = async (req, res) => {
+module.exports.getClientes = async (req, res) => {
     try {
         // Send a response back to the client
         objClient = new np.Client();
-        clientList = await objClient.get_Client();
+        clientList = await objClient.getClientes();
         res.json(clientList);
     } catch (error) {
         console.error('Error:', error);
         res.status(500).send('Internal Server Error');
+    }
+};
+
+module.exports.getEmpresas = async (req, res) => {
+    try {
+        const objEmpresa = new np.Empresa();
+        const empresasTable = await objEmpresa.getEmpresas();
+        res.json(empresasTable);
+    } catch (error) {
+        console.error('Error al obtener empresa:', error);
+        res.status(500).send('Error al obtener empresa');
     }
 };
 
@@ -56,17 +67,19 @@ module.exports.postNewProject = async (req, res) => {
         const departamento        = req.body['departamento'];
         const descripcionProyecto = req.body.descripcionProyecto;
         const porcentajeRiesgo    = req.body.porcentajeRiesgo;
-        const clienteSeleccionado = req.body['clients-lst'];
-        
-        const objProject = new np.Project(clienteSeleccionado,
-                                          nombreProyecto,
-                                          descripcionProyecto,
-                                          departamento,
-                                          selectedEstatus, 
-                                          fechaInicio, 
-                                          fechaFin,
-                                          porcentajeRiesgo);
-        const saveProj = await objProject.save_Project(res,req);
+        //const clienteSeleccionado = req.body['clients-lst'];
+        const listaRiesgos        = req.body.selectedRisks;
+        res.status(200).send(Object.keys(listaRiesgos).length);
+        console.log(nombreProyecto);
+        //const objProject = new np.Project(clienteSeleccionado,
+        //                                  nombreProyecto,
+        //                                  descripcionProyecto,
+        //                                  departamento,
+        //                                  selectedEstatus, 
+        //                                  fechaInicio, 
+        //                                  fechaFin,
+        //                                  porcentajeRiesgo);
+        //const saveProj = await objProject.save_Project(res,req);
     }
     catch (error) {
         //console.error('Error al guardar el proyecto:', error);

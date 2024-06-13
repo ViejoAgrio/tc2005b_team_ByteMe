@@ -3,7 +3,8 @@ const router = express.Router();
 const controller = require("../controllers/newProject.controller.js");
 
 router.get('/', controller.render_newProject);
-router.get('/clients', controller.getClients);
+router.get('/clientes', controller.getClientes);
+router.get('/empresas', controller.getEmpresas);
 router.get('/riesgos', controller.getRiesgos);
 router.get('/planAccion', controller.getPlanAccion);
 //router.get('/getNewActionPlan', controller.getNewActionPlan);

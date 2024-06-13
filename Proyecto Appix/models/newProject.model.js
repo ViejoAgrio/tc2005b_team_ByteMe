@@ -22,23 +22,19 @@ module.exports.Project = class {
     }
 
     //MÉTODOS 
-
-
     async save_Project(res,req){
         try{
             const connection = await db();
             const query = `INSERT INTO proyecto 
-                            (idCliente,
-                             nombreProyecto,
+                            (nombreProyecto,
                              descripcionProyecto,
                              departamento,
                              estatus, 
                              fechaInicio, 
                              fechaFinal,
                              porcentajeRiesgo)
-                           VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
-            const value = [this.clienteProyecto,
-                           this.nombreProyecto,
+                           VALUES (?, ?, ?, ?, ?, ?, ?)`;
+            const value = [this.nombreProyecto,
                            this.descripcionProyecto,
                            this.departamento,
                            this.selectedEstatus,
@@ -52,11 +48,11 @@ module.exports.Project = class {
             return resNewProject;
         }
         catch (error) {
-            //console.error('Error al guardar el proyecto:', error);
             res.status(500).send(`Error al guardar el proyecto: ${error}`);
         }
     };
 }
+
 
 module.exports.PlanAccion = class {
     constructor (my_descripcionAccion)
@@ -98,29 +94,45 @@ module.exports.PlanAccion = class {
             return resPlanAccion;
         }
         catch (error) {
-            //console.error('Error al guardar el proyecto:', error);
             res.status(500).send(`Error al obtener el plan de acción: ${error}`);
         }
+    }
+
+    async updateCheckbox(idAccion, isChecked) {
+        try {
+            const connection = await db(); // Obtener conexión a la base de datos
+            const query = 'UPDATE accionproyecto SET estatusAccion = ? WHERE idAccion = ?;';
+            connection.query(query, [isChecked, idAccion], (error, results) => {
+                if (error) {
+                    console.log('MAL');
+                    console.error('Error al actualizar el estado del checkbox:', error);
+                    res.status(500).json({ success: false, message: 'Error al actualizar el estado del checkbox' });
+                } else {
+                    console.log('BIEN');
+                    res.json({ success: true, message: 'Estado del checkbox actualizado correctamente' });
+                }
+            });
+            await connection.release();
+        } catch (error) {
+            console.error('Error al ejecutar consulta:', error);
+            throw error; // Re-throw para manejar el error fuera de la clase
+        } 
     }
 }
 
 
-
-
 module.exports.Client = class {
     constructor (my_idCliente,
-                 my_nombreEncargado,
-                 my_nombreEmpresa
+                 my_nombreEncargado
                 ){
 
         this.idCliente           = my_idCliente;
         this.nombreEncargado     = my_nombreEncargado;
-        this.nombreEmpresa       = my_nombreEmpresa;
     }
 
     //MÉTODOS 
 
-    async get_Client(){
+    async getClientes(){
         try{
             const connection = await db();
             const queryClient = `SELECT *
@@ -130,12 +142,35 @@ module.exports.Client = class {
             return resClient;
         }
         catch (error) {
-            //console.error('Error al guardar el proyecto:', error);
             res.status(500).send(`Error al obtener el cliente: ${error}`);
         }
     }
 }
 
+
+module.exports.Empresa = class {
+    constructor (my_idEmpresa,
+                 my_nombreEmpresa
+                ){
+
+        this.idEmpresa           = my_idEmpresa;
+        this.nombreEmpresa       = my_nombreEmpresa;
+    }
+    
+    //METODOS
+    async getEmpresas() {
+        try {
+            const connection = await db();
+            const query = `SELECT idEmpresa, nombreEmpresa FROM empresa`;
+            const res = await connection.query(query);
+            await connection.release();
+            return res;
+        } catch (error) {
+            console.error('Error al obtener empresa:', error);
+            throw error;
+        }
+    }
+}
 
 module.exports.Riesgo = class {
     constructor (my_idRiesgo,
@@ -152,14 +187,14 @@ module.exports.Riesgo = class {
     async get_Riesgo(){
         try{
             const connection = await db();
-            const queryRiesgo = `SELECT idRiesgo, descripcionRiesgo, nivelRiesgo
-                                 FROM riesgo`;
+            const queryRiesgo = `
+                SELECT *
+                FROM riesgo;`;
             const resRiesgo = await connection.query(queryRiesgo);
             await connection.release();
             return resRiesgo;
         }
         catch (error) {
-            //console.error('Error al guardar el proyecto:', error);
             res.status(500).send(`Error al obtener el riesgo: ${error}`);
         }
     }

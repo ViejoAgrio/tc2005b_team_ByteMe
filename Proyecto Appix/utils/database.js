@@ -2,7 +2,7 @@ const mariadb = require("mariadb");
 const pool = mariadb.createPool({
     host:"localhost",
     user:"root",
-    password:"qazSPILI741",
+    password:"1002151513",
     database: "appix",
     connectionLimit:5,
     port: 3308

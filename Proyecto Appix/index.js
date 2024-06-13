@@ -29,7 +29,7 @@ app.use(express.static('public'));
 
 const isAuth = require('./utils/is-auth');
 const isUser = require('./utils/is-user');
-const isAdmin = require('./utils/is-admin');
+//const isAdmin = require('./utils/is-admin');
 
 app.get('/', async(req, res, next) => {
     res.render('login'); 
