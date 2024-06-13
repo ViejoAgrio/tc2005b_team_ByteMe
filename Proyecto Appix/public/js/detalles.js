@@ -1,6 +1,6 @@
 // Obtener el valor de riesgo desde un elemento en el DOM
-var dataValue = parseInt(document.getElementById('percentage-label').getAttribute('data-value'));
-
+var dataValue = parseInt(document.getElementById('percentage-label').getAttribute('riesgoProyecto'));
+var riesgoTotal = parseInt(document.getElementById('percentage-label').getAttribute('riesgoTotal'));
 // Función para determinar el color basado en el valor
 function getColor(value) {
     if (value > 49) {
@@ -37,11 +37,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (statusElement) {
         statusElement.style.backgroundColor = backgroundColor;
     }
-
-    // Mostrar el porcentaje de riesgo en el div con id 'percentage-label'
-    var percentageLabel = document.getElementById('percentage-label');
-    percentageLabel.textContent = dataValue + '%';
-    percentageLabel.style.color = getColor(dataValue); // Cambiar el color del texto basado en el valor
 });
 
 // Crear la gráfica de pastel
@@ -49,10 +44,10 @@ var ctx = document.getElementById('myPieChart').getContext('2d');
 var myPieChart = new Chart(ctx, {
     type: 'pie', // Tipo de gráfica: 'pie' para pastel
     data: {
-        labels: ['Nivel de Riesgo', 'Restante'], // Etiqueta del gráfico
+        labels: ['Riesgo contra total', 'Riesgo de otros proyectos'], // Etiqueta del gráfico
         datasets: [{
             label: 'Porcentaje',
-            data: [dataValue, 100 - dataValue], // Datos del gráfico
+            data: [riesgoTotal, 100 - riesgoTotal], // Datos del gráfico
             backgroundColor: [getColor(dataValue), 'rgba(200, 200, 200, 0.2)'], // Colores dinámicos según el valor
             borderColor: 'rgba(255, 255, 255, 1)', // Color del borde (blanco)
             borderWidth: 2 // Ancho del borde

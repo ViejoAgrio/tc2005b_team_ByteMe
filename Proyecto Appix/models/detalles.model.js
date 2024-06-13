@@ -56,7 +56,7 @@ module.exports = class Project {
             ORDER BY rp.nivelRiesgo DESC;`
             const riesgos = await connection.execute(query, [id_proyect]);
             await connection.release(); // Liberar la conexión
-            console.log('RIESGOS INFO', riesgos);
+            //console.log('RIESGOS INFO', riesgos);
             return riesgos; // Devolver el resultado de la consulta
         } catch (error) {
             console.error('Error al ejecutar consulta:', error);
@@ -72,7 +72,7 @@ module.exports = class Project {
             WHERE ap.idProyecto = ?;`
             const acciones = await connection.execute(query, [id_proyect]);
             await connection.release(); // Liberar la conexión
-            console.log('ACCIONES INFO', acciones);
+            //console.log('ACCIONES INFO', acciones);
             return acciones; // Devolver el resultado de la consulta
         } catch (error) {
             console.error('Error al ejecutar consulta:', error);
@@ -120,5 +120,17 @@ module.exports = class Project {
             console.error('Error al ejecutar consulta:', error);
             throw error;
         }
+    }
+    async savePorcentajesRiesgos() {
+        try {
+            const connection = await db();
+            const query = `SELECT porcentajeRiesgo FROM proyecto`
+            const porcentajesRiesgos = await connection.execute(query);
+            await connection.release(); 
+            return porcentajesRiesgos; 
+        } catch (error) {
+            console.error('Error al ejecutar consulta:', error);
+            throw error; // Re-throw para manejar el error fuera de la clase
+        } 
     }
 }

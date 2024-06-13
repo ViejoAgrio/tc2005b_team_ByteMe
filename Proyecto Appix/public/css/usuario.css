@@ -35,11 +35,19 @@ body {
     height: 70px;
 }
 
+.searchers {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 15px;
+}
+
 .selectors {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin-top: 15px;
+}
+
+.searcher {
+    left: 40px;
 }
 
 .label-color {
@@ -140,6 +148,10 @@ body {
 
 .post-it-negro {
     background-color: var(--color-negro); 
+}
+
+.post-it-negro-letra {
+    color: var(--color-negro); 
 }
 
 .post-it-rojo-letra {

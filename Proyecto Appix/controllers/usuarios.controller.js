@@ -1,35 +1,51 @@
-const User = require('../models/usuarios.model.js');
-const bcrypt = require('bcryptjs');
+const User = require('../models/admin.model.js');
+const { formatearFecha } = require("../public/js/controllerFuncionts.js");
 
 module.exports.render_usuario = async (req, res) => {
     try {
-
         const newUser = new User(1);
         const resumed = await newUser.saveResumed();
         
-        function formatearFecha(fechaISO) {
-            const fecha = new Date(fechaISO); // Crear objeto Date a partir de la cadena ISO 8601
-            const dia = fecha.getDate();
-            const mes = fecha.getMonth() + 1; // Meses son indexados desde 0 (enero) hasta 11 (diciembre)
-            const anio = fecha.getFullYear();
-            return `${dia < 10 ? '0' + dia : dia} / ${mes < 10 ? '0' + mes : mes} / ${anio}`;
-          }
-          
+        // Formatear las fechas
         resumed.forEach(proyecto => {
             proyecto.fechaInicio = formatearFecha(proyecto.fechaInicio);
             proyecto.fechaFinal = formatearFecha(proyecto.fechaFinal);
-          });
-          
-        // Mostrar los proyectos con fechas formateadas
-        console.log('RESUMED:', resumed);
+        });
         
         const empresas = await newUser.saveEmpresas();
 
-        console.log('Empresas:', empresas);
+        // Obtener los valores de los selectores de la URL (GET request)
+        const estatus = req.query.estatus || 'Todos';
+        const departamento = req.query.departamento || 'Todos';
+        const empresa = req.query.empresa || 'Todos';
+
+        //console.log('Filters received:', { estatus, departamento, empresa });
+
+        // Filtrar los proyectos según los selectores
+        const proyectosFiltrados = resumed.filter(proyecto => {
+            return (estatus === 'Todos' || proyecto.estatus === estatus) &&
+                   (departamento === 'Todos' || proyecto.departamento === departamento) &&
+                   (empresa === 'Todos' || proyecto.nombreEmpresa === empresa);
+        });
+
+        //console.log('Filtered projects:', proyectosFiltrados);
+
+        const proyectosPorPagina = 9;
+        const totalPaginas = Math.ceil(proyectosFiltrados.length / proyectosPorPagina);
+        const paginaActual = parseInt(req.query.page) || 1;
+        const startIndex = (paginaActual - 1) * proyectosPorPagina;
+        const endIndex = startIndex + proyectosPorPagina;
+      
+        const proyectosPaginados = proyectosFiltrados.slice(startIndex, endIndex);
 
         res.render("usuarios/usuario", {
-            resumedProyects: resumed,
-            empresas: empresas
+            resumedProyects: proyectosPaginados,
+            paginaActual: paginaActual,
+            totalPaginas: totalPaginas,
+            empresas: empresas,
+            selectedEstatus: estatus,
+            selectedDepartamento: departamento,
+            selectedEmpresa: empresa
         });
 
     } catch (error) {
@@ -37,8 +53,3 @@ module.exports.render_usuario = async (req, res) => {
         res.status(500).send('Error al obtener registro de la base de datos');
     }
 };
-
-
-module.exports.render_nuevo_proyecto = async(req,res) =>{
-    res.render('admin/nuevo-proyecto');
-}

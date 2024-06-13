@@ -25,7 +25,7 @@ module.exports.User = class {
     static async getPermisos(username) {
         try {
             const connection = await db();
-            console.log(username);
+            //console.log(username);
             const result = await connection.execute('SELECT rol FROM empleado WHERE nombreUsuario = ?', [username]);
             await connection.release();
             return result;
