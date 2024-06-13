@@ -105,12 +105,25 @@ button{
                     <table>
                         <thead>
                             <tr>
-                                <th>Nuevo riesgo</th>
+                                <th>Agregar nuevo riesgo:</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td><input type="text" name="nuevoNombre" id="nuevo-nombre" class="new-risk-Nuevoriesgo" required placeholder="Descripción del riesgo"></td>
+                                <td><input type="text" name="nuevoNombre" id="descripcionProyecto" class="new-risk-Nuevoriesgo" required placeholder="Descripción del riesgo" maxlength="250"></td>
+                                <td>
+                                    <div class="char-count">
+                                        <span id="current-count">0</span>/250 caracteres
+                                    </div>
+                                    <script>
+                                        const descripcionInput = document.getElementById('descripcionProyecto');
+                                        const currentCount = document.getElementById('current-count');
+                                
+                                        descripcionInput.addEventListener('input', () => {
+                                            currentCount.textContent = descripcionInput.value.length;
+                                        });
+                                    </script>
+                                </td>
                                 <td><button class="waves-effect waves-light btn button" type="submit">Agregar</button></td>
                             </tr>
                         </tbody>
@@ -179,9 +192,13 @@ button{
                 fields: [
                     { name: "idRiesgo", type: "hidden", css: "hide" },
                     { name: "descripcionRiesgo", type: "text", title: "Descripción", width: 150 },
-                    { type: "control" }
+                    { 
+                        type: "control", 
+                        clearFilterButton: false, 
+                        modeSwitchButton: false,
+                    }
                 ]
-            });
+                });
 
             // Add keyup event handler to filter inputs
             $(".jsgrid-filter-row input").on("keyup", function() {

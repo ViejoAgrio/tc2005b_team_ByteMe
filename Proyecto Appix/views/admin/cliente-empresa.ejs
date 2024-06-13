@@ -110,7 +110,7 @@ button{
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th>Agrega los clientes del proyecto:</th>
+                                            <th>Agregar clientes:</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -133,7 +133,7 @@ button{
                                     <table>
                                         <thead>
                                             <tr>
-                                                <th>Agrega las empresas del proyecto:</th>
+                                                <th>Agregar empresa:</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -167,7 +167,6 @@ button{
                 filtering: true,
                 editing: true,
                 paging: true,
-                autoload: true,
                 pageSize: 10,
                 pageButtonCount: 5,
                 deleteConfirm: "Si continuas, este cliente será eliminad de todos los proyectos, ¿Está seguro de que desea eliminar este cliente?",
@@ -216,7 +215,11 @@ button{
                 fields: [
                     { name: "idCliente", type: "hidden", css: "hide" },
                     { name: "nombreEncargado", type: "text", title: "Nombre del Encargado", width: 150},
-                    { type: "control" }
+                    { 
+                        type: "control", 
+                        clearFilterButton: false, 
+                        modeSwitchButton: false,
+                    }
                 ]
             });
 
@@ -276,7 +279,11 @@ button{
                 fields: [
                     { name: "idEmpresa", type: "hidden", css: "hide" },
                     { name: "nombreEmpresa", type: "text", title: "Nombre de la empresa", width: 150},
-                    { type: "control" }
+                    { 
+                        type: "control", 
+                        clearFilterButton: false, 
+                        modeSwitchButton: false,
+                    }
                 ]
             });
 
