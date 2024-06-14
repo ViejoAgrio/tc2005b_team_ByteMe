@@ -48,6 +48,9 @@ app.use('/detalles', rutasDetalles);
 const rutasNewProject = require('./routes/new_project.routes');
 app.use('/admin/nuevo-proyecto', rutasNewProject);
 
+const rutasEdicionProject = require('./routes/edicion-projecto.routes');
+app.use('/admin/edicion-proyecto', rutasEdicionProject);
+
 const rutasRiesgos = require('./routes/riesgos.routes');
 app.use('/admin/riesgos', rutasRiesgos);
 
