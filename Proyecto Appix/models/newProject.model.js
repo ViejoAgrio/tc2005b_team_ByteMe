@@ -28,29 +28,6 @@ module.exports.Project = class {
         this.listaRiesgoLevel    = my_listaRiesgoLevel;
         this.listaPlanAccionId   = my_listaPlanAccionId;
     }
-
-    //MÉTODOS 
-
-    // Función para calcular el impacto de los riesgos del proyecto
-    calcularImpacto(r, n) {
-        let sumaNivelRiesgo = 0;
-        for (let i = 0; i < r; i++) {
-            sumaNivelRiesgo += n[i];
-        }
-        return sumaNivelRiesgo * (1 + r / 10);
-    }
-
-    // Función para calcular el porcentaje de riesgo del proyecto
-    calcularPorcentaje(estatus, r, n, d, t) {
-        if (estatus === 'finalizado') {
-            return 0;
-        } else if (d <= t) {
-            return 100;
-        } else {
-            let impacto = this.calcularImpacto(r, n);
-            return (5000 / (impacto + 50)) + ((5000 * t) / (impacto + 50) / d) + 100;
-        }
-    }
     
     async save_Project(res,req){
         try{
@@ -150,6 +127,18 @@ module.exports.Project = class {
         ];
         await connection.query(query, values);
         await connection.release();
+    }
+
+    async updatePorcentajeRiesgo(idProyecto, porcentajeRiesgo) {
+        try {
+            const connection = await db(); // Obtener conexión a la base de datos
+            const query = `UPDATE proyecto SET porcentajeRiesgo = ? WHERE idProyecto = ?;`;
+            await connection.execute(query, [porcentajeRiesgo, idProyecto]);
+            await connection.release(); // Liberar la conexión
+        } catch (error) {
+            console.error('Error al ejecutar consulta:', error);
+            throw error; // Re-throw para manejar el error fuera de la clase
+        } 
     }
 }
 

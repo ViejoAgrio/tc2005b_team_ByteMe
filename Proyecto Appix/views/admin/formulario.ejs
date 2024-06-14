@@ -50,13 +50,10 @@
             <select id="departamento" name="departamento" class="new-risk-department browser-default" required>
                 <option value="" disabled selected>Seleccione un departamento</option>
                 <option value="Desarrollo Web">Desarrollo web</option>
-                <option value="Aplicaciones Web">Aplicaciones web</option>
+                <option value="Diseño Web">Diseño web</option>
             </select>
         </div>
-    </div>
-
-    <label for="porcentajeRiesgo">Porcentaje de riesgo:</label>
-    <input type="number" id="porcentajeRiesgo" name="porcentajeRiesgo" min="1" max="100" required> <!-- Cambiar name a "encargado" -->            
+    </div>           
 
     <label for="descripcionProyecto">Descripción:</label>
     <input type="text" id="descripcionProyecto" name="descripcionProyecto" maxlength="250" required> <!-- Cambiar name a "descripcion" -->
@@ -111,7 +108,7 @@
                 <h4 class="comentarios-guia">¿No encontraste un cliente?</h4>
             </td>
             <td>
-                <button class="waves-effect waves-light btn button" id="btnAgregarCliente" type="button" onclick="location.href='/admin/cliente-empresa'">Agregar nuevo cliente</button>
+                <button class="btn waves-effect waves-light buttonGreen" id="btnAgregarCliente" type="button" onclick="location.href='/admin/cliente-empresa'">Agregar nuevo cliente</button>
             </td>
         </table>
     </div>
@@ -138,39 +135,12 @@
                 <h4 class="comentarios-guia">¿No encontraste una empresa?</h4>
             </td>
             <td>
-                <button class="waves-effect waves-light btn button" id="btnAgregarEmpresa" type="button" onclick="location.href='/admin/cliente-empresa'">Agregar nueva empresa</button>
+                <button class="btn waves-effect waves-light buttonGreen" id="btnAgregarEmpresa" type="button" onclick="location.href='/admin/cliente-empresa'">Agregar nueva empresa</button>
             </td>
         </table>
     </div>
 
     <div id="hiddenInputsEmpresaList" style="display: none;"></div>
-    
-    <section id="plan-de-accion"></section>
-
-        <h3 class="titulo-secciones">Plan de acción</h3>
-  
-
-    <label>Agrega acciones a tu plan de acción del proyecto:</label>
-
-        <h4 class="comentarios-guia">Acciones existentes:</h4>
-   
-
-    <div id="jsGridAcc" class="no-materialize-checkbox"></div>
-
-    <div class="seccion-formulario">
-    <table>
-        <td>
-            <h4 class="comentarios-guia">¿No encontraste una acción?</h4>
-        </td>
-        <td>
-            <button class="waves-effect waves-light btn button" id="btnAgregarPlanAccion" type="button" onclick="location.href='/admin/pendientes'">Agregar nueva acción</button>
-        </td>
-    </table>
-    </div>
-
-    <div id="hiddenInputsAccionList" style="display: none;"></div>
-
-    </section>
 
     <section>
         <div class="new-risks">
@@ -190,18 +160,46 @@
                     <h4 class="comentarios-guia">¿No encontraste el riesgo?</h4>
                 </td>
                 <td>
-                    <button class="waves-effect waves-light btn button" id="btnAgregarRiesgo" type="button" onclick="location.href='/admin/riesgos'">Agregar nuevo riesgo</button></td>
+                    <button class="btn waves-effect waves-light buttonGreen" id="btnAgregarRiesgo" type="button" onclick="location.href='/admin/riesgos'">Agregar nuevo riesgo</button></td>
                 </td>                
             </table>
             </div>
         </div>
     </section>
     
+    
+    <section id="plan-de-accion"></section>
+
+        <h3 class="titulo-secciones">Plan de acción</h3>
+  
+
+    <label>Agrega acciones a tu plan de acción del proyecto:</label>
+
+        <h4 class="comentarios-guia">Acciones existentes:</h4>
+   
+
+    <div id="jsGridAcc" class="no-materialize-checkbox"></div>
+
+    <div class="seccion-formulario">
+    <table>
+        <td>
+            <h4 class="comentarios-guia">¿No encontraste una acción?</h4>
+        </td>
+        <td>
+            <button class="btn waves-effect waves-light buttonGreen" id="btnAgregarPlanAccion" type="button" onclick="location.href='/admin/pendientes'">Agregar nueva acción</button>
+        </td>
+    </table>
+    </div>
+
+    <div id="hiddenInputsAccionList" style="display: none;"></div>
+
+    </section>
+
     <div id="hiddenInputsRiskList" style="display: none;"></div>
 
     <div class="button-container button-container-np" style="display: flex; justify-content: flex-end;">
-        <input class="btn waves-effect waves-light save-button" id="btnGuardar" type="submit" value="Guardar">
-        <button class="btn waves-effect waves-light cancel-button" id="btnCancelar" type="button" onclick="location.href='/admin/admin'">Cancel</button>
+        <button class="btn waves-effect waves-light buttonRed" id="btnCancelar" type="button" onclick="location.href='/admin/admin'">Cancel</button>
+        <button class="btn waves-effect waves-light buttonBlue" id="btnGuardar" type="submit" value="Guardar">Guardar</button>
     </div>
 
     <script>
