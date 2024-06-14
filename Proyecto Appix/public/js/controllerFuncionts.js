@@ -22,8 +22,21 @@ async function calcularPorcentajeRiesgo(idProyecto) {
     const estatus = await calculo.saveEstatus(idProyecto);
     if (estatus.estatus == 'Finalizado'){
         return 0;
-    } else if (fechaInicio >= fechaFinal){
+    } else if (fechaInicio >= fechaFinal || fechaActual >= fechaFinal){
         return 100;
+    } else if (fechaInicio > fechaActual){
+        var sumNiveles = 0;
+        for (let i = 0; i < numeroRiesgos; i++){
+            sumNiveles = sumNiveles + nivelesRiesgos[i].nivelRiesgo
+        }
+        const R = sumNiveles * (1 + (numeroRiesgos / 10));
+        const porcentajeRiesgo = ((-5000) / (R + 50)) + 100;
+        if (porcentajeRiesgo > 100){
+            return 100;
+        } else if (porcentajeRiesgo < 0){
+            return 0;
+        }
+        return porcentajeRiesgo;
     } else {
         var sumNiveles = 0;
         for (let i = 0; i < numeroRiesgos; i++){
@@ -36,6 +49,11 @@ async function calcularPorcentajeRiesgo(idProyecto) {
         const diferenciaMilisegundosHI = fechaActual - fechaInicio;
         const t = Math.round(diferenciaMilisegundosHI / milisegundosPorDia);
         const porcentajeRiesgo = ((-5000) / (R + 50)) + (((5000 * t) / (R + 50)) / d) + 100;
+        if (porcentajeRiesgo > 100){
+            return 100;
+        } else if (porcentajeRiesgo < 0){
+            return 0;
+        }
         return porcentajeRiesgo;
     }
 }

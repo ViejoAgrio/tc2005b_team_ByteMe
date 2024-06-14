@@ -22,7 +22,7 @@ module.exports = class porcentajeRiesgoModel {
             const query = `SELECT COUNT(*) AS numeroRiesgos FROM riesgoProyecto WHERE idProyecto = ?;`
             const [numeroRiesgos] = await connection.execute(query, [id_proyect]);
             await connection.release(); // Liberar la conexión
-            //console.log('RIESGOS INFO', typeof numeroRiesgos.numeroRiesgos);
+            //console.log('RIESGOS INFO', numeroRiesgos, id_proyect);
             return numeroRiesgos; // Devolver el resultado de la consulta
         } catch (error) {
             console.error('Error al ejecutar consulta:', error);
@@ -61,7 +61,6 @@ module.exports = class porcentajeRiesgoModel {
             const query = `SELECT idProyecto FROM proyecto;`;
             const idProyectos = await connection.execute(query);
             await connection.release(); // Liberar la conexión
-            //console.log('RIESGOS INFO', riesgos);
             return idProyectos; // Devolver el resultado de la consulta
         } catch (error) {
             console.error('Error al ejecutar consulta:', error);
@@ -74,7 +73,6 @@ module.exports = class porcentajeRiesgoModel {
             const query = `UPDATE proyecto SET porcentajeRiesgo = ? WHERE idProyecto = ?;`;
             await connection.execute(query, [porcentajeRiesgo, idProyecto]);
             await connection.release(); // Liberar la conexión
-            //console.log('RIESGOS INFO', riesgos);
         } catch (error) {
             console.error('Error al ejecutar consulta:', error);
             throw error; // Re-throw para manejar el error fuera de la clase
