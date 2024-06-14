@@ -138,7 +138,7 @@
                                             <div class="icon-edit"><i class="material-icons">edit</i></div>
                                         </div>
                                         <div class="col s4">
-                                            <div class="icon-copy"><i class="material-icons">content_copy</i></div>
+                                            <div class="icon-copy"><i class="material-icons modal-trigger" data-target="copy-modal" data-id="<%= resumedProyects[i].idProyecto %>">content_copy</i></div>
                                         </div>
                                         <div class="col s4">
                                             <div class="icon-delete"><i class="material-icons modal-trigger" data-target="delete-modal" data-id="<%= resumedProyects[i].idProyecto %>">delete</i></div>
@@ -168,6 +168,18 @@
                 <div class="modal-footer">
                     <button href="#!" class="buttonBlue modal-close waves-effect waves-blue btn-flat">Cancelar</button>
                     <button href="#!" id="confirm-delete" class="buttonRed modal-close waves-effect waves-red btn-flat">Aceptar</button>
+                </div>
+            </div>
+
+            <!-- Copy Modal -->
+            <div id="copy-modal" class="modal">
+                <div class="modal-content">
+                    <h4>Confirmar Copia</h4>
+                    <p>Está a punto de copiar este proyecto. ¿Desea continuar?</p>
+                </div>
+                <div class="modal-footer">
+                    <button href="#!" class="buttonBlue modal-close waves-effect waves-blue btn-flat">Cancelar</button>
+                    <button href="#!" id="confirm-copy" class="buttonRed modal-close waves-effect waves-red btn-flat">Aceptar</button>
                 </div>
             </div>
         </div>
@@ -334,6 +346,45 @@
                 .then(data => {
                     console.log('Success:', data);
                     // Redirigir o actualizar la página después de la eliminación
+                    window.location.href = '/admin/admin';
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+            } else {
+                console.error('ID de proyecto no encontrado.');
+            }
+        });
+
+        // Event delegation for copy icons
+        document.body.addEventListener('click', function(event) {
+            if (event.target.closest('.icon-copy')) {
+                var idProyecto = event.target.closest('.icon-copy').querySelector('i').getAttribute('data-id');
+                document.getElementById('confirm-copy').setAttribute('data-id', idProyecto);
+            }
+        });
+
+        // Manejar el clic en el botón de confirmar copia
+        document.querySelector('#confirm-copy').addEventListener('click', function() {
+            var idProyecto = this.getAttribute('data-id');
+            if (idProyecto) {
+                // Lógica para copiar el proyecto
+                fetch('/admin/copiar', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ idProyecto: idProyecto }),
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error de conexión: ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Success:', data);
+                    // Redirigir o actualizar la página después de la copia
                     window.location.href = '/admin/admin';
                 })
                 .catch((error) => {

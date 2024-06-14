@@ -108,4 +108,142 @@ module.exports = class User {
             throw error;
         }
     }
+
+    async selectProject(){
+        try {
+            //Select project properties
+            
+            const connection = await db();
+
+            const selectProyectoQuery = `
+                SELECT * 
+                FROM proyecto 
+                WHERE idProyecto = ?;
+            `;
+
+            const response = await connection.execute(selectProyectoQuery, [this.id_proyect]);
+            await connection.release()
+            return response[0];
+            
+        } catch (error) {
+            console.error('Error al consultar proyecto: ', error);
+            throw error;
+        }
+    }
+
+    async selectRiesgoProject(){
+        try {
+            //Select riesgoprojecto properties
+            
+            const connection = await db();
+
+            const selectRiesgoProyectoQuery = `
+                SELECT * 
+                FROM riesgoproyecto
+                WHERE idProyecto = ?;
+            `;
+
+            const response = await connection.execute(
+                selectRiesgoProyectoQuery,
+                [this.id_proyect]
+            );
+            
+            await connection.release()
+            return response;
+            
+        } catch (error) {
+            console.error('Error al consultar tabla riesgoproyecto: ', error);
+            throw error;
+        }
+    }
+
+    async selectAccionProject(){
+        try {
+            //Select accionprojecto properties
+            
+            const connection = await db();
+
+            const selectAccionProyectoQuery = `
+                SELECT * 
+                FROM accionproyecto 
+                WHERE idProyecto = ?;
+            `;
+
+            const response = await connection.execute(
+                selectAccionProyectoQuery,
+                [this.id_proyect]
+            );
+
+            await connection.release()
+            return response;
+            
+        } catch (error) {
+            console.error('Error al consultar tabla accionproyecto: ', error);
+            throw error;
+        }
+    }
+
+    async selectEmpresaCliente(){
+        try {
+            //Select empresacliente properties
+            
+            const connection = await db();
+
+            const selectEmpresaClienteQuery = `
+                SELECT *
+                FROM empresacliente 
+                WHERE idProyecto = ?;
+            `;
+
+            const response = await connection.execute(selectEmpresaClienteQuery, [this.id_proyect]);
+            await connection.release()
+            return response[0];
+            
+        } catch (error) {
+            console.error('Error al consultar tabla empresacliente: ', error);
+            throw error;
+        }
+    }
+
+    async save_planAccionProject(listaPlanAccion,idProyecto) {
+        const connection = await db();
+
+        const query = `
+            INSERT INTO accionproyecto 
+            (idProyecto, idAccion, estatusAccion)
+            VALUES (?, ?, ?);
+        `;
+
+        for (const planAccion of listaPlanAccion) {
+            const values = [
+                idProyecto,
+                planAccion.idAccion,
+                planAccion.estatusAccion
+            ];
+            await connection.query(query, values);
+        }
+
+        await connection.release();
+    }
+
+    async save_riesgoProject(listaRiesgoProject,idProyecto) {
+        const connection = await db();
+
+        const query = `
+            INSERT INTO riesgoproyecto 
+            (idProyecto, idRiesgo, nivelRiesgo)
+            VALUES (?, ?, ?);
+        `;
+
+        for (const riesgoProj of listaRiesgoProject) {
+            const values = [
+                idProyecto,
+                riesgoProj.idRiesgo,
+                riesgoProj.nivelRiesgo
+            ];
+            await connection.query(query, values);
+        }
+
+        await connection.release();
+    }
 }

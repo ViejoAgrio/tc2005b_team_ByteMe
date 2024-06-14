@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-
+/*
 document.addEventListener('DOMContentLoaded', function() {
     $(document).ready(function() {
         $('#add-client-btn').click(function() {
@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+*/
 
 /* Fill clients dropdown with database info
 document.addEventListener('DOMContentLoaded', function() {
@@ -543,17 +544,3 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => console.error('Error al cargar los riesgos:', error));
 });
-
-/*document.addEventListener('DOMContentLoaded', function() {
-    $("#btnCancelar").on("click", function() {
-        if (Object.keys(checkboxStatesRsg).length != 0){
-            // Iterar sobre todos los checkboxes encontrados
-            Object.keys(checkboxStatesRsg).forEach(function(key) {
-                if(checkboxStatesRsg[key]){
-                    riskLvl[key] = numberInputStatesRsg[key];
-                    alert(riskLvl[key]);
-                }
-            });
-        }
-    });
-});*/
