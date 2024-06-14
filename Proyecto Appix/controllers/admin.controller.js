@@ -1,4 +1,5 @@
-const User = require('../models/admin.model.js');
+const User    = require('../models/admin.model.js');
+const npModel = require('../models/newProject.model.js');
 const { formatearFecha, calcularPorcentajeRiesgo } = require("../public/js/controllerFuncionts.js");
 
 module.exports.render_admin = async (req, res) => {
@@ -90,5 +91,95 @@ module.exports.eliminar_proyecto = async (req, res) => {
     } catch (error) {
         console.error('Error al eliminar el proyecto:', error);
         res.status(500).json({ message: 'Error al eliminar el proyecto' });
+    }
+};
+
+module.exports.copiar_proyecto = async (req, res) => {
+    const { idProyecto } = req.body;
+    try {
+        var banderaRiesgos  = false;
+        var banderaAcciones = false;
+        var banderaAddPlanAccion = false;
+        var banderaAddRiesgos    = false;
+
+        const project = new User(idProyecto);
+
+        // Consultas relacionadas al proyecto
+        const projectProperties = await project.selectProject();
+        
+        const riesgoProjectProperties = await project.selectRiesgoProject();
+
+        const accionProjectProperties = await project.selectAccionProject();
+
+        const empresaClienteProjectProperties = await project.selectEmpresaCliente();
+        
+        // Validación de datos indispensables
+        if (!projectProperties) {
+            res.status(500).json(
+                { message: 'Error al copiar el proyecto: Proyecto no encontrado' }
+            );
+        }
+
+        if(!empresaClienteProjectProperties){
+            res.status(500).json(
+                { message: 'Error al copiar el proyecto: Proyecto no encontrado' }
+            );
+        }
+
+        /*my_nombreProyecto,
+        my_descripcionProyecto,
+        my_departamento,
+        my_selectedEstatus, 
+        my_fechaInicio, 
+        my_fechaFinal,
+        my_porcentajeRiesgo,
+        my_idCliente,
+        my_idEmpresa,
+        my_listaRiesgoId,
+        my_listaRiesgoLevel,
+        my_listaPlanAccionId*/
+
+
+        // Insersiones a las tablas pertinentes
+        const oldProjectProp = new npModel.Project(
+            projectProperties.nombreProyecto + " - copia",
+            projectProperties.descripcionProyecto,
+            projectProperties.departamento,
+            projectProperties.estatus,
+            projectProperties.fechaInicio,
+            projectProperties.fechaFinal,
+            projectProperties.porcentajeRiesgo,
+            empresaClienteProjectProperties.idCliente,
+            empresaClienteProjectProperties.idEmpresa
+        );
+
+        const nuevoProyecto = await oldProjectProp.save_Project();
+        
+        await oldProjectProp.save_clientEmpresaProject(
+            res,
+            req,
+            oldProjectProp.idEmpresa,
+            oldProjectProp.idCliente,
+            nuevoProyecto.idProyecto
+        );
+        
+        if(accionProjectProperties){
+            await project.save_planAccionProject(
+                accionProjectProperties,
+                nuevoProyecto.idProyecto
+            );
+        }
+
+        if(riesgoProjectProperties){
+            await project.save_riesgoProject(
+                riesgoProjectProperties,
+                nuevoProyecto.idProyecto
+            );
+        }
+
+        res.status(200).json({ message: 'Proyecto copiado correctamente' });
+    } catch (error) {
+        console.error('Error al copiar el proyecto:', error);
+        res.status(500).json({ message: 'Error al copiar el proyecto' });
     }
 };
