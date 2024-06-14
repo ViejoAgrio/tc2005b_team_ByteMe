@@ -28,8 +28,6 @@ module.exports.Project = class {
         this.listaRiesgoLevel    = my_listaRiesgoLevel;
         this.listaPlanAccionId   = my_listaPlanAccionId;
     }
-
-    //MÉTODOS 
     
     async save_Project(res,req){
         try{
@@ -129,6 +127,18 @@ module.exports.Project = class {
         ];
         await connection.query(query, values);
         await connection.release();
+    }
+
+    async updatePorcentajeRiesgo(idProyecto, porcentajeRiesgo) {
+        try {
+            const connection = await db(); // Obtener conexión a la base de datos
+            const query = `UPDATE proyecto SET porcentajeRiesgo = ? WHERE idProyecto = ?;`;
+            await connection.execute(query, [porcentajeRiesgo, idProyecto]);
+            await connection.release(); // Liberar la conexión
+        } catch (error) {
+            console.error('Error al ejecutar consulta:', error);
+            throw error; // Re-throw para manejar el error fuera de la clase
+        } 
     }
 }
 

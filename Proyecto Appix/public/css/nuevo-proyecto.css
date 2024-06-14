@@ -3,8 +3,8 @@
 
 h2 {
     text-align: center;
-    font-size: 4em; 
-    color: #007bff;
+    font-size: 4em; /* Letras más grandes */
+    color:rgb(49, 131, 214);
     text-transform: uppercase;
     margin-top: 50px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -125,31 +125,6 @@ header {
     margin-right: 10px;
 }
 
-#agregar-plan-btn {
-    padding: 8px 12px;
-    font-size: 14px;
-    width: 100px;
-    display: flex; /* Usar flexbox */
-    align-items: center; /* Centrar verticalmente el botón */
-    justify-content: center; /* Centrar horizontalmente el botón */
-}
-
-.eliminar-plan-btn {
-    background-color: #ffffff;
-    border: none; /* Quita el borde del botón */
-    padding: 0; /* Elimina el relleno */
-    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-    background-image: url('/images/trash2.png'); /* Agrega la imagen de fondo */
-    background-size: cover; /* Ajusta el tamaño de la imagen */
-    width: 20px; /* Ajusta el ancho del botón */
-    height: 20px; /* Ajusta la altura del botón */
-    margin-left: 10px;
-}
-
-.eliminar-plan-btn:hover img {
-    filter: brightness(80%); /* Reduce el brillo de la imagen al pasar el mouse sobre el botón */
-}
-
 .divider {
     border-top: 1px solid #ccc; /* Línea divisoria gris */
     margin-top: 10px; /* Espacio superior */
@@ -170,50 +145,6 @@ header {
     margin-top: 15px;
     margin-bottom: 15;
 }
-
-.button-centered {
-    display: flex;
-    height: 70px;
-    width: 100%;
-    align-items: center;
-    margin: 0;
-}
-
-button{
-    background:rgb(49, 131, 214);
-    color:#fff;
-    border:none;
-    position:relative;
-    height:35px;
-    width: 130px;
-    cursor:pointer;
-    transition:800ms ease all;
-    outline:none;
-  }
-  button:hover{
-    background:#fff;
-    color:rgb(49, 131, 214);
-  }
-  button:before,button:after{
-    content:'';
-    position:absolute;
-    top:0;
-    right:0;
-    height:2px;
-    width:0;
-    background: rgb(49, 131, 214);
-    transition:400ms ease all;
-  }
-  button:after{
-    right:inherit;
-    top:inherit;
-    left:0;
-    bottom:0;
-  }
-  button:hover:before,button:hover:after{
-    width:100%;
-    transition:800ms ease all;
-  }
 
 .no-materialize-checkbox{
     margin-top: 10px;
@@ -240,3 +171,114 @@ button{
 .seccion-formulario {
     margin-bottom: 50px;
 }
+
+.buttonBlue{
+    color: white;
+    margin: 10px;
+    border:none;
+    position:relative;
+    height:35px;
+    width: 150px;
+    cursor:pointer;
+    transition:800ms ease all;
+    background: rgb(49, 131, 214);
+    outline:none;
+  }
+  .buttonBlue:hover{
+    background:#fff;
+    color:rgb(49, 131, 214);
+  }
+  .buttonBlue:before,.buttonBlue:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: rgb(49, 131, 214);
+    transition:400ms ease all;
+  }
+  .buttonBlue:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+  }
+  .buttonBlue:hover:before,.buttonBlue:hover:after{
+    width:100%;
+    transition:800ms ease all;
+  }
+
+.buttonRed{
+    color: white;
+    margin: 10px;
+    border:none;
+    position:relative;
+    height:35px;
+    width: 150px;
+    cursor:pointer;
+    transition:800ms ease all;
+    background: rgb(176, 14, 14);
+    outline:none;
+  }
+  .buttonRed:hover{
+    background:#fff;
+    color:rgb(176, 14, 14);
+  }
+  .buttonRed:before,.buttonRed:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: rgb(176, 14, 14);
+    transition:400ms ease all;
+  }
+  .buttonRed:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+  }
+  .buttonRed:hover:before,.buttonRed:hover:after{
+    width:100%;
+    transition:800ms ease all;
+  }
+
+  .buttonGreen{
+    color: white;
+    margin: 10px;
+    border:none;
+    position:relative;
+    height:35px;
+    width: 250px;
+    cursor:pointer;
+    transition:800ms ease all;
+    background: rgb(31, 134, 105);
+    outline:none;
+  }
+  .buttonGreen:hover{
+    background:#fff;
+    color:rgb(31, 134, 105);
+  }
+  .buttonGreen:before,.buttonGreen:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: rgb(31, 134, 105);
+    transition:400ms ease all;
+  }
+  .buttonGreen:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+  }
+  .buttonGreen:hover:before,.buttonGreen:hover:after{
+    width:100%;
+    transition:800ms ease all;
+  }
