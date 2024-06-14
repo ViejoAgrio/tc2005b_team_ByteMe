@@ -22,7 +22,7 @@ module.exports = class porcentajeRiesgoModel {
             const query = `SELECT COUNT(*) AS numeroRiesgos FROM riesgoProyecto WHERE idProyecto = ?;`
             const [numeroRiesgos] = await connection.execute(query, [id_proyect]);
             await connection.release(); // Liberar la conexión
-            console.log('RIESGOS INFO', numeroRiesgos, id_proyect);
+            //console.log('RIESGOS INFO', numeroRiesgos, id_proyect);
             return numeroRiesgos; // Devolver el resultado de la consulta
         } catch (error) {
             console.error('Error al ejecutar consulta:', error);

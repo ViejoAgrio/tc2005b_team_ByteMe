@@ -134,7 +134,6 @@ module.exports.postNewProject = async (req, res) => {
             await objProject.save_riskProject(res,req,projectArrayId.idProyecto);
         }
         const porcentajeRiesgo = await calcularPorcentajeRiesgo(projectArrayId.idProyecto);
-        console.log('AAAAAA', porcentajeRiesgo, 'BBBB', projectArrayId.idProyecto);
         await objProject.updatePorcentajeRiesgo(projectArrayId.idProyecto, porcentajeRiesgo);
 
         res.status(201).redirect("/admin/admin")
