@@ -3,7 +3,7 @@ var dataValue = parseInt(document.getElementById('percentage-label').getAttribut
 var riesgoTotal = parseInt(document.getElementById('percentage-label').getAttribute('riesgoTotal'));
 // Función para determinar el color basado en el valor
 function getColor(value) {
-    if (value > 49) {
+    if (value > 66) {
         return 'rgb(176, 14, 14)';
     } else if (value > 33) {
         return 'rgb(226, 173, 14)';
@@ -16,7 +16,7 @@ function getColor(value) {
 
 // Función para determinar el color de fondo basado en el valor
 function getBackgroundColor(value) {
-    if (value > 49) {
+    if (value > 66) {
         return 'rgb(176, 14, 14)';
     } else if (value > 33) {
         return 'rgb(226, 173, 14)';

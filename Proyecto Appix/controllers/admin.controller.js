@@ -5,8 +5,8 @@ module.exports.render_admin = async (req, res) => {
     try {
         const newUser = new User(1);
         const resumed = await newUser.saveResumed();
-        const porcentajeRiesgo = await calcularPorcentajeRiesgo(1);
-        console.log('porcentajeRiesgo: ', porcentajeRiesgo);
+        //const porcentajeRiesgo = await calcularPorcentajeRiesgo(1);
+        //console.log('porcentajeRiesgo: ', porcentajeRiesgo);
         // Formatear las fechas
         resumed.forEach(proyecto => {
             proyecto.fechaInicio = formatearFecha(proyecto.fechaInicio);
