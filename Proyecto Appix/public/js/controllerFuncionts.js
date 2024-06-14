@@ -29,6 +29,7 @@ async function calcularPorcentajeRiesgo(idProyecto) {
         for (let i = 0; i < numeroRiesgos; i++){
             sumNiveles = sumNiveles + nivelesRiesgos[i].nivelRiesgo
         }
+        console.log('ESTST', numeroRiesgosN, idProyecto);
         const R = sumNiveles * (1 + (numeroRiesgos / 10));
         const diferenciaMilisegundosFI = fechaFinal - fechaInicio;
         const milisegundosPorDia = 1000 * 60 * 60 * 24;

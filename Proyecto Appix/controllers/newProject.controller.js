@@ -1,4 +1,5 @@
 const np = require('../models/newProject.model.js');
+const { formatearFecha, calcularPorcentajeRiesgo } = require("../public/js/controllerFuncionts.js");
 const db = require('../utils/database.js');
 
 
@@ -39,7 +40,6 @@ module.exports.getRiesgos = async (req, res) => {
     catch (error) {
         res.status(500).json({ error: 'Error al obtener los riesgos' });
     }
-    console.log("Test");
 };
 
 module.exports.getPlanAccion = async (req, res) => {
@@ -52,7 +52,6 @@ module.exports.getPlanAccion = async (req, res) => {
     catch (error) {
         res.status(500).json({ error: 'Error al obtener los planes de accion' });
     }
-    console.log("Test");
 };
 
 module.exports.postNewProject = async (req, res) => {
@@ -63,7 +62,6 @@ module.exports.postNewProject = async (req, res) => {
         const selectedEstatus     = req.body['estatus'];
         const departamento        = req.body['departamento'];
         const descripcionProyecto = req.body.descripcionProyecto;
-        const porcentajeRiesgo    = req.body.porcentajeRiesgo;
         var clienteId             = {};
         var empresaId             = {};
         var listaPlanAccionIds    = {};
@@ -111,7 +109,7 @@ module.exports.postNewProject = async (req, res) => {
                                           selectedEstatus, 
                                           fechaInicio, 
                                           fechaFin,
-                                          porcentajeRiesgo,
+                                          10,
                                           clienteId,
                                           empresaId,
                                           listaRiesgosIds,
@@ -135,6 +133,9 @@ module.exports.postNewProject = async (req, res) => {
         {
             await objProject.save_riskProject(res,req,projectArrayId.idProyecto);
         }
+        const porcentajeRiesgo = await calcularPorcentajeRiesgo(projectArrayId.idProyecto);
+        console.log('AAAAAA', porcentajeRiesgo, 'BBBB', projectArrayId.idProyecto);
+        await objProject.updatePorcentajeRiesgo(projectArrayId.idProyecto, porcentajeRiesgo);
 
         res.status(201).redirect("/admin/admin")
     }
