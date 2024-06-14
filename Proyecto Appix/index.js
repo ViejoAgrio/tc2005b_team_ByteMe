@@ -2,6 +2,7 @@ const http    = require('http');
 const express = require('express');
 const path    = require('path');
 const app     = express();
+require('./public/js/cronJob');
 
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
@@ -23,7 +24,7 @@ app.set('views', 'views');
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static('public'));
 
@@ -36,16 +37,25 @@ app.get('/', async(req, res, next) => {
 });
 
 const rutasUsuarios = require('./routes/usuarios.routes');
-app.use('/usuarios', isUser, rutasUsuarios);
+app.use('/usuarios', rutasUsuarios);
 
 const rutasAdmin = require('./routes/admin.routes');
 app.use('/admin', rutasAdmin);
 
 const rutasDetalles = require('./routes/detalles.routes');
-app.use('/detalles', isAuth, rutasDetalles);
+app.use('/detalles', rutasDetalles);
 
 const rutasNewProject = require('./routes/new_project.routes');
 app.use('/admin/nuevo-proyecto', rutasNewProject);
+
+const rutasRiesgos = require('./routes/riesgos.routes');
+app.use('/admin/riesgos', rutasRiesgos);
+
+const rutasPendientes = require('./routes/pendientes.routes');
+app.use('/admin/pendientes', rutasPendientes);
+
+const rutasClienteEmpresa = require('./routes/cliente-empresa.routes');
+app.use('/admin/cliente-empresa', rutasClienteEmpresa);
 
 const rutasLogin = require('./routes/login.routes');
 app.use('/login', rutasLogin);

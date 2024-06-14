@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Tiny5&display=swap');
+
 :root {
-    --color-back-azul: #00508F; 
+    --color-back-azul: #004586; 
     --color-rojo: rgb(176, 14, 14); 
     --color-info-rojo: rgb(205, 73, 73);
     --color-amarillo: rgb(226, 173, 14); 
@@ -64,7 +66,9 @@ body {
     height: 70px; /* Ajusta esto al tamaño de tu logo */
     background-image: url('/images/logo-appix-blanco.png'); 
     background-size: contain; /* Asegura que el logo se ajuste dentro de las dimensiones */
-    margin-bottom: 20px;
+    margin-right: 5px;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .header-title {
@@ -72,7 +76,11 @@ body {
     font-size: 24px; /* Tamaño de fuente del título */
     margin: 0; /* Elimina el margen por defecto del H1 */
     height: 70px;
+    width: 100%;
     align-items: center;
+    font-family: "Tiny5", sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
 .row {
