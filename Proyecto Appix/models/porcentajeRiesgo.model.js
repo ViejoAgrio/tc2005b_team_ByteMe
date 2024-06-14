@@ -55,4 +55,29 @@ module.exports = class porcentajeRiesgoModel {
             throw error; // Re-throw para manejar el error fuera de la clase
         } 
     }
+    async saveIdProyectos(idProyecto, porcentajeRiesgo) {
+        try {
+            const connection = await db(); // Obtener conexión a la base de datos
+            const query = `SELECT idProyecto FROM proyecto;`;
+            const idProyectos = await connection.execute(query);
+            await connection.release(); // Liberar la conexión
+            //console.log('RIESGOS INFO', riesgos);
+            return idProyectos; // Devolver el resultado de la consulta
+        } catch (error) {
+            console.error('Error al ejecutar consulta:', error);
+            throw error; // Re-throw para manejar el error fuera de la clase
+        } 
+    }
+    async updatePorcentajeRiesgo(idProyecto, porcentajeRiesgo) {
+        try {
+            const connection = await db(); // Obtener conexión a la base de datos
+            const query = `UPDATE proyecto SET porcentajeRiesgo = ? WHERE idProyecto = ?;`;
+            await connection.execute(query, [porcentajeRiesgo, idProyecto]);
+            await connection.release(); // Liberar la conexión
+            //console.log('RIESGOS INFO', riesgos);
+        } catch (error) {
+            console.error('Error al ejecutar consulta:', error);
+            throw error; // Re-throw para manejar el error fuera de la clase
+        } 
+    }
 }

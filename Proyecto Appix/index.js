@@ -2,6 +2,7 @@ const http    = require('http');
 const express = require('express');
 const path    = require('path');
 const app     = express();
+require('./public/js/cronJob');
 
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
