@@ -31,27 +31,6 @@ module.exports.Project = class {
     }
 
     //MÉTODOS 
-
-    // Función para calcular el impacto de los riesgos del proyecto
-    calcularImpacto(r, n) {
-        let sumaNivelRiesgo = 0;
-        for (let i = 0; i < r; i++) {
-            sumaNivelRiesgo += n[i];
-        }
-        return sumaNivelRiesgo * (1 + r / 10);
-    }
-
-    // Función para calcular el porcentaje de riesgo del proyecto
-    calcularPorcentaje(estatus, r, n, d, t) {
-        if (estatus === 'finalizado') {
-            return 0;
-        } else if (d <= t) {
-            return 100;
-        } else {
-            let impacto = this.calcularImpacto(r, n);
-            return (5000 / (impacto + 50)) + ((5000 * t) / (impacto + 50) / d) + 100;
-        }
-    }
     
     async save_Project(res,req){
         try{
@@ -161,29 +140,7 @@ module.exports.PlanAccion = class {
     }
 
     //MÉTODOS 
-    //async save_PlanAccion(res, req) {
-    //    try {
-    //        const connection = await db();
-    //        const query = `INSERT INTO accion 
-    //                        (idProyecto,
-    //                         descripcionAccion,
-    //                         estadoRealizacion)
-    //                       VALUES (?, ?, ?)`;
-    //        const values = [
-    //            1,
-    //            this.descripcionAccion,
-    //            0
-    //        ];
-//
-    //        const resplanAccion = await connection.query(query,values);
-    //        return resplanAccion;
-    //    }
-    //    catch (error) {
-    //        //console.error('Error al guardar el proyecto:', error);
-    //        return false;
-    //    }
-    //};
-
+    
     async get_PlanAccion(){
         try{
             const connection = await db();
@@ -284,6 +241,7 @@ module.exports.Riesgo = class {
     }
 
     //MÉTODOS 
+
     async get_Riesgo(){
         try{
             const connection = await db();
@@ -300,102 +258,3 @@ module.exports.Riesgo = class {
     }
 
 }
-
-
-
-
-
-//--------------------------------
-//module.exports.saveNewProject = async (res,req) => {
-//    try
-//    {
-//        const connection = await db.pool.getConnection();
-//        const query = `SELECT nombreProyecto, estatus, fechaInicio, fechaFinal, porcentajeRiesgo 
-//                FROM proyecto
-//                ORDER BY porcentajeRiesgo DESC;`;
-//        
-//        query_res = await connection.query(query);
-//        res.send(query_res);
-//    }
-//    catch(error) {
-//        console.error('Error al ejecutar consulta:', error);
-//        throw error; // Re-throw para manejar el error fuera de la clase
-//    }
-//};
-
-
-//--------------------------------
-//module.exports.saveNewProject = async (res,req) => {
-//    try {
-//        const connection = await db.pool.getConnection();
-//        const query = `INSERT INTO riesgo 
-//                        (idProyecto, 
-//                        descripcionRiesgo, 
-//                        nivelRiesgo)
-//                        VALUES (?, ?, ?)`;
-//        const value = [12, "TestInsert", 5];
-//        const query_res = await connection.query(query, value);
-//        res.send("Inserción exitosa");
-//    }
-//    catch (error) {
-//        console.error('Error al ejecutar consulta:', error);
-//        throw error; // Re-throw para manejar el error fuera de la clase
-//    }
-//};
-//--------------------------------
-
-
-//module.exports.saveNewProject = async (res, nombreProyecto/*,idProyecto, descripcionRiesgo, nivelRiesgo*/) => {
- //   res.send(nombreProyecto);
-    
-    /*try {
-        const connection = await db.pool.getConnection();
-        const query = `INSERT INTO riesgo 
-                        (idProyecto, 
-                        descripcionRiesgo, 
-                        nivelRiesgo)
-                        VALUES (?, ?, ?)`;
-        const value = [idProyecto, descripcionRiesgo, nivelRiesgo];
-        const query_res = await connection.query(query, value);
-        res.send("Inserción exitosa");
-    }
-    catch (error) {
-        console.error('Error al ejecutar consulta:', error);
-        throw error; // Re-throw para manejar el error fuera de la clase
-    }*/
-//};
-
-
-//module.exports.saveNewProject = async (res,req) => {
-//    try {
-//        const connection = await db.pool.getConnection();
-//        const query = `INSERT INTO riesgo 
-//                        (idProyecto, 
-//                        descripcionRiesgo, 
-//                        nivelRiesgo)
-//                        VALUES (?, ?, ?)`;
-//        const value = [12, "TestInsert", 5];
-//        const query_res = await connection.query(query, value);
-//        res.send("Inserción exitosa");
-//    }
-//    catch (error) {
-//        console.error('Error al ejecutar consulta:', error);
-//        throw error; // Re-throw para manejar el error fuera de la clase
-//    }
-//};
-
-
-
-//--------------------------------
-//
-//module.exports.postNewProject = (project, callback) => {
-//    const { nombreProyecto, fechaInicio, fechaFin, empresa, departamento, estatus, encargado, porcentajeRiesgo, descripcionProyecto } = project;
-//    const stmt = await.db.prepare(`INSERT INTO projects (nombreProyecto, fechaInicio, fechaFin, empresa, departamento, estatus, encargado, porcentajeRiesgo, descripcionProyecto)
-//    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-//    `);
-//    stmt.run(nombreProyecto, fechaInicio, fechaFin, empresa, departamento, estatus, encargado, porcentajeRiesgo, descripcionProyecto, function(err) {
-//        callback(err, this.lastID);
-//    });
-//    stmt.finalize();
-//};
-

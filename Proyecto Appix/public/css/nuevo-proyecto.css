@@ -1,13 +1,10 @@
-/* Estilos generales */
-
-
 h2 {
     text-align: center;
-    font-size: 4em; /* Letras más grandes */
-    color: #007bff; /* Color azul */
+    font-size: 4em; 
+    color: #007bff;
     text-transform: uppercase;
     margin-top: 50px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Estilo de fuente */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     position: relative;
 }
 
