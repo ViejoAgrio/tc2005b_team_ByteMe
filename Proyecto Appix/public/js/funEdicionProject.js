@@ -307,7 +307,7 @@ document.addEventListener('DOMContentLoaded', function() {
         for (var itemId in hiddenInputsAccionData) {
             if (hiddenInputsAccionData.hasOwnProperty(itemId)) {
                 var data = hiddenInputsAccionData[itemId];
-                var inputHtml = '<input type="hidden" name="hiddenAccInput_Chk" id="-1" value="' + data.id + '" />';
+                var inputHtml = '<input type="hidden" name="hiddenAccInput_Chk" value="' + data.id + '" />';
                 hiddenInputsAccionList.append(inputHtml); // Agrega el input oculto al elemento oculto
             }
         }
@@ -363,6 +363,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                             accion.idAccion = -1;
                                             
                                             checkboxAccStates[item.idAcc] = true;
+                                            hiddenInputsAccionData[item.idAcc] = { id: item.idAcc};
                                         }
                                     }
                                 }
