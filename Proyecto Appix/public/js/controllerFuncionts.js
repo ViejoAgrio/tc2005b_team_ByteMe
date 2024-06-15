@@ -10,6 +10,16 @@ function formatearFecha(fechaISO) {
     return `${diaFormateado} / ${mesFormateado} / ${anio}`;
 }
 
+function formatearFechaReverse(fechaISO) {
+    const fecha = new Date(fechaISO);
+    const dia = fecha.getDate();
+    const mes = fecha.getMonth() + 1;
+    const anio = fecha.getFullYear();
+    const diaFormateado = dia < 10 ? '0' + dia : dia;
+    const mesFormateado = mes < 10 ? '0' + mes : mes;
+    return `${anio}-${mesFormateado}-${diaFormateado}`;
+}
+
 async function calcularPorcentajeRiesgo(idProyecto) {
     const calculo = new porcentajeRiesgoModel(idProyecto);
     const fechas = await calculo.saveDates(idProyecto);
@@ -58,4 +68,4 @@ async function calcularPorcentajeRiesgo(idProyecto) {
     }
 }
 
-module.exports = { formatearFecha, calcularPorcentajeRiesgo };
+module.exports = { formatearFecha , formatearFechaReverse, calcularPorcentajeRiesgo };

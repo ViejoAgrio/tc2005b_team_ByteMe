@@ -71,35 +71,26 @@
         });
     </script>
 
-    <!--
-    <div style="display: flex; justify-content: space-between;" name="clients-div" id="clients-div">
-        <div style="width: 48%;">
-            <button id="add-client-btn" name="add-client-btn" class="waves-effect waves-light btn button" type="button">
-                Agregar Nuevo Cliente
-            </button>
-        </div>
-
-
-        <div style="width: 48%;">
-            <select id="clients-lst" name="clients-lst" class="new-risk-department browser-default" required>
-                <option value="" disabled selected>Seleccione un cliente</option>
-            </select>
-        </div>
-    </div>
-    -->
-
     <section id="cliente"></section>
 
-
         <h3 class="titulo-secciones">Clientes</h3>
-   
 
     <label>Agrega el cliente encargado del proyecto:</label>
 
-  
-        <h4 class="comentarios-guia">Clientes existentes:</h4>
- 
-
+    <table style="width: 100%;">
+        <tr>
+            <td>
+                <h4 class="comentarios-guia">Clientes existentes:</h4>
+                <label>Recuerda recargar la tabla en caso de haber agregado más clientes:</label>
+            </td>
+            <td style="text-align: right;">
+                <div id="refreshContainerClientes">
+                    <button id="refreshButtonClientes" class="refreshButton" type="button"></button>
+                </div>
+                <span id="refreshTextClientes" class="refreshText">Actualiza</span>
+            </td>
+        </tr>
+    </table>
     <div id="jsGridClientes" class="no-materialize-checkbox"></div>
 
     <div class="seccion-formulario">
@@ -117,16 +108,24 @@
 
     <section id="empresa"></section>
 
-
         <h3 class="titulo-secciones">Empresas</h3>
  
-
     <label>Agrega una empresa a tu proyecto:</label>
 
-  
-        <h4 class="comentarios-guia">Empresas existentes:</h4>
- 
-
+    <table style="width: 100%;">
+        <tr>
+            <td>
+                <h4 class="comentarios-guia">Empresas existentes:</h4>
+                <label>Recuerda recargar la tabla en caso de haber agregado más empresas:</label>
+            </td>
+            <td style="text-align: right;">
+                <div id="refreshContainerEmpresas">
+                    <button id="refreshButtonEmpresas" class="refreshButton" type="button"></button>
+                </div>
+                <span id="refreshTextEmpresas" class="refreshText">Actualiza</span>
+            </td>
+        </tr>
+    </table>
     <div id="jsGridEmpresas" class="no-materialize-checkbox"></div>
 
     <div class="seccion-formulario">
@@ -142,16 +141,28 @@
 
     <div id="hiddenInputsEmpresaList" style="display: none;"></div>
 
+
     <section>
         <div class="new-risks">
+            
             <h3 class="titulo-secciones">Riesgos</h3>
 
             <label>Agrega riesgos y su nivel de impacto en tu proyecto:</label>
 
-        
-                <h4 class="comentarios-guia">Riesgos existentes:</h4>
-           
-
+            <table style="width: 100%;">
+                <tr>
+                    <td>
+                        <h4 class="comentarios-guia">Riesgos existentes:</h4>
+                        <label>Recuerda recargar la tabla en caso de haber agregado más riesgos:</label>
+                    </td>
+                    <td style="text-align: right;">
+                        <div id="refreshContainerRiesgos">
+                            <button id="refreshButtonRiesgos" class="refreshButton" type="button"></button>
+                        </div>
+                        <span id="refreshTextRiesgos" class="refreshText">Actualiza</span>
+                    </td>
+                </tr>
+            </table>
             <div id="jsGridRsg" name="jsGridRsg" class="no-materialize-checkbox"></div>
 
             <div class="seccion-formulario">
@@ -172,21 +183,31 @@
 
         <h3 class="titulo-secciones">Plan de acción</h3>
   
+    <label>Agrega pendientes a tu plan de acción del proyecto:</label>
 
-    <label>Agrega acciones a tu plan de acción del proyecto:</label>
-
-        <h4 class="comentarios-guia">Acciones existentes:</h4>
-   
-
+    <table style="width: 100%;">
+        <tr>
+            <td>
+                <h4 class="comentarios-guia">Pendientes existentes:</h4>
+                <label>Recuerda recargar la tabla en caso de haber agregado más pendientes:</label>
+            </td>
+            <td style="text-align: right;">
+                <div id="refreshContainerAccion">
+                    <button id="refreshButtonAccion" class="refreshButton" type="button"></button>
+                </div>
+                <span id="refreshTextAccion" class="refreshText">Actualiza</span>
+            </td>
+        </tr>
+    </table>
     <div id="jsGridAcc" class="no-materialize-checkbox"></div>
 
     <div class="seccion-formulario">
     <table>
         <td>
-            <h4 class="comentarios-guia">¿No encontraste una acción?</h4>
+            <h4 class="comentarios-guia">¿No encontraste un pendiente?</h4>
         </td>
         <td>
-            <button class="btn waves-effect waves-light buttonGreen" id="btnAgregarPlanAccion" type="button" onclick="location.href='/admin/pendientes'">Agregar nueva acción</button>
+            <button class="btn waves-effect waves-light buttonGreen" id="btnAgregarPlanAccion" type="button" onclick="location.href='/admin/pendientes'">Agregar nuevo pendiente</button>
         </td>
     </table>
     </div>
@@ -198,25 +219,8 @@
     <div id="hiddenInputsRiskList" style="display: none;"></div>
 
     <div class="button-container button-container-np" style="display: flex; justify-content: flex-end;">
-        <button class="btn waves-effect waves-light buttonRed" id="btnCancelar" type="button" onclick="location.href='/admin/admin'">Cancel</button>
+        <button class="btn waves-effect waves-light buttonRed" id="btnCancelar" type="button" onclick="location.href='/admin/admin'">Cancelar</button>
         <button class="btn waves-effect waves-light buttonBlue" id="btnGuardar" type="submit" value="Guardar">Guardar</button>
     </div>
-
-    <script>
-        /*$("#btnGuardar").on("click", function() {
-            if (Object.keys(checkboxStatesClients).length != 0){
-                alert(checkboxStatesClients.length);
-                // Iterar sobre todos los checkboxes encontrados
-                checkboxes.each(function() {
-                    if ($(this).is(':checked')) {
-                        console.log($(this).val() + " está seleccionado"); // Imprimir el valor de los checkboxes seleccionados
-                    } else {
-                        console.log($(this).val() + " no está seleccionado"); // Imprimir el valor de los checkboxes no seleccionados
-                    }
-                });
-            }
-        });*/
-    </script>
-
 
 </form>

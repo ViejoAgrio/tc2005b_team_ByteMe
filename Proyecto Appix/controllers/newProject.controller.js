@@ -73,6 +73,16 @@ module.exports.postNewProject = async (req, res) => {
         var banderaAddPlanAccion = false;
         var banderaAddRiesgos    = false;
         
+        // Validación de checkboxes obligatorios
+        if(!req.body.hiddenClientInput_Chk || !req.body.hiddenEmpInput_Chk) {
+            return res.send(`
+                <script>
+                    alert('Debe seleccionar tanto el cliente como la empresa.');
+                    window.history.back();
+                </script>
+            `);
+        }
+
         // Se obtiene la cliente
         if(req.body.hiddenClientInput_Chk != null)
         {

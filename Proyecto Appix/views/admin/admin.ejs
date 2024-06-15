@@ -135,7 +135,7 @@
                                 <div class="icons <%= colorRight %>">
                                     <div class="row">
                                         <div class="col s4">
-                                            <div class="icon-edit"><i class="material-icons">edit</i></div>
+                                            <div class="icon-edit"><i class="material-icons" data-id="<%= resumedProyects[i].idProyecto %>">edit</i></div>
                                         </div>
                                         <div class="col s4">
                                             <div class="icon-copy"><i class="material-icons modal-trigger" data-target="copy-modal" data-id="<%= resumedProyects[i].idProyecto %>">content_copy</i></div>
@@ -315,6 +315,15 @@
                         $(this).hide();
                     }
                 });
+        });
+
+        // Event delegation for copy icons
+        document.body.addEventListener('click', function(event) {
+            if (event.target.closest('.icon-edit')) {
+                const idProyecto = event.target.closest('.icon-edit').querySelector('i').getAttribute('data-id');
+                const url = `/admin/edicion-proyecto?idProyecto=${idProyecto}`;
+                window.location.href = url;
+            }
         });
 
         // Event delegation for delete icons

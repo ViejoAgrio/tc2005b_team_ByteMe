@@ -98,6 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 */
 
+
 // Clients Table with checkboxes and search implemented
 document.addEventListener('DOMContentLoaded', function() {
     var checkboxStatesClients = {};
@@ -106,6 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
     $("#jsGridClientes").on("change", "input[name='selClient']", function() {
         var isChecked = $(this).prop("checked");
         var itemId = $(this).attr("value");
+        checkboxStatesClients[itemId] = isChecked;
 
         if (isChecked) {
             // Desmarcar cualquier otro checkbox seleccionado
@@ -139,68 +141,79 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    fetch('nuevo-proyecto/clientes')
-        .then(response => response.json())
-        .then(dataJSON => {
-            fullDataMappedClients = dataJSON.map(client => ({
-                id: client.idCliente,
-                encargado: client.nombreEncargado
-            }));
-            
-            $(function() {
-                // Define an object to store checkbox states
-            
-                $("#jsGridClientes").jsGrid({
-                    height: "400px",
-                    width: "100%",
-                    sorting: true,
-                    filtering: true,
-                    editing: false,
-                    paging: false,
-                    
-                    data: fullDataMappedClients,
-                    controller: {
-                        loadData: function(filter) {
-                            function normalizeText(text) {
-                                return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-                            }
+    var fullDataMappedClients = [];
 
-                            return $.grep(fullDataMappedClients, function(eachData) {
-                                return (!filter.encargado || normalizeText(eachData.encargado).indexOf(normalizeText(filter.encargado)) > -1);
-                            });
-                        }
-                    },
-
-                    fields: [
-                        { name: "encargado", type: "text", title: "Cliente encargado", width: 150},
-                        {
-                            title: "Selección",
-                            sorting: false,
-                            editing: true,
-                            width: 25,
-                            itemTemplate: function(value, item) {
-                                var checkbox =  $("<input>").attr("type", "checkbox")
-                                                            .attr("name", "selClient")
-                                                            .attr("value", item.id);
-                                
-                                // Restore checkbox state from checkboxStatesClients object
-                                checkbox.prop("checked", checkboxStatesClients[item.id] || false);
-                    
-                                return checkbox;
-                            }
-                        }
-                    ]
-                });
+    function loadDataAndRefreshGrid() {
+        fetch('nuevo-proyecto/clientes')
+            .then(response => response.json())
+            .then(dataJSON => {
+                fullDataMappedClients = dataJSON.map(client => ({
+                    id: client.idCliente,
+                    encargado: client.nombreEncargado
+                }));
+                
+                $("#jsGridClientes").jsGrid("option", "data", fullDataMappedClients).jsGrid("refresh");
 
                 // Add keyup event handler to filter inputs
                 $(".jsgrid-filter-row input").on("keyup", function() {
                     $("#jsGridClientes").jsGrid("loadData");
                 });
-            });
-        })
-        .catch(error => console.error('Error al cargar los clientes:', error));
-});
+            })
+            .catch(error => console.error('Error al cargar los clientes:', error));
+    }
 
+    $(function() {
+        $("#jsGridClientes").jsGrid({
+            height: "400px",
+            width: "100%",
+            sorting: true,
+            filtering: true,
+            editing: false,
+            paging: false,
+            autoload: true,
+            
+            data: fullDataMappedClients,
+            controller: {
+                loadData: function(filter) {
+                    function normalizeText(text) {
+                        return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                    }
+
+                    return $.grep(fullDataMappedClients, function(eachData) {
+                        return (!filter.encargado || normalizeText(eachData.encargado).indexOf(normalizeText(filter.encargado)) > -1);
+                    });
+                }
+            },
+
+            fields: [
+                { name: "encargado", type: "text", title: "Cliente encargado", width: 150},
+                {
+                    title: "Selección",
+                    sorting: false,
+                    editing: true,
+                    width: 25,
+                    itemTemplate: function(value, item) {
+                        var checkbox =  $("<input>").attr("type", "checkbox")
+                                                    .attr("name", "selClient")
+                                                    .attr("value", item.id);
+                        
+                        // Restore checkbox state from checkboxStatesClients object
+                        checkbox.prop("checked", checkboxStatesClients[item.id] || false);
+            
+                        return checkbox;
+                    }
+                }
+            ]
+        });
+
+        loadDataAndRefreshGrid();
+    });
+
+    // Add event listener for refresh button
+    $("#refreshButtonClientes").on("click", function() {
+        loadDataAndRefreshGrid();
+    });
+});
 
 
 // Companies Table with checkboxes and search implemented
@@ -244,6 +257,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    var fullDataMappedEmpresas = [];
+
+    function loadDataAndRefreshGrid() {
     fetch('nuevo-proyecto/empresas')
         .then(response => response.json())
         .then(dataJSON => {
@@ -252,58 +268,66 @@ document.addEventListener('DOMContentLoaded', function() {
                 name: empresa.nombreEmpresa
             }));
             
-            $(function() {
+            $("#jsGridEmpresas").jsGrid("option", "data", fullDataMappedEmpresas).jsGrid("refresh");
                 // Define an object to store checkbox states
-            
-                $("#jsGridEmpresas").jsGrid({
-                    height: "400px",
-                    width: "100%",
-                    sorting: true,
-                    filtering: true,
-                    editing: false,
-                    paging: false,
-
-                    data: fullDataMappedEmpresas,
-                    controller: {
-                        loadData: function(filter) {
-                            function normalizeText(text) {
-                                return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-                            }
-
-                            return $.grep(fullDataMappedEmpresas, function(eachData) {
-                                return (!filter.name || normalizeText(eachData.name).indexOf(normalizeText(filter.name)) > -1);
-                            });
-                        }
-                    },
-
-                    fields: [
-                        { name: "name", type: "text", title: "Empresa", width: 200},
-                        {
-                            title: "Selección",
-                            sorting: false,
-                            editing: true,
-                            width: 25,
-                            itemTemplate: function(value, item) {
-                                var checkbox =  $("<input>").attr("type", "checkbox")
-                                                            .attr("name", "selEmpresas")
-                                                            .attr("value", item.id);
-                                
-                                // Restore checkbox state from checkboxStatesCompanies object
-                                checkbox.prop("checked", checkboxStatesEmpresas[item.id] || false);
-                    
-                                return checkbox;
-                            }
-                        }
-                    ]
-                });
 
                 // Add keyup event handler to filter inputs
-                $(".jsgrid-filter-row input").on("keyup", function() {
+                $(".jsgrid-filter-row input").off("keyup").on("keyup", function() {
                     $("#jsGridEmpresas").jsGrid("loadData");
                 });
-            });
         })
-        .catch(error => console.error('Error al cargar las empresas:', error));
+            .catch(error => console.error('Error al cargar las empresas:', error));
+    }
+    
+    $(function() {
+        $("#jsGridEmpresas").jsGrid({
+            height: "400px",
+            width: "100%",
+            sorting: true,
+            filtering: true,
+            editing: false,
+            paging: false,
+            autoload: true,
+
+            data: fullDataMappedEmpresas,
+            controller: {
+                loadData: function(filter) {
+                    function normalizeText(text) {
+                        return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                    }
+
+                    return $.grep(fullDataMappedEmpresas, function(eachData) {
+                        return (!filter.name || normalizeText(eachData.name).indexOf(normalizeText(filter.name)) > -1);
+                    });
+                }
+            },
+
+            fields: [
+                { name: "name", type: "text", title: "Empresa", width: 200},
+                {
+                    title: "Selección",
+                    sorting: false,
+                    editing: true,
+                    width: 25,
+                    itemTemplate: function(value, item) {
+                        var checkbox =  $("<input>").attr("type", "checkbox")
+                                                    .attr("name", "selEmpresas")
+                                                    .attr("value", item.id);
+                        
+                        // Restore checkbox state from checkboxStatesCompanies object
+                        checkbox.prop("checked", checkboxStatesEmpresas[item.id] || false);
+            
+                        return checkbox;
+                    }
+                }
+            ]
+        });
+        loadDataAndRefreshGrid();
+    });
+    // Add event listener for refresh button
+    $("#refreshButtonEmpresas").on("click", function() {
+        loadDataAndRefreshGrid();
+    });
 });
 
 
@@ -342,71 +366,88 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    fetch('nuevo-proyecto/planAccion')
-        .then(response => response.json())
-        .then(dataJSON => {
-            fullDataMapped = dataJSON.map(planAcc => ({
-                dsc: planAcc.descripcionAccion,
-                idAcc: planAcc.idAccion
-            }));
-            
-            $(function() {
-                // Define an object to store checkbox states
-            
-                $("#jsGridAcc").jsGrid({
-                    height: "400px",
-                    width: "100%",
-                    sorting: true,
-                    filtering: true,
-                    editing: false,
-                    paging: false,
+    var fullDataMapped = [];
 
-                    data: fullDataMapped,
-                    controller: {
-                        loadData: function(filter) {
-                            return $.grep(fullDataMapped, function(eachData) {
-                                return (!filter.dsc || eachData.dsc.indexOf(filter.dsc) > -1);
-                            });
-                        }
-                    },
-
-                    fields: [
-                        { name: "dsc", type: "text", title: "Descripción", width: 150},
-                        {
-                            title: "Selección",
-                            sorting: false,
-                            editing: true,
-                            width: 25,
-                            itemTemplate: function(value, item) {
-                                var checkbox =  $("<input>").attr("type", "checkbox")
-                                                            .attr("name", "selAcc")
-                                                            .attr("value", item.idAcc);
-                                
-                                // Restore checkbox state from checkboxAccStates object
-                                if (checkboxAccStates[item.idAcc]) {
-                                    checkbox.prop("checked", true);
-                                } else {
-                                    checkbox.prop("checked", false);
-                                }
-                    
-                                return checkbox;
-                            }
-                        }
-                    ]
-                });
+    function loadDataAndRefreshGrid() {
+        fetch('nuevo-proyecto/planAccion')
+            .then(response => response.json())
+            .then(dataJSON => {
+                fullDataMapped = dataJSON.map(planAcc => ({
+                    dsc: planAcc.descripcionAccion,
+                    idAcc: planAcc.idAccion
+                }));
+            
+                $("#jsGridAcc").jsGrid("option", "data", fullDataMapped).jsGrid("refresh");
 
                 // Add keyup event handler to filter inputs
                 $(".jsgrid-filter-row input").on("keyup", function() {
                     $("#jsGridAcc").jsGrid("loadData");
                 });
+            })
+            .catch(error => console.error('Error al cargar los planes de acción:', error));
+        }
+
+        $(function() {
+            // Define an object to store checkbox states
+            
+            $("#jsGridAcc").jsGrid({
+                height: "400px",
+                width: "100%",
+                sorting: true,
+                filtering: true,
+                editing: false,
+                paging: false,
+                autoload: true,
+
+                data: fullDataMapped,
+                controller: {
+                    loadData: function(filter) {
+                        return $.grep(fullDataMapped, function(eachData) {
+                            return (!filter.dsc || eachData.dsc.indexOf(filter.dsc) > -1);
+                        });
+                    }
+                },
+
+                fields: [
+                    { name: "dsc", type: "text", title: "Descripción", width: 150},
+                    {
+                        title: "Selección",
+                        sorting: false,
+                        editing: true,
+                        width: 25,
+                        itemTemplate: function(value, item) {
+                            var checkbox =  $("<input>").attr("type", "checkbox")
+                                                        .attr("name", "selAcc")
+                                                        .attr("value", item.idAcc);
+                            
+                        // Restore checkbox state from checkboxAccStates object
+                        if (checkboxAccStates[item.idAcc]) {
+                            checkbox.prop("checked", true);
+                        } else {
+                            checkbox.prop("checked", false);
+                        }
+                
+                            return checkbox;
+                        }
+                    }
+                ]
             });
-        })
-        .catch(error => console.error('Error al cargar los planes de acción:', error));
+
+            loadDataAndRefreshGrid();
+    });
+
+    // Add event listener for refresh button
+    $("#refreshButtonAccion").on("click", function() {
+        loadDataAndRefreshGrid();
+    });
 });
+
+
 
 // Risk Table with checkboxes and search implemented
 document.addEventListener('DOMContentLoaded', function() {
     var hiddenInputsRiskData = {};
+
     $("#jsGridRsg").on("change", "input[name='selRsg']", function() {
         var isChecked = $(this).prop("checked");
         var itemId = $(this).attr("value");
@@ -457,90 +498,106 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    fetch('nuevo-proyecto/riesgos')
-        .then(responseRsg => responseRsg.json())
-        .then(dataJSONRsg => {
-            fullDataMappedRsg = dataJSONRsg.map(riesgo => ({
-                dsc: riesgo.descripcionRiesgo,
-                idR:  riesgo.idRiesgo
-            }));
-            
-            $(function() {
-                // Define an object to store checkbox states
-            
-                $("#jsGridRsg").jsGrid({
-                    height: "400px",
-                    width: "100%",
-                    sorting: true,
-                    filtering: true,
-                    editing: false,
-                    paging: false,
+    var fullDataMappedRsg = [];
 
-                    data: fullDataMappedRsg,
-                    controller: {
-                        loadData: function(filter) {
-                            function normalizeText(text) {
-                                return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-                            }
+    function loadDataAndRefreshGrid() {
 
-                            return $.grep(fullDataMappedRsg, function(eachData) {
-                                return (!filter.dsc || normalizeText(eachData.dsc).indexOf(normalizeText(filter.dsc)) > -1);
-                            });
-                        }
-                    },
+        fetch('nuevo-proyecto/riesgos')
+            .then(responseRsg => responseRsg.json())
+            .then(dataJSONRsg => {
+                fullDataMappedRsg = dataJSONRsg.map(riesgo => ({
+                    dsc: riesgo.descripcionRiesgo,
+                    idR:  riesgo.idRiesgo
+                }));
 
-                    fields: [
-                        { name: "dsc", type: "text", title: "Descripción", width: 150},
-                        {
-                            name: "rsg", title: "Nivel", width: 25,
-                            itemTemplate: function(value, item) {
-                                //<input type="number" id="quantity" name="quantity" min="1" max="5">
-                                var numberInput = $("<input>").attr("type","number")
-                                                              .attr("min" ,0)
-                                                              .attr("max" ,9)
-                                                              .attr("name","lvlRsg")
-                                                              .attr("value",0)
-                                                              .attr("id",item.idR)
-                                                              .attr("onKeyDown","return false");
-                                
-                                // Restore checkbox state from checkboxStatesRsg object
-                                if (numberInputStatesRsg[item.idR]) {
-                                    numberInput.prop("value", numberInputStatesRsg[item.idR]);
-                                } else {
-                                    numberInput.prop("value", 0);
-                                }
-
-                                return numberInput;
-                            }
-                        },
-                        {
-                            title: "Selección",
-                            sorting: false,
-                            editing: true,
-                            width: 25,
-                            itemTemplate: function(value, item) {
-                                var checkbox =  $("<input>").attr("type", "checkbox")
-                                                            .attr("name", "selRsg")
-                                                            .attr("value", item.idR);
-                                
-                                // Restore checkbox state from checkboxStatesRsg object
-                                if (checkboxStatesRsg[item.idR]) {
-                                    checkbox.prop("checked", true);
-                                } else {
-                                    checkbox.prop("checked", false);
-                                }
-                    
-                                return checkbox;
-                            }
-                        }
-                    ]
-                });
+                $("#jsGridRsg").jsGrid("option", "data", fullDataMappedRsg).jsGrid("refresh");
 
                 // Add keyup event handler to filter inputs
                 $(".jsgrid-filter-row input").on("keyup", function() {
                     $("#jsGridRsg").jsGrid("loadData");
                 });
-            });
-        })
+            })
         .catch(error => console.error('Error al cargar los riesgos:', error));
+    }
+            
+    $(function() {
+        // Define an object to store checkbox states
+            
+        $("#jsGridRsg").jsGrid({
+            height: "400px",
+            width: "100%",
+            sorting: true,
+            filtering: true,
+            editing: false,
+            paging: false,
+            autoload: true,
+
+            data: fullDataMappedRsg,
+            controller: {
+                loadData: function(filter) {
+                    function normalizeText(text) {
+                        return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                    }
+
+                    return $.grep(fullDataMappedRsg, function(eachData) {
+                        return (!filter.dsc || normalizeText(eachData.dsc).indexOf(normalizeText(filter.dsc)) > -1);
+                    });
+                }
+            },
+
+            fields: [
+                { name: "dsc", type: "text", title: "Descripción", width: 150},
+                {
+                    name: "rsg", title: "Nivel", width: 25,
+                    itemTemplate: function(value, item) {
+                        //<input type="number" id="quantity" name="quantity" min="1" max="5">
+                        var numberInput = $("<input>").attr("type","number")
+                                                      .attr("min" ,0)
+                                                      .attr("max" ,9)
+                                                      .attr("name","lvlRsg")
+                                                      .attr("value",0)
+                                                      .attr("id",item.idR)
+                                                      .attr("onKeyDown","return false");
+                        
+                        // Restore checkbox state from checkboxStatesRsg object
+                        if (numberInputStatesRsg[item.idR]) {
+                            numberInput.prop("value", numberInputStatesRsg[item.idR]);
+                    } else {
+                            numberInput.prop("value", 0);
+                        
+                        return numberInput;
+                    }
+                    }
+                },
+
+                {
+                    title: "Selección",
+                    sorting: false,
+                    editing: true,
+                    width: 25,
+                    itemTemplate: function(value, item) {
+                        var checkbox =  $("<input>").attr("type", "checkbox")
+                                                    .attr("name", "selRsg")
+                                                    .attr("value", item.idR);
+                        
+                        // Restore checkbox state from checkboxStatesRsg object
+                        if (checkboxStatesRsg[item.idR]) {
+                            checkbox.prop("checked", true);
+                        } else {
+                            checkbox.prop("checked", false);
+                        }
+            
+                        return checkbox;
+                    }
+                }
+            ]
+        });
+
+        loadDataAndRefreshGrid();
+    });
+
+    // Add event listener for refresh button
+    $("#refreshButtonRiesgos").on("click", function() {
+        loadDataAndRefreshGrid();
+    });
 });
