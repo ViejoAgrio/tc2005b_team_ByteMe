@@ -185,6 +185,11 @@
     <input type="text" id="idProyecto" name="idProyecto" value="<%= empresaCliente.idProyecto %>" style="display: none;">
     <input type="text" id="idEmpresa"  name="idEmpresa"  value="<%= empresaCliente.idEmpresa %>" style="display: none;">
     <input type="text" id="idCliente"  name="idCliente"  value="<%= empresaCliente.idCliente %>" style="display: none;">
+    <div id="hiddenPrevAccionList" style="display: none;">
+    <% acciones.forEach(function(accion) { %>
+        <input type="hidden" name="hiddenPrevAcc" value="<%= accion.idAccionProyecto %>" />
+    <% }); %>
+    </div>
 
     <div class="button-container button-container-np" style="display: flex; justify-content: flex-end;">
         <input class="btn waves-effect waves-light save-button" id="btnGuardar" type="submit" value="Guardar">
