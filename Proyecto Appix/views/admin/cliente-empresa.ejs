@@ -19,7 +19,6 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
@@ -58,22 +57,23 @@
     margin: 10px;
 }
 
-button{
-    background:rgb(49, 131, 214);
-    color:#fff;
+.buttonBlue{
+    color: white;
+    margin: 10px;
     border:none;
     position:relative;
     height:35px;
-    width: 130px;
+    width: 150px;
     cursor:pointer;
     transition:800ms ease all;
+    background: rgb(49, 131, 214);
     outline:none;
   }
-  button:hover{
+  .buttonBlue:hover{
     background:#fff;
     color:rgb(49, 131, 214);
   }
-  button:before,button:after{
+  .buttonBlue:before,.buttonBlue:after{
     content:'';
     position:absolute;
     top:0;
@@ -83,13 +83,50 @@ button{
     background: rgb(49, 131, 214);
     transition:400ms ease all;
   }
-  button:after{
+  .buttonBlue:after{
     right:inherit;
     top:inherit;
     left:0;
     bottom:0;
   }
-  button:hover:before,button:hover:after{
+  .buttonBlue:hover:before,.buttonBlue:hover:after{
+    width:100%;
+    transition:800ms ease all;
+  }
+
+.buttonGreen{
+    color: white;
+    margin: 10px;
+    border:none;
+    position:relative;
+    height:35px;
+    width: 150px;
+    cursor:pointer;
+    transition:800ms ease all;
+    background: rgb(31, 134, 105);
+    outline:none;
+  }
+  .buttonGreen:hover{
+    background:#fff;
+    color:rgb(31, 134, 105);
+  }
+  .buttonGreen:before,.buttonGreen:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: rgb(31, 134, 105);
+    transition:400ms ease all;
+  }
+  .buttonGreen:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+  }
+  .buttonGreen:hover:before,.buttonGreen:hover:after{
     width:100%;
     transition:800ms ease all;
   }
@@ -115,7 +152,7 @@ button{
                                     <tbody>
                                         <tr>
                                             <td><input type="text" name="nuevoNombre" id="nuevo-nombre" class="new-risk-Nuevoriesgo" required placeholder = "Nombre del encargado"></td>
-                                            <td><button class="btn btn-success" type="submit">Agregar</button></td>
+                                            <td><button class="btn waves-effect waves-light buttonGreen" type="submit">Agregar</button></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -138,7 +175,7 @@ button{
                                         <tbody>
                                             <tr>
                                                 <td><input type="text" name="newEmpresa" id="nuevo-nombre" class="new-risk-Nuevoriesgo" required placeholder = "Nombre de la empresa"></td>
-                                                <td><button class="btn btn-success" type="submit">Agregar</button></td>
+                                                <td><button class="btn waves-effect waves-light buttonGreen" type="submit">Agregar</button></td>
                                             </tr>
                                         </tbody>
                                     </table>

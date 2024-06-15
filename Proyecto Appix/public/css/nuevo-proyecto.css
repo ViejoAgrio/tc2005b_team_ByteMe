@@ -104,17 +104,6 @@ header {
     margin: 10px;
 }
 
-.cancel-button {
-    background-color: #f44336; /* Color rojo */
-    width: 30%;
-    margin-left: 15px;
-}
-
-.save-button {
-    background-color: #00df07; /* Color verde */
-    width: 30%;
-}
-
 .input-group {
     display: flex;
     align-items: center;
