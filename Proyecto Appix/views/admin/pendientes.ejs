@@ -57,22 +57,23 @@
     margin: 10px;
 }
 
-button{
-    background:rgb(49, 131, 214);
-    color:#fff;
+.buttonBlue{
+    color: white;
+    margin: 10px;
     border:none;
     position:relative;
     height:35px;
-    width: 130px;
+    width: 150px;
     cursor:pointer;
     transition:800ms ease all;
+    background: rgb(49, 131, 214);
     outline:none;
   }
-  button:hover{
+  .buttonBlue:hover{
     background:#fff;
     color:rgb(49, 131, 214);
   }
-  button:before,button:after{
+  .buttonBlue:before,.buttonBlue:after{
     content:'';
     position:absolute;
     top:0;
@@ -82,13 +83,50 @@ button{
     background: rgb(49, 131, 214);
     transition:400ms ease all;
   }
-  button:after{
+  .buttonBlue:after{
     right:inherit;
     top:inherit;
     left:0;
     bottom:0;
   }
-  button:hover:before,button:hover:after{
+  .buttonBlue:hover:before,.buttonBlue:hover:after{
+    width:100%;
+    transition:800ms ease all;
+  }
+
+.buttonGreen{
+    color: white;
+    margin: 10px;
+    border:none;
+    position:relative;
+    height:35px;
+    width: 150px;
+    cursor:pointer;
+    transition:800ms ease all;
+    background: rgb(31, 134, 105);
+    outline:none;
+  }
+  .buttonGreen:hover{
+    background:#fff;
+    color:rgb(31, 134, 105);
+  }
+  .buttonGreen:before,.buttonGreen:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: rgb(31, 134, 105);
+    transition:400ms ease all;
+  }
+  .buttonGreen:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+  }
+  .buttonGreen:hover:before,.buttonGreen:hover:after{
     width:100%;
     transition:800ms ease all;
   }
@@ -123,7 +161,7 @@ button{
                                         });
                                     </script>
                                 </td>
-                                <td><button class="waves-effect waves-light btn button" type="submit">Agregar</button></td>
+                                <td><button class="btn waves-effect waves-light buttonGreen" type="submit">Agregar</button></td>
                             </tr>
                         </tbody>
                     </table>
