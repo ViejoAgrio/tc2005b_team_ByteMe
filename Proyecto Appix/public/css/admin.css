@@ -1,0 +1,149 @@
+@import url('usuario.css');
+
+.post-it-dates {
+    display: flex;
+    flex-direction: column;
+    width: 112px;
+    height: 205px;
+    color: #fff;
+    justify-content: center;
+    align-items: center;
+}
+
+.icons {
+    height: 45px;
+    width: 112px;
+    padding-left: 10px;
+    padding-top: 6px;
+    color: #fff;
+}
+
+.icon-edit:hover {
+    color: black;
+}
+
+.icon-copy:hover {
+    color: black;
+}
+
+.icon-delete:hover {
+    color: black;
+}
+
+.icon-error {
+    display: flex;
+    padding-left: 15px;
+    color: rgb(205, 73, 73);;
+    border-top: 2px solid #ccc;
+    align-items: center;
+}
+
+.icon-error h3 {
+    color: black;
+    padding-right: 10px;
+    padding-top: 10px;
+}
+
+
+.buttonBlue{
+    color: black;
+    border:none;
+    position:relative;
+    height:35px;
+    width: 130px;
+    cursor:pointer;
+    transition:800ms ease all;
+    outline:none;
+  }
+  .buttonBlue:hover{
+    background:#fff;
+    color:rgb(49, 131, 214);
+  }
+  .buttonBlue:before,.buttonBlue:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: rgb(49, 131, 214);
+    transition:400ms ease all;
+  }
+  .buttonBlue:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+  }
+  .buttonBlue:hover:before,.buttonBlue:hover:after{
+    width:100%;
+    transition:800ms ease all;
+  }
+
+.buttonRed{
+    color: black;
+    border:none;
+    position:relative;
+    height:35px;
+    width: 130px;
+    cursor:pointer;
+    transition:800ms ease all;
+    outline:none;
+  }
+  .buttonRed:hover{
+    background:#fff;
+    color:rgb(176, 14, 14);
+  }
+  .buttonRed:before,.buttonRed:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: rgb(176, 14, 14);
+    transition:400ms ease all;
+  }
+  .buttonRed:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+  }
+  .buttonRed:hover:before,.buttonRed:hover:after{
+    width:100%;
+    transition:800ms ease all;
+  }
+
+.modal-content h4{
+    color: black;
+    text-align: center;
+}
+
+.modal-content p{
+    color: black;
+    text-align: center;
+}
+
+.fixed-action-btn {
+  position:relative;
+  margin-top: 30px;
+  background-color: var(--color-back-azul);
+}
+
+.fixed-action-btn a{
+  box-shadow: none;
+}
+
+.darkBlue {
+  background-color: var(--color-back-azul);
+}
+
+.darkBlue:hover{
+  background-color: var(--color-back-azul);
+  box-shadow: none;
+}
+
+.tooltipped {
+  font-size: 8px;
+}

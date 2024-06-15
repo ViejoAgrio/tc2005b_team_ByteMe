@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cliente-empresa</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://unpkg.com/jsgrid/dist/jsgrid.min.css" rel="stylesheet" />
+    <link href="https://unpkg.com/jsgrid/dist/jsgrid-theme.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/jsgrid/dist/jsgrid.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/newProject.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tiny5&display=swap');
+
+        body {
+            background-image: url('/images/fondoBlanco.png'); /* Asegúrate de que la ruta sea correcta */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+    background-color: #004586;
+    color: #fff;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 70px;
+}
+
+.header-title {
+    font-size: 24px; /* Tamaño de fuente del título */
+    margin: 0; /* Elimina el margen por defecto del H1 */
+    width: 100%;
+    font-family: "Tiny5", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.logo-header {
+    width: 70px; /* Ajusta esto al tamaño de tu logo */
+    height: 70px; /* Ajusta esto al tamaño de tu logo */
+    background-image: url('/images/logo-appix-blanco.png'); 
+    background-size: contain; /* Asegura que el logo se ajuste dentro de las dimensiones */
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 5px; /* Espacio entre el logo y el texto */
+}
+.button-container {
+    margin: 10px;
+}
+
+.buttonBlue{
+    color: white;
+    margin: 10px;
+    border:none;
+    position:relative;
+    height:35px;
+    width: 150px;
+    cursor:pointer;
+    transition:800ms ease all;
+    background: rgb(49, 131, 214);
+    outline:none;
+  }
+  .buttonBlue:hover{
+    background:#fff;
+    color:rgb(49, 131, 214);
+  }
+  .buttonBlue:before,.buttonBlue:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: rgb(49, 131, 214);
+    transition:400ms ease all;
+  }
+  .buttonBlue:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+  }
+  .buttonBlue:hover:before,.buttonBlue:hover:after{
+    width:100%;
+    transition:800ms ease all;
+  }
+
+.buttonGreen{
+    color: white;
+    margin: 10px;
+    border:none;
+    position:relative;
+    height:35px;
+    width: 150px;
+    cursor:pointer;
+    transition:800ms ease all;
+    background: rgb(31, 134, 105);
+    outline:none;
+  }
+  .buttonGreen:hover{
+    background:#fff;
+    color:rgb(31, 134, 105);
+  }
+  .buttonGreen:before,.buttonGreen:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: rgb(31, 134, 105);
+    transition:400ms ease all;
+  }
+  .buttonGreen:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+  }
+  .buttonGreen:hover:before,.buttonGreen:hover:after{
+    width:100%;
+    transition:800ms ease all;
+  }
+    </style>
+</head>
+<body>
+    <%- include('./../header.ejs') %>
+    <div class="container">
+
+        <div class="container px-4 text-center">
+                    <div class="row gx-5">
+                      <div class="col">
+                       <div class="p-3"><form action="/admin/cliente-empresa/add-cliente" method="POST">
+                        <section>
+                            <div class="new-risks">
+                                <h3 class="titulo-secciones">Clientes</h3>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Agregar clientes:</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><input type="text" name="nuevoNombre" id="nuevo-nombre" class="new-risk-Nuevoriesgo" required placeholder = "Nombre del encargado"></td>
+                                            <td><button class="btn waves-effect waves-light buttonGreen" type="submit">Agregar</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div id="jsGridClientes" class="no-materialize-checkbox"></div> <!-- Contenedor para Grid.js -->
+                        </section>
+                    </form></div>
+                      </div>
+                      <div class="col">
+                        <div class="p-3"><form action="/admin/cliente-empresa/add-empresa" method="POST">
+                            <section>
+                                <div class="new-risks">
+                                    <h3 class="titulo-secciones">Empresas</h3>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Agregar empresa:</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><input type="text" name="newEmpresa" id="nuevo-nombre" class="new-risk-Nuevoriesgo" required placeholder = "Nombre de la empresa"></td>
+                                                <td><button class="btn waves-effect waves-light buttonGreen" type="submit">Agregar</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div id="jsGridEmpresas"></div>  
+                            </section>
+                        </form></div> 
+                      </div> 
+                    </div>
+                  </div>
+                
+            </section>
+        </form>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const clientesTable = <%- clientesTable %>; 
+            const empresasTable = <%- empresasTable %>;
+
+            $("#jsGridClientes").jsGrid({
+                height: "400px",
+                width: "100%",
+                sorting: true,
+                filtering: true,
+                editing: true,
+                paging: true,
+                pageSize: 10,
+                pageButtonCount: 5,
+                deleteConfirm: "Si continuas, este cliente será eliminad de todos los proyectos, ¿Está seguro de que desea eliminar este cliente?",
+
+                data: clientesTable,
+                controller: {
+                    loadData: function(filter) {
+                            function normalizeText(text) {
+                                return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                            }
+                    
+                        return $.grep(clientesTable, function(eachData) {
+                            return (!filter.nombreEncargado || normalizeText(eachData.nombreEncargado).indexOf(normalizeText(filter.nombreEncargado)) > -1);
+                        });
+                    },
+                    updateItem: function(item) {
+                        console.log("Datos que se envían para actualización:", item);
+                        return $.ajax({
+                            type: "POST",
+                            url: "/admin/cliente-empresa/update-cliente",
+                            contentType: "application/json",
+                            data: JSON.stringify({
+                                idCliente: item.idCliente,
+                                nombreEncargado: item.nombreEncargado
+                            }),
+                            dataType: "json"
+                        }).done(function(response) {
+                            console.log("Respuesta del servidor:", response);
+                            var updatedItem = response.cliente;
+                            var itemIndex = clientesTable.findIndex(data => data.idCliente === updatedItem.idCliente);
+                            if (itemIndex !== -1) {
+                                clientesTable[itemIndex] = updatedItem;
+                            }
+                            $("#jsGridClientes").jsGrid("loadData"); 
+                        }).fail(function(jqXHR, textStatus, errorThrown) {
+                            console.error("Error en la solicitud AJAX:", textStatus, errorThrown);
+                        });             
+                    },
+                    deleteItem: function(item) {
+                        console.log('Eliminandoooooo')
+                        return $.ajax({
+                            type: "POST",
+                            url: "/admin/cliente-empresa/delete-cliente",
+                            data: item
+                        });
+                    }
+                },
+
+                fields: [
+                    { name: "idCliente", type: "hidden", css: "hide" },
+                    { name: "nombreEncargado", type: "text", title: "Nombre del Encargado", width: 150},
+                    { 
+                        type: "control", 
+                        clearFilterButton: false, 
+                        modeSwitchButton: false,
+                    }
+                ]
+            });
+
+            $("#jsGridEmpresas").jsGrid({
+                height: "400px",
+                width: "100%",
+                sorting: true,
+                filtering: true,
+                editing: true,
+                paging: true,
+                autoload: true,
+                pageSize: 10,
+                pageButtonCount: 5,
+                deleteConfirm: "Si continuas, esta empresa será eliminada de todos los proyectos, ¿Está seguro de que desea eliminar esta empresa?",
+
+                data: empresasTable,
+                controller: {
+                    loadData: function(filter) {
+                            function normalizeText(text) {
+                                return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                            }
+                    
+                        return $.grep(empresasTable, function(eachData) {
+                            return (!filter.nombreEmpresa || normalizeText(eachData.nombreEmpresa).indexOf(normalizeText(filter.nombreEmpresa)) > -1);
+                        });
+                    },
+                    updateItem: function(item) {
+                        console.log("Datos que se envían para actualización:", item);
+                return $.ajax({
+                    type: "POST",
+                    url: "/admin/cliente-empresa/update-empresa",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        idEmpresa: item.idEmpresa,
+                        nombreEmpresa: item.nombreEmpresa
+                    }),
+                    dataType: "json"
+                        }).done(function(response) {
+                            console.log("Respuesta del servidor:", response);
+                            var updatedItem = response.empresa;
+                            var itemIndex = empresasTable.findIndex(data => data.idEmpresa === updatedItem.idEmpresa);
+                            if (itemIndex !== -1) {
+                                empresasTable[itemIndex] = updatedItem;
+                            }
+                            $("#jsGridEmpresas").jsGrid("loadData"); 
+                        }).fail(function(jqXHR, textStatus, errorThrown) {
+                            console.error("Error en la solicitud AJAX:", textStatus, errorThrown);
+                        });              
+                    },
+                    deleteItem: function(item) {
+                        console.log('Eliminandoooooo')
+                        return $.ajax({
+                            type: "POST",
+                            url: "/admin/cliente-empresa/delete-empresa",
+                            data: item
+                        });
+                    }
+                },
+
+                fields: [
+                    { name: "idEmpresa", type: "hidden", css: "hide" },
+                    { name: "nombreEmpresa", type: "text", title: "Nombre de la empresa", width: 150},
+                    { 
+                        type: "control", 
+                        clearFilterButton: false, 
+                        modeSwitchButton: false,
+                    }
+                ]
+            });
+
+            // Add keyup event handler to filter inputs for both grids
+            $(".jsgrid-filter-row input").on("keyup", function() {
+                $("#jsGridClientes").jsGrid("loadData");
+                $("#jsGridEmpresas").jsGrid("loadData");
+            });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

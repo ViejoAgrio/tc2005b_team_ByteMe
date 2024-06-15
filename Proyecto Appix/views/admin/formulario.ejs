@@ -1,0 +1,222 @@
+<form action="/admin/nuevo-proyecto" method="POST">
+    <script>
+        let checkboxStatesRsg = {};
+        let numberInputStatesRsg = {};
+        let riskLvl = {};
+    </script>
+    <label for="nombreProyecto">Nombre del proyecto:</label>
+    <input type="text" id="nombreProyecto" name="nombreProyecto" required>
+
+    <div style="display: flex; justify-content: space-between;">
+        <div style="width: 48%;">
+            <label for="fechaInicio">Fecha de inicio:</label>
+            <input type="date" id="fechaInicio" name="fechaInicio" required 
+                   min="<?php echo date('Y-m-d'); ?>" onchange="setFechaFinalMin()">
+        </div>
+        <div style="width: 48%;">
+            <label for="fechaFinal">Fecha de entrega:</label>
+            <input type="date" id="fechaFinal" name="fechaFinal" required 
+                   min="<?php echo date('Y-m-d'); ?>">
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('fechaFinal').setAttribute('min', today);
+        });
+    
+        function setFechaFinalMin() {
+            const fechaInicio = document.getElementById('fechaInicio').value;
+            document.getElementById('fechaFinal').setAttribute('min', fechaInicio);
+        }
+    </script>
+    
+    <div style="display: flex; justify-content: space-between;">
+        <div style="width: 48%;">
+            <label for="estatus">Estatus del proyecto:</label>
+                <select id="estatus" name="estatus" class="new-risk-department browser-default" required>
+                    <option value="" disabled selected>Seleccione un estatus</option>
+                    <option value="En proceso">En proceso</option>
+                    <option value="En planeacion">En planeacion</option>
+                    <option value="En espera">En espera</option>
+                    <option value="Atrasado">Atrasado</option>
+                    <option value="Finalizado">Finalizado</option>
+                </select>
+            
+        </div>
+        <div style="width: 48%;">
+            <label for="departamento">Departamento:</label>
+            <select id="departamento" name="departamento" class="new-risk-department browser-default" required>
+                <option value="" disabled selected>Seleccione un departamento</option>
+                <option value="Desarrollo Web">Desarrollo web</option>
+                <option value="Diseño Web">Diseño web</option>
+            </select>
+        </div>
+    </div>           
+
+    <label for="descripcionProyecto">Descripción:</label>
+    <input type="text" id="descripcionProyecto" name="descripcionProyecto" maxlength="250" required> <!-- Cambiar name a "descripcion" -->
+    
+    <div class="char-count">
+        <span id="current-count">0</span>/250 caracteres
+    </div>
+    
+    <script>
+        const descripcionInput = document.getElementById('descripcionProyecto');
+        const currentCount = document.getElementById('current-count');
+
+        descripcionInput.addEventListener('input', () => {
+            currentCount.textContent = descripcionInput.value.length;
+        });
+    </script>
+
+    <!--
+    <div style="display: flex; justify-content: space-between;" name="clients-div" id="clients-div">
+        <div style="width: 48%;">
+            <button id="add-client-btn" name="add-client-btn" class="waves-effect waves-light btn button" type="button">
+                Agregar Nuevo Cliente
+            </button>
+        </div>
+
+
+        <div style="width: 48%;">
+            <select id="clients-lst" name="clients-lst" class="new-risk-department browser-default" required>
+                <option value="" disabled selected>Seleccione un cliente</option>
+            </select>
+        </div>
+    </div>
+    -->
+
+    <section id="cliente"></section>
+
+
+        <h3 class="titulo-secciones">Clientes</h3>
+   
+
+    <label>Agrega el cliente encargado del proyecto:</label>
+
+  
+        <h4 class="comentarios-guia">Clientes existentes:</h4>
+ 
+
+    <div id="jsGridClientes" class="no-materialize-checkbox"></div>
+
+    <div class="seccion-formulario">
+        <table>
+            <td>
+                <h4 class="comentarios-guia">¿No encontraste un cliente?</h4>
+            </td>
+            <td>
+                <button class="btn waves-effect waves-light buttonGreen" id="btnAgregarCliente" type="button" onclick="location.href='/admin/cliente-empresa'">Agregar nuevo cliente</button>
+            </td>
+        </table>
+    </div>
+
+    <div id="hiddenInputsClientList" style="display: none;"></div>
+
+    <section id="empresa"></section>
+
+
+        <h3 class="titulo-secciones">Empresas</h3>
+ 
+
+    <label>Agrega una empresa a tu proyecto:</label>
+
+  
+        <h4 class="comentarios-guia">Empresas existentes:</h4>
+ 
+
+    <div id="jsGridEmpresas" class="no-materialize-checkbox"></div>
+
+    <div class="seccion-formulario">
+        <table>
+            <td>
+                <h4 class="comentarios-guia">¿No encontraste una empresa?</h4>
+            </td>
+            <td>
+                <button class="btn waves-effect waves-light buttonGreen" id="btnAgregarEmpresa" type="button" onclick="location.href='/admin/cliente-empresa'">Agregar nueva empresa</button>
+            </td>
+        </table>
+    </div>
+
+    <div id="hiddenInputsEmpresaList" style="display: none;"></div>
+
+    <section>
+        <div class="new-risks">
+            <h3 class="titulo-secciones">Riesgos</h3>
+
+            <label>Agrega riesgos y su nivel de impacto en tu proyecto:</label>
+
+        
+                <h4 class="comentarios-guia">Riesgos existentes:</h4>
+           
+
+            <div id="jsGridRsg" name="jsGridRsg" class="no-materialize-checkbox"></div>
+
+            <div class="seccion-formulario">
+            <table>
+                <td>
+                    <h4 class="comentarios-guia">¿No encontraste el riesgo?</h4>
+                </td>
+                <td>
+                    <button class="btn waves-effect waves-light buttonGreen" id="btnAgregarRiesgo" type="button" onclick="location.href='/admin/riesgos'">Agregar nuevo riesgo</button></td>
+                </td>                
+            </table>
+            </div>
+        </div>
+    </section>
+    
+    
+    <section id="plan-de-accion"></section>
+
+        <h3 class="titulo-secciones">Plan de acción</h3>
+  
+
+    <label>Agrega acciones a tu plan de acción del proyecto:</label>
+
+        <h4 class="comentarios-guia">Acciones existentes:</h4>
+   
+
+    <div id="jsGridAcc" class="no-materialize-checkbox"></div>
+
+    <div class="seccion-formulario">
+    <table>
+        <td>
+            <h4 class="comentarios-guia">¿No encontraste una acción?</h4>
+        </td>
+        <td>
+            <button class="btn waves-effect waves-light buttonGreen" id="btnAgregarPlanAccion" type="button" onclick="location.href='/admin/pendientes'">Agregar nueva acción</button>
+        </td>
+    </table>
+    </div>
+
+    <div id="hiddenInputsAccionList" style="display: none;"></div>
+
+    </section>
+
+    <div id="hiddenInputsRiskList" style="display: none;"></div>
+
+    <div class="button-container button-container-np" style="display: flex; justify-content: flex-end;">
+        <button class="btn waves-effect waves-light buttonRed" id="btnCancelar" type="button" onclick="location.href='/admin/admin'">Cancel</button>
+        <button class="btn waves-effect waves-light buttonBlue" id="btnGuardar" type="submit" value="Guardar">Guardar</button>
+    </div>
+
+    <script>
+        /*$("#btnGuardar").on("click", function() {
+            if (Object.keys(checkboxStatesClients).length != 0){
+                alert(checkboxStatesClients.length);
+                // Iterar sobre todos los checkboxes encontrados
+                checkboxes.each(function() {
+                    if ($(this).is(':checked')) {
+                        console.log($(this).val() + " está seleccionado"); // Imprimir el valor de los checkboxes seleccionados
+                    } else {
+                        console.log($(this).val() + " no está seleccionado"); // Imprimir el valor de los checkboxes no seleccionados
+                    }
+                });
+            }
+        });*/
+    </script>
+
+
+</form>

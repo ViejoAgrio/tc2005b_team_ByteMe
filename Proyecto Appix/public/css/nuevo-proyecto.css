@@ -1,0 +1,273 @@
+/* Estilos generales */
+@import url('https://fonts.googleapis.com/css2?family=Tiny5&display=swap');
+
+h2 {
+    text-align: center;
+    font-size: 4em; /* Letras más grandes */
+    color:rgb(49, 131, 214);
+    text-transform: uppercase;
+    margin-top: 50px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: relative;
+}
+
+h2::after {
+    content: '';
+    display: block;
+    width: 450px;
+    height: 3px; /* Grosor de la línea */
+    background-color: #ccc; /* Color de la línea gris claro */
+    position: absolute;
+    bottom: -10px; /* Distancia desde el título */
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('/images/fondoBlanco.png'); /* Asegúrate de que la ruta sea correcta */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #004586;
+    color: #fff;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 70px;
+}
+
+.logo-header {
+    width: 70px; /* Ajusta esto al tamaño de tu logo */
+    height: 70px; /* Ajusta esto al tamaño de tu logo */
+    background-image: url('/images/logo-appix-blanco.png'); 
+    background-size: contain; /* Asegura que el logo se ajuste dentro de las dimensiones */
+    margin-right: 5px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.header-title {
+    display: flex;
+    font-size: 24px; /* Tamaño de fuente del título */
+    margin: 0; /* Elimina el margen por defecto del H1 */
+    height: 70px;
+    width: 100%;
+    align-items: center;
+    font-family: "Tiny5", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.row {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 0 20px;
+    background-color: #f2f2f2; /* Color de fondo blanco */
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-container {
+    padding: 20px;
+}
+
+.form-container label {
+    font-weight: bold;
+}
+
+.risk {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+
+.button-container{
+    margin: 10px;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+}
+
+#plan-accion {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.divider {
+    border-top: 1px solid #ccc; /* Línea divisoria gris */
+    margin-top: 10px; /* Espacio superior */
+    margin-bottom: 10px; /* Espacio inferior */
+}
+
+.titulo-secciones {
+    color: #4fa4ff; /* Color del título del plan de acción */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Estilo de fuente */
+    font-size: 2em;
+}
+
+.comentarios-guia {
+    color: #000000; /* Color del título del plan de acción */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Estilo de fuente */
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 15px;
+    margin-bottom: 15;
+}
+
+.no-materialize-checkbox{
+    margin-top: 10px;
+    margin-bottom: 25px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1);
+}
+.no-materialize-checkbox input[type="checkbox"] {
+    opacity: 1;
+    position: static;
+    pointer-events: auto;
+}
+
+.no-materialize-checkbox label {
+    pointer-events: none;
+}
+
+.no-materialize-checkbox label:before, 
+.no-materialize-checkbox label:after {
+    display: none;
+}
+
+.seccion-formulario {
+    margin-bottom: 50px;
+}
+
+.buttonBlue{
+    color: white;
+    margin: 10px;
+    border:none;
+    position:relative;
+    height:35px;
+    width: 150px;
+    cursor:pointer;
+    transition:800ms ease all;
+    background: rgb(49, 131, 214);
+    outline:none;
+  }
+  .buttonBlue:hover{
+    background:#fff;
+    color:rgb(49, 131, 214);
+  }
+  .buttonBlue:before,.buttonBlue:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: rgb(49, 131, 214);
+    transition:400ms ease all;
+  }
+  .buttonBlue:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+  }
+  .buttonBlue:hover:before,.buttonBlue:hover:after{
+    width:100%;
+    transition:800ms ease all;
+  }
+
+.buttonRed{
+    color: white;
+    margin: 10px;
+    border:none;
+    position:relative;
+    height:35px;
+    width: 150px;
+    cursor:pointer;
+    transition:800ms ease all;
+    background: rgb(176, 14, 14);
+    outline:none;
+  }
+  .buttonRed:hover{
+    background:#fff;
+    color:rgb(176, 14, 14);
+  }
+  .buttonRed:before,.buttonRed:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: rgb(176, 14, 14);
+    transition:400ms ease all;
+  }
+  .buttonRed:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+  }
+  .buttonRed:hover:before,.buttonRed:hover:after{
+    width:100%;
+    transition:800ms ease all;
+  }
+
+  .buttonGreen{
+    color: white;
+    margin: 10px;
+    border:none;
+    position:relative;
+    height:35px;
+    width: 250px;
+    cursor:pointer;
+    transition:800ms ease all;
+    background: rgb(31, 134, 105);
+    outline:none;
+  }
+  .buttonGreen:hover{
+    background:#fff;
+    color:rgb(31, 134, 105);
+  }
+  .buttonGreen:before,.buttonGreen:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: rgb(31, 134, 105);
+    transition:400ms ease all;
+  }
+  .buttonGreen:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+  }
+  .buttonGreen:hover:before,.buttonGreen:hover:after{
+    width:100%;
+    transition:800ms ease all;
+  }

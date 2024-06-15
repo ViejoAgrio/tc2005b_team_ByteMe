@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appix</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>       
+    <div class="con">
+        <div class="resumed">
+            <header class="header">
+                <div class="row">
+                    <div class="col s3">
+                        <div class="row">
+                            <div class="col s3">
+                                <div class="logo-header"></div>
+                            </div>
+                            <div class="col s9">
+                                <h1 class="header-title">RISK-MANAGER</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s9">                   
+                        <div class="fixed-action-btn right">
+                            <a class="btn-floating btn-large darkBlue">
+                            <i class="large material-icons">dehaze</i>
+                            </a>
+                            <ul>
+                            <li><a class="btn-floating yellow darken-1"><i class="material-icons tooltipped" data-position="bottom" data-tooltip="Cerrar sesión" onclick="location.href='/../login/logout'">exit_to_app</i></a></li>
+                            </ul>
+                        </div>  
+                    </div>
+                </div>
+            </header>
+            <div class="searchers">
+                <form id="filters-form" action="/admin/admin">
+                    <div class="selectors center">
+                        <div class="input-field">
+                            <select id="lista-estatus" name="estatus">
+                                <option value="Todos" <%= selectedEstatus === 'Todos' ? 'selected' : '' %>>Todos</option>
+                                <option value="En proceso" <%= selectedEstatus === 'En proceso' ? 'selected' : '' %>>En proceso</option>
+                                <option value="Atrasado" <%= selectedEstatus === 'Atrasado' ? 'selected' : '' %>>Atrasado</option>
+                                <option value="En planeación" <%= selectedEstatus === 'En planeación' ? 'selected' : '' %>>En planeación</option>
+                                <option value="En espera" <%= selectedEstatus === 'En espera' ? 'selected' : '' %>>En espera</option>
+                                <option value="Finalizado" <%= selectedEstatus === 'Finalizado' ? 'selected' : '' %>>Finalizado</option>
+                            </select>
+                            <label>Estatus del proyecto</label>
+                        </div>
+                        <div class="input-field">
+                            <select id="lista-departamento" name="departamento">
+                                <option value="Todos" <%= selectedDepartamento === 'Todos' ? 'selected' : '' %>>Todos</option>
+                                <option value="Desarrollo web" <%= selectedDepartamento === 'Desarrollo web' ? 'selected' : '' %>>Desarrollo web</option>
+                                <option value="Diseño web" <%= selectedDepartamento === 'Diseño web' ? 'selected' : '' %>>Diseño web</option>
+                            </select>
+                            <label>Departamento del proyecto</label>
+                        </div>
+                        <div class="input-field">
+                            <select id="lista-empresa" name="empresa">
+                                <option value="Todos" <%= selectedEmpresa === 'Todos' ? 'selected' : '' %>>Todos</option>
+                                <% for (let i = 0; i <= empresas.length - 1; i++) { %>
+                                <option value="<%= empresas[i].nombreEmpresa %>" <%= selectedEmpresa === empresas[i].nombreEmpresa ? 'selected' : '' %>><%= empresas[i].nombreEmpresa %></option>
+                                <% } %>
+                            </select>
+                            <label>Empresa del proyecto</label>
+                        </div>
+                    </div>            
+                </form>  
+                <div class="input-field searcher right">
+                    <input type="text" id="search" placeholder="Buscar proyectos por título">
+                </div>
+            </div>      
+            <div class="row">
+                <% for (let i = 0; i < resumedProyects.length; i++) {
+                    if (resumedProyects[i].porcentajeRiesgo > 49) { 
+                        var colorLeft = 'post-it-rojo';
+                        var colorRight = 'post-it-rojo-claro';
+                        var colorLetra = 'post-it-rojo-letra';
+                    } else if (resumedProyects[i].porcentajeRiesgo > 33) {
+                        var colorLeft = 'post-it-amarillo';
+                        var colorRight = 'post-it-amarillo-claro';
+                        var colorLetra = 'post-it-amarillo-letra';
+                    } else if (resumedProyects[i].porcentajeRiesgo > 0) {
+                        var colorLeft = 'post-it-azul'; 
+                        var colorRight = 'post-it-azul-claro';
+                        var colorLetra = 'post-it-azul-letra';
+                    } else {
+                        var colorLeft = 'post-it-negro'; 
+                        var colorRight = 'post-it-negro-claro';
+                        var colorLetra = 'post-it-negro-letra';
+                    } %>
+                <div class="col s4 project-card" 
+                    data-status="<%= resumedProyects[i].estatus %>" 
+                    data-department="<%= resumedProyects[i].departamento %>"
+                    data-company="<%= resumedProyects[i].nombreEmpresa %>">
+                    <div class="post-it hoverable" data-id-proyecto="<%= resumedProyects[i].idProyecto %>">
+                        <div class="row">
+                            <div class="col s9">
+                                <div class="post-it-header <%= colorLeft %>">
+                                    <span class="card-title"><h2><%= resumedProyects[i].nombreProyecto %></h2></span>
+                                </div>
+                                <div class="post-it-left">
+                                    <div class="post-it-risk <%= colorLetra %>">
+                                        <h3>Porcentaje de riesgo</h3>
+                                        <h1><%= resumedProyects[i].porcentajeRiesgo %>%</h1>
+                                    </div>
+                                    <div class="risks">
+                                        <h3>Riesgos:</h3>
+                                        <div class="riesgos">
+                                            <% if (resumedProyects[i].riesgos.length < 1 || resumedProyects[i].riesgos[0].descripcionRiesgo == null) {%>
+                                                <div class="icon-error">
+                                                    <h3> No hay riesgos registrados para este proyecto</h3>
+                                                </div>
+                                            <% } else { for (let j = 0; j < resumedProyects[i].riesgos.length && j < 5; j++) {%>
+                                            <div class="icon-error">
+                                                <i class="tiny material-icons">error</i>
+                                                <h3><%= resumedProyects[i].riesgos[j].descripcionRiesgo %></h3>
+                                            </div>
+                                            <% }} %>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="post-it-status">
+                                    <h3><%= resumedProyects[i].estatus %></h3>
+                                </div>
+                            </div>
+                            <div class="col s3">
+                                <div class="icons <%= colorRight %>">
+                                </div>
+                                <div class="post-it-dates <%= colorRight %>">
+                                    <h2>Inicio</h2>
+                                    <h3><%= resumedProyects[i].fechaInicio %></h3>
+                                    <p><br></p>
+                                    <h2>Final</h2>
+                                    <h3><%= resumedProyects[i].fechaFinal %></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+        </div>
+        <div class="pags">
+            <ul class="pagination">
+                <li class="<%= paginaActual <= 1 ? 'disabled' : 'waves-effect' %>">
+                    <a href="<%= paginaActual <= 1 ? '#' : `/admin/admin?page=${paginaActual - 1}&estatus=${selectedEstatus}&departamento=${selectedDepartamento}&empresa=${selectedEmpresa}` %>">
+                        <i class="material-icons">chevron_left</i>
+                    </a>
+                </li>
+                <% for (let i = 1; i <= totalPaginas; i++) { %>
+                <li class="<%= paginaActual === i ? 'active' : 'waves-effect' %>">
+                    <a href="/admin/admin?page=<%= i %>&estatus=<%= selectedEstatus %>&departamento=<%= selectedDepartamento %>&empresa=<%= selectedEmpresa %>"><%= i %></a>
+                </li>
+                <% } %>
+                <li class="<%= paginaActual >= totalPaginas ? 'disabled' : 'waves-effect' %>">
+                    <a href="<%= paginaActual >= totalPaginas ? '#' : `/admin/admin?page=${paginaActual + 1}&estatus=${selectedEstatus}&departamento=${selectedDepartamento}&empresa=${selectedEmpresa}` %>">
+                        <i class="material-icons">chevron_right</i>
+                    </a>
+                </li>
+            </ul>     
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Prevenir que los enlaces deshabilitados sean clicables
+                    document.querySelectorAll('.pagination li.disabled a').forEach(function(element) {
+                        element.addEventListener('click', function(event) {
+                            event.preventDefault();
+                        });
+                    });
+                });
+            </script>                      
+        </div>
+    </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script>
+            const postIts = document.querySelectorAll('.post-it.hoverable');
+            postIts.forEach(postIt => {
+                postIt.addEventListener('click', function() {
+                    const idProyecto = this.getAttribute('data-id-proyecto');
+                    const url = `/detalles/detalles?rol=1&idProyecto=${idProyecto}`;
+                    window.location.href = url;
+                });
+            });
+        </script>
+        <script>
+            $(document).ready(function(){
+                $('select').formSelect();
+                $('.fixed-action-btn').floatingActionButton();
+
+                function updateURLWithFilters() {
+                    var estatus = $('#lista-estatus').val();
+                    var departamento = $('#lista-departamento').val();
+                    var empresa = $('#lista-empresa').val();
+
+                    console.log('Updating URL with values:', { estatus, departamento, empresa });
+
+                    var url = new URL(window.location.href);
+                    url.searchParams.set('estatus', estatus);
+                    url.searchParams.set('departamento', departamento);
+                    url.searchParams.set('empresa', empresa);
+                    url.searchParams.set('page', 1); // Resetea la paginación a la primera página
+
+                    window.location.href = url.toString();
+                }
+
+                // Asociar el evento de cambio a los selectores
+                $('#lista-estatus').change(updateURLWithFilters);
+                $('#lista-departamento').change(updateURLWithFilters);
+                $('#lista-empresa').change(updateURLWithFilters);
+
+                // Añadir los filtros a los enlaces de paginación al cargar la página
+                function addFiltersToPagination() {
+                    var estatus = $('#lista-estatus').val();
+                    var departamento = $('#lista-departamento').val();
+                    var empresa = $('#lista-empresa').val();
+
+                    $('.pagination a').each(function() {
+                        var url = new URL($(this).attr('href'), window.location.origin);
+                        url.searchParams.set('estatus', estatus);
+                        url.searchParams.set('departamento', departamento);
+                        url.searchParams.set('empresa', empresa);
+                        $(this).attr('href', url.toString());
+                    });
+                }
+
+                addFiltersToPagination();
+            });
+        </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.fixed-action-btn');
+        var instances = M.FloatingActionButton.init(elems, {
+            direction: 'left',
+            hoverEnabled: false
+        });
+        var elems = document.querySelectorAll('.tooltipped');
+        var instances = M.Tooltip.init(elems);
+
+        $('#search').on('input', function() {
+                var searchTerm = $(this).val().toLowerCase();
+                $('.project-card').each(function() {
+                    var title = $(this).find('.card-title').text().toLowerCase();
+                    if (title.includes(searchTerm)) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,313 @@
+@import url('https://fonts.googleapis.com/css2?family=Tiny5&display=swap');
+
+:root {
+    --color-back-azul: #004586; 
+    --color-rojo: rgb(176, 14, 14); 
+    --color-info-rojo: rgb(205, 73, 73);
+    --color-amarillo: rgb(226, 173, 14); 
+    --color-info-amarillo: rgb(215, 171, 40);
+    --color-info-azul: rgb(49, 131, 214); 
+    --color-negro: rgba(0, 0, 0, 0.947); 
+    --color-info-negro: rgba(0, 0, 0, 0.836); 
+}
+
+
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.con {
+    width: 100%;
+    height: 100vh;
+    overflow: scroll;
+    background-image: url('/images/fondoBlanco.png'); 
+    background-size: cover;
+    background-position: center;
+}
+
+.header {
+    display: flex;
+    background-color: var(--color-back-azul); /* Color de fondo azul */
+    color: #fff;
+    height: 70px;
+}
+
+.searchers {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.selectors {
+    display: flex;
+}
+
+.searcher {
+    left: 40px;
+}
+
+.label-color {
+    color: #cd0e0e; /* Cambia este valor al color deseado */
+    font-size: 30px;
+}
+
+.input-field select option {
+    color: rgb(196, 84, 9); /* Cambia este valor al color deseado */
+}
+
+.logo-header {
+    width: 70px; /* Ajusta esto al tamaño de tu logo */
+    height: 70px; /* Ajusta esto al tamaño de tu logo */
+    background-image: url('/images/logo-appix-blanco.png'); 
+    background-size: contain; /* Asegura que el logo se ajuste dentro de las dimensiones */
+    margin-right: 5px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.header-title {
+    display: flex;
+    font-size: 24px; /* Tamaño de fuente del título */
+    margin: 0; /* Elimina el margen por defecto del H1 */
+    height: 70px;
+    width: 100%;
+    align-items: center;
+    font-family: "Tiny5", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.row {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.post-it {
+    display: flex;
+    flex-direction: column;
+    height: 250px;
+    background-color: #fff;
+    margin: 20px; 
+    border-radius: 10px 10px 10px 0;
+    transition: transform 0.3s ease;
+    border: 1px solid #ccc;
+    overflow: hidden;
+    width: 450px;
+}
+
+.post-it h1 {
+    font-size: 50px;
+    margin: 0;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+
+.post-it h2 {
+    font-size: 15px;
+    margin: 0;
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+.post-it h3{
+    font-size: 14px;
+    margin: 0;
+}
+
+.post-it:hover {
+    transform: translateY(-5px);
+    cursor: pointer;
+}
+
+.post-it-header {
+    display: flex;
+    color: #fff;
+    height: 45px;
+    width: 336px;
+    border-radius: 10px 0 0 0;
+    justify-content: left;
+    align-items: center;
+    text-align: center;
+    margin: 0;
+}
+
+.post-it-rojo {
+    background-color: var(--color-rojo); 
+}
+
+.post-it-amarillo {
+    background-color: var(--color-amarillo); 
+}
+
+.post-it-azul {
+    background-color: var(--color-back-azul); 
+}
+
+.post-it-negro {
+    background-color: var(--color-negro); 
+}
+
+.post-it-negro-letra {
+    color: var(--color-negro); 
+}
+
+.post-it-rojo-letra {
+    color: var(--color-rojo); 
+}
+
+.post-it-amarillo-letra {
+    color: var(--color-amarillo); 
+}
+
+.post-it-azul-letra {
+    color: var(--color-back-azul); 
+}
+
+.post-it-dates-full {
+    display: flex;
+    flex-direction: column;
+    width: 112px;
+    height: 250px;
+    color: #fff;
+    justify-content: center;
+    align-items: center;
+}
+
+.post-it-rojo-claro {
+    background-color: var(--color-info-rojo);
+}
+
+.post-it-amarillo-claro {
+    background-color: var(--color-info-amarillo);
+}
+
+.post-it-azul-claro {
+    background-color: var(--color-info-azul);
+}
+
+.post-it-negro-claro {
+    background-color: var(--color-info-negro);
+}
+
+.post-it-left {
+    display: flex;
+    flex-direction: column;
+    height: 170px;
+    width: 336px;
+    margin: 0;
+    padding: 0;
+    overflow: scroll;
+}
+
+.post-it-risk {
+    display: flex;
+    flex-direction: column;
+    width: 336px;
+    height: 170px;
+    align-items: center;
+    margin: 0;
+    padding-top: 10px;
+}
+
+.risks {
+    width: 336px;
+    color: black;
+}
+
+.risks h3 {
+    font-size: 14px;
+    margin: 0;
+    margin-left: 5px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.post-it-status {
+    display: flex;
+    height: 40px;
+    width: 336px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-top: 2px solid #ccc;
+    margin: 0;
+    padding: 5px;
+    font-weight: bold;
+}
+
+.post-it-status h3 {
+    font-weight: bold;
+}
+
+.pagination {
+    height: 80px;
+}
+
+.pagination li.active {
+    background-color: rgb(49, 131, 214); /* Color de fondo del elemento activo */
+}
+.pagination li.active a {
+    color: black; /* Color del texto del elemento activo */
+}
+.pagination li a {
+    color: black; /* Color del texto de los elementos */
+}
+
+.button-centered {
+    display: flex;
+    height: 70px;
+    width: 100%;
+    align-items: center;
+    margin: 0;
+}
+
+button{
+    background:rgb(49, 131, 214);
+    color:#fff;
+    border:none;
+    position:relative;
+    height:35px;
+    width: 100%;
+    cursor:pointer;
+    transition:800ms ease all;
+    outline:none;
+  }
+  button:hover{
+    background:#fff;
+    color:rgb(49, 131, 214);
+  }
+  button:before,button:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: rgb(49, 131, 214);
+    transition:400ms ease all;
+  }
+  button:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+  }
+  button:hover:before,button:hover:after{
+    width:100%;
+    transition:800ms ease all;
+  }
+
+.pags {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
