@@ -1,5 +1,6 @@
 const User    = require('../models/admin.model.js');
 const npModel = require('../models/newProject.model.js');
+const bcrypt = require('bcryptjs')
 const { formatearFecha, calcularPorcentajeRiesgo } = require("../public/js/controllerFuncionts.js");
 
 module.exports.render_admin = async (req, res) => {
@@ -73,8 +74,10 @@ module.exports.post_change_password = async (req, res) => {
         if (!user) {
             return res.status(400).json({ message: 'Usuario no encontrado' });
         }
+
+        const hashedPassword = await bcrypt.hash(newPassword, 12);
     
-        await User.newPassword(username, newPassword);
+        await User.newPassword(username, hashedPassword);
         return res.status(200).json({ message: 'La contraseña ha sido cambiada' });
     } catch (err) {
         console.error('Error changing password:', err);

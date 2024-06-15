@@ -30,32 +30,32 @@ app.use(express.static('public'));
 
 const isAuth = require('./utils/is-auth');
 const isUser = require('./utils/is-user');
-//const isAdmin = require('./utils/is-admin');
+const isAdmin = require('./utils/is-admin');
 
 app.get('/', async(req, res, next) => {
     res.render('login'); 
 });
 
 const rutasUsuarios = require('./routes/usuarios.routes');
-app.use('/usuarios', rutasUsuarios);
+app.use('/usuarios', isUser, rutasUsuarios);
 
 const rutasAdmin = require('./routes/admin.routes');
-app.use('/admin', rutasAdmin);
+app.use('/admin', isAdmin, rutasAdmin);
 
 const rutasDetalles = require('./routes/detalles.routes');
-app.use('/detalles', rutasDetalles);
+app.use('/detalles', isAuth, rutasDetalles);
 
 const rutasNewProject = require('./routes/new_project.routes');
-app.use('/admin/nuevo-proyecto', rutasNewProject);
+app.use('/admin/nuevo-proyecto', isAdmin, rutasNewProject);
 
 const rutasRiesgos = require('./routes/riesgos.routes');
-app.use('/admin/riesgos', rutasRiesgos);
+app.use('/admin/riesgos', isAdmin, rutasRiesgos);
 
 const rutasPendientes = require('./routes/pendientes.routes');
-app.use('/admin/pendientes', rutasPendientes);
+app.use('/admin/pendientes', isAdmin, rutasPendientes);
 
 const rutasClienteEmpresa = require('./routes/cliente-empresa.routes');
-app.use('/admin/cliente-empresa', rutasClienteEmpresa);
+app.use('/admin/cliente-empresa', isAdmin, rutasClienteEmpresa);
 
 const rutasLogin = require('./routes/login.routes');
 app.use('/login', rutasLogin);
