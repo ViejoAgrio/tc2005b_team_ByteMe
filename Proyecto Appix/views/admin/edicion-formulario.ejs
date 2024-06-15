@@ -1,0 +1,205 @@
+<form action="/admin/edicion-proyecto" method="POST">
+    <script>
+        let checkboxStatesRsg = {};
+        let numberInputStatesRsg = {};
+        let riskLvl = {};
+    </script>
+    <label for="nombreProyecto">Nombre del proyecto:</label>
+    <input type="text" id="nombreProyecto" name="nombreProyecto" value="<%= proyecto.nombreProyecto %>" required>
+
+    <div style="display: flex; justify-content: space-between;">
+        <div style="width: 48%;">
+            <label for="fechaInicio">Fecha de inicio:</label>
+            <input type="date" id="fechaInicio" name="fechaInicio" required 
+                   min="<?php echo date('Y-m-d'); ?>" value="<%= proyecto.fechaInicio %>" onchange="setFechaFinalMin()">
+        </div>
+        <div style="width: 48%;">
+            <label for="fechaFinal">Fecha de entrega:</label>
+            <input type="date" id="fechaFinal" name="fechaFinal"  required 
+                   min="<?php echo date('Y-m-d'); ?>" value="<%= proyecto.fechaFinal %>">
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('fechaFinal').setAttribute('min', today);
+        });
+    
+        function setFechaFinalMin() {
+            const fechaInicio = document.getElementById('fechaInicio').value;
+            document.getElementById('fechaFinal').setAttribute('min', fechaInicio);
+        }
+    </script>
+    
+    <div style="display: flex; justify-content: space-between;">
+        <div style="width: 48%;">
+            <label for="estatus">Estatus del proyecto:</label>
+                <select id="estatus" name="estatus" class="new-risk-department browser-default" required>
+                    <option value="" disabled>Seleccione un estatus</option>
+                    <option value="En proceso" <%= proyecto.estatus === 'En proceso' ? 'selected' : '' %>>En proceso</option>
+                    <option value="En planeacion" <%= proyecto.estatus === 'En planeacion' ? 'selected' : '' %>>En planeacion</option>
+                    <option value="En espera" <%= proyecto.estatus === 'En espera' ? 'selected' : '' %>>En espera</option>
+                    <option value="Atrasado" <%= proyecto.estatus === 'Atrasado' ? 'selected' : '' %>>Atrasado</option>
+                    <option value="Finalizado" <%= proyecto.estatus === 'Finalizado' ? 'selected' : '' %>>Finalizado</option>
+                </select>
+            
+        </div>
+        <div style="width: 48%;">
+            <label for="departamento">Departamento:</label>
+            <select id="departamento" name="departamento" class="new-risk-department browser-default" required>
+                <option value="" disabled>Seleccione un departamento</option>
+                <option value="Desarrollo Web" <%= proyecto.departamento === 'Desarrollo web' ? 'selected' : '' %>>Desarrollo web</option>
+                <option value="Diseño Web" <%= proyecto.departamento === 'Diseño web' ? 'selected' : '' %>>Diseño web</option>
+            </select>
+        </div>
+    </div>
+
+    <label for="descripcionProyecto">Descripción:</label>
+    <input type="text" id="descripcionProyecto" name="descripcionProyecto" maxlength="250" value="<%= proyecto.descripcionProyecto %>" required>
+    
+    <div class="char-count">
+        <span id="current-count">0</span>/250 caracteres
+    </div>
+    
+    <script>
+        const descripcionInput = document.getElementById('descripcionProyecto');
+        const currentCount = document.getElementById('current-count');
+
+        descripcionInput.addEventListener('input', () => {
+            currentCount.textContent = descripcionInput.value.length;
+        });
+    </script>
+
+    <section id="cliente"></section>
+
+
+        <h3 class="titulo-secciones">Clientes</h3>
+   
+
+    <label>Agrega el cliente encargado del proyecto:</label>
+
+  
+        <h4 class="comentarios-guia">Clientes existentes:</h4>
+ 
+
+    <div id="jsGridClientes" class="no-materialize-checkbox"></div>
+
+    <div class="seccion-formulario">
+        <table>
+            <td>
+                <h4 class="comentarios-guia">¿No encontraste un cliente?</h4>
+            </td>
+            <td>
+                <button class="waves-effect waves-light btn button" id="btnAgregarCliente" type="button" onclick="location.href='/admin/cliente-empresa'">Agregar nuevo cliente</button>
+            </td>
+        </table>
+    </div>
+
+    <div id="hiddenInputsClientList" style="display: none;"></div>
+
+    <section id="empresa"></section>
+
+
+        <h3 class="titulo-secciones">Empresas</h3>
+ 
+
+    <label>Agrega una empresa a tu proyecto:</label>
+
+  
+        <h4 class="comentarios-guia">Empresas existentes:</h4>
+ 
+
+    <div id="jsGridEmpresas" class="no-materialize-checkbox"></div>
+
+    <div class="seccion-formulario">
+        <table>
+            <td>
+                <h4 class="comentarios-guia">¿No encontraste una empresa?</h4>
+            </td>
+            <td>
+                <button class="waves-effect waves-light btn button" id="btnAgregarEmpresa" type="button" onclick="location.href='/admin/cliente-empresa'">Agregar nueva empresa</button>
+            </td>
+        </table>
+    </div>
+
+    <div id="hiddenInputsEmpresaList" style="display: none;"></div>
+    
+    <section id="plan-de-accion"></section>
+
+        <h3 class="titulo-secciones">Plan de acción</h3>
+  
+
+    <label>Agrega acciones a tu plan de acción del proyecto:</label>
+
+        <h4 class="comentarios-guia">Acciones existentes:</h4>
+   
+
+    <div id="jsGridAcc" class="no-materialize-checkbox"></div>
+
+    <div class="seccion-formulario">
+    <table>
+        <td>
+            <h4 class="comentarios-guia">¿No encontraste una acción?</h4>
+        </td>
+        <td>
+            <button class="waves-effect waves-light btn button" id="btnAgregarPlanAccion" type="button" onclick="location.href='/admin/pendientes'">Agregar nueva acción</button>
+        </td>
+    </table>
+    </div>
+
+    <div id="hiddenInputsAccionList" style="display: none;">
+    <% acciones.forEach(function(accion) { %>
+        <input type="hidden" name="hiddenAccInput_Chk" value="<%= accion.idAccion %>" />
+    <% }); %>
+    </div>
+
+    </section>
+
+    <section>
+        <div class="new-risks">
+            <h3 class="titulo-secciones">Riesgos</h3>
+
+            <label>Agrega riesgos y su nivel de impacto en tu proyecto:</label>
+
+        
+                <h4 class="comentarios-guia">Riesgos existentes:</h4>
+           
+
+            <div id="jsGridRsg" name="jsGridRsg" class="no-materialize-checkbox"></div>
+
+            <div class="seccion-formulario">
+            <table>
+                <td>
+                    <h4 class="comentarios-guia">¿No encontraste el riesgo?</h4>
+                </td>
+                <td>
+                    <button class="waves-effect waves-light btn button" id="btnAgregarRiesgo" type="button" onclick="location.href='/admin/riesgos'">Agregar nuevo riesgo</button></td>
+                </td>                
+            </table>
+            </div>
+        </div>
+    </section>
+    
+    <div id="hiddenInputsRiskList" style="display: none;"></div>
+    <input type="text" id="idProyecto" name="idProyecto" value="<%= empresaCliente.idProyecto %>" style="display: none;">
+    <input type="text" id="idEmpresa"  name="idEmpresa"  value="<%= empresaCliente.idEmpresa %>" style="display: none;">
+    <input type="text" id="idCliente"  name="idCliente"  value="<%= empresaCliente.idCliente %>" style="display: none;">
+    <div id="hiddenPrevAccionList" style="display: none;">
+    <% acciones.forEach(function(accion) { %>
+        <input type="hidden" name="hiddenPrevAcc" value="<%= accion.idAccionProyecto %>" />
+    <% }); %>
+    </div>
+
+    <div class="button-container button-container-np" style="display: flex; justify-content: flex-end;">
+        <input class="btn waves-effect waves-light save-button" id="btnGuardar" type="submit" value="Guardar">
+        <button class="btn waves-effect waves-light cancel-button" id="btnCancelar" type="button" onclick="location.href='/admin/admin'">Cancel</button>
+    </div>
+
+    <div id="proyecto-data" data-proyecto='<%= JSON.stringify(proyecto) %>' style="display: none;"></div>
+    <div id="empaclnt-data" data-proyecto='<%= JSON.stringify(empresaCliente) %>' style="display: none;"></div>
+    <div id="clientes-data" data-proyecto='<%= JSON.stringify(clientes) %>' style="display: none;"></div>
+    <div id="empresas-data" data-proyecto='<%= JSON.stringify(empresas) %>' style="display: none;"></div>
+    <div id="acciones-data" data-proyecto='<%= JSON.stringify(acciones) %>' style="display: none;"></div>
+    <div id="riesgos-data"  data-proyecto='<%= JSON.stringify(riesgos) %>' style="display: none;"></div>
+</form>

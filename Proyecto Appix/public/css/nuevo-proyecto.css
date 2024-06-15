@@ -282,3 +282,25 @@ header {
     width:100%;
     transition:800ms ease all;
   }
+
+#refreshContainer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.refreshButton {
+    background-image: url('/images/refresh.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 20px;
+    height: 20px;
+    border: none;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-top: 30px;
+}
+
+.refreshText {
+    font-size: 10px;
+}
