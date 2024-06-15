@@ -36,30 +36,27 @@
         <div style="width: 48%;">
             <label for="estatus">Estatus del proyecto:</label>
                 <select id="estatus" name="estatus" class="new-risk-department browser-default" required>
-                    <option value="" disabled selected>Seleccione un estatus</option>
-                    <option value="En proceso">En proceso</option>
-                    <option value="En planeacion">En planeacion</option>
-                    <option value="En espera">En espera</option>
-                    <option value="Atrasado">Atrasado</option>
-                    <option value="Finalizado">Finalizado</option>
+                    <option value="" disabled>Seleccione un estatus</option>
+                    <option value="En proceso" <%= proyecto.estatus === 'En proceso' ? 'selected' : '' %>>En proceso</option>
+                    <option value="En planeacion" <%= proyecto.estatus === 'En planeacion' ? 'selected' : '' %>>En planeacion</option>
+                    <option value="En espera" <%= proyecto.estatus === 'En espera' ? 'selected' : '' %>>En espera</option>
+                    <option value="Atrasado" <%= proyecto.estatus === 'Atrasado' ? 'selected' : '' %>>Atrasado</option>
+                    <option value="Finalizado" <%= proyecto.estatus === 'Finalizado' ? 'selected' : '' %>>Finalizado</option>
                 </select>
             
         </div>
         <div style="width: 48%;">
             <label for="departamento">Departamento:</label>
             <select id="departamento" name="departamento" class="new-risk-department browser-default" required>
-                <option value="" disabled selected>Seleccione un departamento</option>
-                <option value="Desarrollo Web">Desarrollo web</option>
-                <option value="Aplicaciones Web">Aplicaciones web</option>
+                <option value="" disabled>Seleccione un departamento</option>
+                <option value="Desarrollo Web" <%= proyecto.departamento === 'Desarrollo web' ? 'selected' : '' %>>Desarrollo web</option>
+                <option value="Diseño Web" <%= proyecto.departamento === 'Diseño web' ? 'selected' : '' %>>Diseño web</option>
             </select>
         </div>
     </div>
 
-    <label for="porcentajeRiesgo">Porcentaje de riesgo:</label>
-    <input type="number" id="porcentajeRiesgo" name="porcentajeRiesgo" min="1" max="100" required> <!-- Cambiar name a "encargado" -->            
-
     <label for="descripcionProyecto">Descripción:</label>
-    <input type="text" id="descripcionProyecto" name="descripcionProyecto" maxlength="250" value="<%= proyecto.descripcionProyecto %>" required> <!-- Cambiar name a "descripcion" -->
+    <input type="text" id="descripcionProyecto" name="descripcionProyecto" maxlength="250" value="<%= proyecto.descripcionProyecto %>" required>
     
     <div class="char-count">
         <span id="current-count">0</span>/250 caracteres
@@ -151,7 +148,11 @@
     </table>
     </div>
 
-    <div id="hiddenInputsAccionList" style="display: none;"></div>
+    <div id="hiddenInputsAccionList" style="display: none;">
+    <% acciones.forEach(function(accion) { %>
+        <input type="hidden" name="hiddenAccInput_Chk" id="<%= accion.idAccionProyecto %>" value="<%= accion.idAccion %>" />
+    <% }); %>
+    </div>
 
     </section>
 
@@ -181,9 +182,19 @@
     </section>
     
     <div id="hiddenInputsRiskList" style="display: none;"></div>
+    <input type="text" id="idProyecto" name="idProyecto" value="<%= empresaCliente.idProyecto %>" style="display: none;">
+    <input type="text" id="idEmpresa"  name="idEmpresa"  value="<%= empresaCliente.idEmpresa %>" style="display: none;">
+    <input type="text" id="idCliente"  name="idCliente"  value="<%= empresaCliente.idCliente %>" style="display: none;">
 
     <div class="button-container button-container-np" style="display: flex; justify-content: flex-end;">
         <input class="btn waves-effect waves-light save-button" id="btnGuardar" type="submit" value="Guardar">
         <button class="btn waves-effect waves-light cancel-button" id="btnCancelar" type="button" onclick="location.href='/admin/admin'">Cancel</button>
     </div>
+
+    <div id="proyecto-data" data-proyecto='<%= JSON.stringify(proyecto) %>' style="display: none;"></div>
+    <div id="empaclnt-data" data-proyecto='<%= JSON.stringify(empresaCliente) %>' style="display: none;"></div>
+    <div id="clientes-data" data-proyecto='<%= JSON.stringify(clientes) %>' style="display: none;"></div>
+    <div id="empresas-data" data-proyecto='<%= JSON.stringify(empresas) %>' style="display: none;"></div>
+    <div id="acciones-data" data-proyecto='<%= JSON.stringify(acciones) %>' style="display: none;"></div>
+    <div id="riesgos-data"  data-proyecto='<%= JSON.stringify(riesgos) %>' style="display: none;"></div>
 </form>

@@ -7,21 +7,59 @@ module.exports.render_edicionProject = async (req, res) => {
         const idProyecto  = req.query.idProyecto;
         const proyectoObj = new edProj.Project();
 
-        const proyecto = await proyectoObj.selectProject(idProyecto);
+        // Selects
+        const proyectoSelect = await proyectoObj.selectProject(idProyecto);
         
-        if (!proyecto) {
+        const empresaCliente = await proyectoObj.selectEmpresaCliente(idProyecto);
+
+        const clientesSelect = await proyectoObj.selectClientes();
+
+        const empresasSelect = await proyectoObj.selectEmpresas();
+
+        const planaccnSelect = await proyectoObj.selectPlanAccion(idProyecto);
+        
+        const riesgospSelect = await proyectoObj.selectRiesgos(idProyecto);
+
+        if (!proyectoSelect) {
             return res.status(404).send("Proyecto no encontrado.");
         }
 
-        proyecto.fechaInicio = formatearFechaReverse(proyecto.fechaInicio);
-        proyecto.fechaFinal = formatearFechaReverse(proyecto.fechaFinal);
+        if (!empresaCliente) {
+            return res.status(404).send(
+                "Empresa y cliente del proyecto no encontrados."
+            );
+        }
+
+        if (!clientesSelect) {
+            return res.status(404).send(
+                "Clientes no encontrados."
+            );
+        }
+
+        if (!empresasSelect) {
+            return res.status(404).send(
+                "Empresas no encontrados."
+            );
+        }
+
+        proyectoSelect.fechaInicio = formatearFechaReverse(
+            proyectoSelect.fechaInicio
+        );
+        proyectoSelect.fechaFinal  = formatearFechaReverse(
+            proyectoSelect.fechaFinal
+        );
 
         res.render('admin/edicion-proyecto',{
-            proyecto, proyecto
+            proyecto: proyectoSelect,
+            empresaCliente: empresaCliente,
+            clientes: clientesSelect,
+            empresas: empresasSelect,
+            acciones: planaccnSelect,
+            riesgos : riesgospSelect
         });
     } catch (error) {
-        console.error('Error al obtener empresa:', error);
-        res.status(500).send('Internal Server Error: ', error);
+        console.error('Error Interno del Server: ', error);
+        res.status(500).send('Error Interno del Server: ', error);
     }
 };
 
@@ -74,17 +112,17 @@ module.exports.getPlanAccion = async (req, res) => {
     console.log("Test");
 };
 
-module.exports.postNewProject = async (req, res) => {
+module.exports.postEditProject = async (req, res) => {
     try {
+        const idProyecto          = req.body.idProyecto;
         const nombreProyecto      = req.body.nombreProyecto;
         const fechaInicio         = req.body.fechaInicio;
         const fechaFin            = req.body.fechaFinal;
         const selectedEstatus     = req.body['estatus'];
         const departamento        = req.body['departamento'];
         const descripcionProyecto = req.body.descripcionProyecto;
-        const porcentajeRiesgo    = req.body.porcentajeRiesgo;
-        var clienteId             = {};
-        var empresaId             = {};
+        var clienteId             = req.body.idCliente;
+        var empresaId             = req.body.idEmpresa;
         var listaPlanAccionIds    = {};
         var listaRiesgosIds       = {};
         var listaRiesgosLevel     = {};
@@ -93,24 +131,17 @@ module.exports.postNewProject = async (req, res) => {
         var banderaEmpresa       = false;
         var banderaAddPlanAccion = false;
         var banderaAddRiesgos    = false;
+
+        if(req.body.hiddenClientInput_Chk != null) {
+            clienteId = req.body.hiddenClientInput_Chk;
+        }
+
+        if(req.body.hiddenEmpInput_Chk != null) {
+            empresaId = req.body.hiddenEmpInput_Chk;
+        }
         
-        // Se obtiene la cliente
-        if(req.body.hiddenClientInput_Chk != null)
-        {
-            clienteId      = req.body.hiddenClientInput_Chk;
-            banderaCliente = true;
-        }
-
-        // Se obtiene la empresa
-        if(req.body.hiddenEmpInput_Chk != null)
-        {
-            empresaId      = req.body.hiddenEmpInput_Chk;
-            banderaEmpresa = true;
-        }
-
         // Se obtiene la lista de los planes de acción
-        if(req.body.hiddenAccInput_Chk != null)
-        {
+        if(req.body.hiddenAccInput_Chk != null) {
             listaPlanAccionIds   = req.body.hiddenAccInput_Chk;
             banderaAddPlanAccion = true;
         }
@@ -124,37 +155,35 @@ module.exports.postNewProject = async (req, res) => {
             banderaAddRiesgos = true;
         }
         
-        const objProject = new np.Project(nombreProyecto,
-                                          descripcionProyecto,
-                                          departamento,
-                                          selectedEstatus, 
-                                          fechaInicio, 
-                                          fechaFin,
-                                          porcentajeRiesgo,
-                                          clienteId,
-                                          empresaId,
-                                          listaRiesgosIds,
-                                          listaRiesgosLevel,
-                                          listaPlanAccionIds);
+        const objProject = new edProj.Project(
+            idProyecto,
+            nombreProyecto,
+            descripcionProyecto,
+            departamento,
+            selectedEstatus, 
+            fechaInicio, 
+            fechaFin,
+            clienteId,
+            empresaId,
+            listaRiesgosIds,
+            listaRiesgosLevel,
+            listaPlanAccionIds
+        );
         
         // Guardado en tabla proyecto y obtención de id del nuevo proyecto
-        const projectArrayId = await objProject.save_Project(res,req);
+        const projectUpdateStatus = await objProject.update_Project();
         
-        if(banderaCliente && banderaEmpresa)
-        {
-            await objProject.save_clientEmpresaProject(res,req, empresaId, clienteId, projectArrayId.idProyecto);
-        }
+        const clntEmpUpdateStatus = await objProject.update_clientEmpresaProject();
+        
+        //if (banderaAddPlanAccion) {
+        //    await objProject.save_planAccionProject(res,req,projectArrayId.idProyecto);
+        //}
 
-        if(banderaAddPlanAccion)
-        {
-            await objProject.save_planAccionProject(res,req,projectArrayId.idProyecto);
-        }
+        //if (banderaAddRiesgos) {
+        //    await objProject.save_riskProject(res,req,projectArrayId.idProyecto);
+        //}
 
-        if(banderaAddRiesgos)
-        {
-            await objProject.save_riskProject(res,req,projectArrayId.idProyecto);
-        }
-
+        //res.status(500).send(clntEmpUpdateStatus);
         res.status(201).redirect("/admin/admin")
     }
     catch (error) {

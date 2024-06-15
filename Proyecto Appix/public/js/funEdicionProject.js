@@ -1,7 +1,10 @@
-// Llenar página
-document.addEventListener('DOMContentLoaded', function() {
-    
-});
+// Global Variables
+let proyecto;
+let empresaClient;
+let clientes;
+let empresas;
+let acciones;
+let riesgos;
 
 // Manejar el envío del formulario de nuevo proyecto
 document.addEventListener('DOMContentLoaded', function() {
@@ -33,75 +36,26 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-/*
+// Actualización de las variables globales
 document.addEventListener('DOMContentLoaded', function() {
-    $(document).ready(function() {
-        $('#add-client-btn').click(function() {
-            // Remove button and dropdown
-            var buttonDiv = $(this).parent();
-            var dropdownDiv = $('#clients-lst').parent();
-            buttonDiv.hide();
-            dropdownDiv.hide();
+    const proyectoData = document.getElementById('proyecto-data').dataset.proyecto;
+    proyecto = JSON.parse(proyectoData);
 
-            // Create textboxes and new button
-            var textboxEnc = $('<input type="text" id="encargado-txt" name="encargado-txt" required>');
-            var textboxEmp = $('<input type="text" id="empresa-txt" name="empresa-txt" required>');
-            var labelEnc = $('<label for="encargado-txt">Encargado:</label>');
-            var labelEmp = $('<label for="empresa-txt">Empresa:</label>');
-            var newButton = $('<button id="list-btn" class="waves-effect waves-light btn" type="button">Ver Lista</button>');
+    const empresaCData  = document.getElementById('empaclnt-data').dataset.proyecto;
+    empresaClient = JSON.parse(empresaCData);
 
-            // Append new elements
-            var textboxDivEnc = $('<div style="width: 35%;"></div>').append(labelEnc, textboxEnc);
-            var textboxDivEmp = $('<div style="width: 35%;"></div>').append(labelEmp, textboxEmp);
-            var newButtonDiv = $('<div style="width: 20%;"></div>').append(newButton);
+    const clientesData  = document.getElementById('clientes-data').dataset.proyecto;
+    clientes = JSON.parse(clientesData);
 
-            $('#clients-div').append(textboxDivEnc, textboxDivEmp, newButtonDiv);
+    const empresasData  = document.getElementById('empresas-data').dataset.proyecto;
+    empresas = JSON.parse(empresasData);
 
-            // Add event listener for the new button
-            newButton.click(function() {
-                // Remove textboxes and new button
-                textboxDivEnc.remove();
-                textboxDivEmp.remove();
-                newButtonDiv.remove();
+    const accionesData  = document.getElementById('acciones-data').dataset.proyecto;
+    acciones = JSON.parse(accionesData);
 
-                // Show original button and dropdown
-                buttonDiv.show();
-                dropdownDiv.show();
-            });
-        });
-    });
+    const riesgosData  = document.getElementById('riesgos-data').dataset.proyecto;
+    riesgos  = JSON.parse(riesgosData);
 });
-*/
-
-/* Fill clients dropdown with database info
-document.addEventListener('DOMContentLoaded', function() {
-    fetch('nuevo-proyecto/clients')
-        .then(response => response.json())
-        .then(message => {
-            const dropdown = document.getElementById("clients-lst");
-            dropdown.innerHTML = '';
-
-            const dfltOption = document.createElement('option');
-            dfltOption.value = "";
-            dfltOption.textContent = `Seleccione un cliente`;
-            dfltOption.disabled = true;
-            dfltOption.selected = true;
-            dropdown.appendChild(dfltOption)
-
-            for (let key in message){
-                const option = document.createElement('option');
-                
-                // Set the value and text of the option element
-                option.value = message[key]['idCliente'];
-                option.textContent = `${message[key]['nombreEncargado']} - ${message[key]['nombreEmpresa']}`;
-                
-                // Append the option to the dropdown menu
-                dropdown.appendChild(option);
-            }
-        })
-        .catch(error => console.log('Error fetching clients:', error));
-});
-*/
 
 // Clients Table with checkboxes and search implemented
 document.addEventListener('DOMContentLoaded', function() {
@@ -188,8 +142,15 @@ document.addEventListener('DOMContentLoaded', function() {
                                                             .attr("name", "selClient")
                                                             .attr("value", item.id);
                                 
-                                // Restore checkbox state from checkboxStatesClients object
-                                checkbox.prop("checked", checkboxStatesClients[item.id] || false);
+                                if (empresaClient.idCliente == item.id) {
+                                    checkbox.prop("checked",true);
+                                    empresaClient.idCliente = -1;
+
+                                    checkboxStatesClients[item.id] = true;
+                                } else {
+                                    // Restore checkbox state from checkboxStatesClients object
+                                    checkbox.prop("checked", checkboxStatesClients[item.id] || false);
+                                }
                     
                                 return checkbox;
                             }
@@ -292,10 +253,15 @@ document.addEventListener('DOMContentLoaded', function() {
                                 var checkbox =  $("<input>").attr("type", "checkbox")
                                                             .attr("name", "selEmpresas")
                                                             .attr("value", item.id);
-                                
-                                // Restore checkbox state from checkboxStatesCompanies object
-                                checkbox.prop("checked", checkboxStatesEmpresas[item.id] || false);
-                    
+                                if (empresaClient.idEmpresa == item.id) {
+                                    checkbox.prop("checked",true);
+                                    empresaClient.idEmpresa = -1;
+                                    
+                                    checkboxStatesEmpresas[item.id] = true;
+                                } else {
+                                    // Restore checkbox state from checkboxStatesCompanies object
+                                    checkbox.prop("checked", checkboxStatesEmpresas[item.id] || false);
+                                }
                                 return checkbox;
                             }
                         }
@@ -341,7 +307,7 @@ document.addEventListener('DOMContentLoaded', function() {
         for (var itemId in hiddenInputsAccionData) {
             if (hiddenInputsAccionData.hasOwnProperty(itemId)) {
                 var data = hiddenInputsAccionData[itemId];
-                var inputHtml = '<input type="hidden" name="hiddenAccInput_Chk" value="' + data.id + '" />';
+                var inputHtml = '<input type="hidden" name="hiddenAccInput_Chk" id="-1" value="' + data.id + '" />';
                 hiddenInputsAccionList.append(inputHtml); // Agrega el input oculto al elemento oculto
             }
         }
@@ -387,12 +353,25 @@ document.addEventListener('DOMContentLoaded', function() {
                                                             .attr("name", "selAcc")
                                                             .attr("value", item.idAcc);
                                 
-                                // Restore checkbox state from checkboxAccStates object
-                                if (checkboxAccStates[item.idAcc]) {
-                                    checkbox.prop("checked", true);
-                                } else {
-                                    checkbox.prop("checked", false);
+                                if (!(Object.keys(acciones).length === 0)) {
+                                    for (var accion of acciones) {
+                                        if (accion.idAccion == item.idAcc) {
+                                            checkbox.prop(
+                                                "checked",
+                                                true
+                                            );
+                                            accion.idAccion = -1;
+                                            
+                                            checkboxAccStates[item.idAcc] = true;
+                                        }
+                                    }
                                 }
+
+                                // Restore checkbox state from checkboxAccStates object
+                                checkbox.prop(
+                                    "checked",
+                                    checkboxAccStates[item.idAcc] || false
+                                );
                     
                                 return checkbox;
                             }
@@ -508,6 +487,18 @@ document.addEventListener('DOMContentLoaded', function() {
                                                               .attr("id",item.idR)
                                                               .attr("onKeyDown","return false");
                                 
+                                if (!(Object.keys(riesgos).length === 0)) {
+                                    for (var riesgo of riesgos) {
+                                        if (riesgo.idRiesgo == item.idR) {
+                                            numberInput.val(
+                                                riesgo.nivelRiesgo
+                                            );
+                                            
+                                            numberInputStatesRsg[item.idR] = riesgo.nivelRiesgo;
+                                        }
+                                    }
+                                }
+
                                 // Restore checkbox state from checkboxStatesRsg object
                                 if (numberInputStatesRsg[item.idR]) {
                                     numberInput.prop("value", numberInputStatesRsg[item.idR]);
@@ -528,6 +519,19 @@ document.addEventListener('DOMContentLoaded', function() {
                                                             .attr("name", "selRsg")
                                                             .attr("value", item.idR);
                                 
+                                if (!(Object.keys(riesgos).length === 0)) {
+                                    for (var riesgo of riesgos) {
+                                        if (riesgo.idRiesgo == item.idR) {
+                                            checkbox.prop(
+                                                "checked",
+                                                true
+                                            );
+                                            riesgo.idRiesgo = -1;
+                                            
+                                            checkboxStatesRsg[item.idR] = true;
+                                        }
+                                    }
+                                }
                                 // Restore checkbox state from checkboxStatesRsg object
                                 if (checkboxStatesRsg[item.idR]) {
                                     checkbox.prop("checked", true);
@@ -549,3 +553,74 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => console.error('Error al cargar los riesgos:', error));
 });
+
+// Código desactivado
+/*
+document.addEventListener('DOMContentLoaded', function() {
+    $(document).ready(function() {
+        $('#add-client-btn').click(function() {
+            // Remove button and dropdown
+            var buttonDiv = $(this).parent();
+            var dropdownDiv = $('#clients-lst').parent();
+            buttonDiv.hide();
+            dropdownDiv.hide();
+
+            // Create textboxes and new button
+            var textboxEnc = $('<input type="text" id="encargado-txt" name="encargado-txt" required>');
+            var textboxEmp = $('<input type="text" id="empresa-txt" name="empresa-txt" required>');
+            var labelEnc = $('<label for="encargado-txt">Encargado:</label>');
+            var labelEmp = $('<label for="empresa-txt">Empresa:</label>');
+            var newButton = $('<button id="list-btn" class="waves-effect waves-light btn" type="button">Ver Lista</button>');
+
+            // Append new elements
+            var textboxDivEnc = $('<div style="width: 35%;"></div>').append(labelEnc, textboxEnc);
+            var textboxDivEmp = $('<div style="width: 35%;"></div>').append(labelEmp, textboxEmp);
+            var newButtonDiv = $('<div style="width: 20%;"></div>').append(newButton);
+
+            $('#clients-div').append(textboxDivEnc, textboxDivEmp, newButtonDiv);
+
+            // Add event listener for the new button
+            newButton.click(function() {
+                // Remove textboxes and new button
+                textboxDivEnc.remove();
+                textboxDivEmp.remove();
+                newButtonDiv.remove();
+
+                // Show original button and dropdown
+                buttonDiv.show();
+                dropdownDiv.show();
+            });
+        });
+    });
+});
+*/
+
+/* Fill clients dropdown with database info
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('nuevo-proyecto/clients')
+        .then(response => response.json())
+        .then(message => {
+            const dropdown = document.getElementById("clients-lst");
+            dropdown.innerHTML = '';
+
+            const dfltOption = document.createElement('option');
+            dfltOption.value = "";
+            dfltOption.textContent = `Seleccione un cliente`;
+            dfltOption.disabled = true;
+            dfltOption.selected = true;
+            dropdown.appendChild(dfltOption)
+
+            for (let key in message){
+                const option = document.createElement('option');
+                
+                // Set the value and text of the option element
+                option.value = message[key]['idCliente'];
+                option.textContent = `${message[key]['nombreEncargado']} - ${message[key]['nombreEmpresa']}`;
+                
+                // Append the option to the dropdown menu
+                dropdown.appendChild(option);
+            }
+        })
+        .catch(error => console.log('Error fetching clients:', error));
+});
+*/

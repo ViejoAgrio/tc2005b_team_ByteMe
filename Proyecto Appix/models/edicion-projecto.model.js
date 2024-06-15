@@ -1,26 +1,25 @@
 const db = require('../utils/database.js');
 
 module.exports.Project = class {
-    constructor (my_nombreProyecto,
+    constructor (my_idProyecto,
+                 my_nombreProyecto,
                  my_descripcionProyecto,
                  my_departamento,
                  my_selectedEstatus, 
                  my_fechaInicio, 
                  my_fechaFinal,
-                 my_porcentajeRiesgo,
                  my_idCliente,
                  my_idEmpresa,
                  my_listaRiesgoId,
                  my_listaRiesgoLevel,
                  my_listaPlanAccionId
                 ){
-        
+        this.idProyecto          = my_idProyecto;
         this.nombreProyecto      = my_nombreProyecto;
         this.fechaInicio         = my_fechaInicio;
         this.fechaFinal          = my_fechaFinal;
         this.departamento        = my_departamento;
         this.selectedEstatus     = my_selectedEstatus;
-        this.porcentajeRiesgo    = my_porcentajeRiesgo;
         this.descripcionProyecto = my_descripcionProyecto;
         this.idCliente           = my_idCliente;
         this.idEmpresa           = my_idEmpresa;
@@ -31,46 +30,41 @@ module.exports.Project = class {
 
     //MÉTODOS 
     
-    async save_Project(res,req){
-        try{
-            let insertedId = 0;
-            
+    async update_Project() {
+        try {
             const connection = await db();
-            const queryProyecto = `INSERT INTO proyecto 
-                            (nombreProyecto,
-                             descripcionProyecto,
-                             departamento,
-                             estatus, 
-                             fechaInicio, 
-                             fechaFinal,
-                             porcentajeRiesgo)
-                           VALUES (?, ?, ?, ?, ?, ?, ?)`;
-            const valueProyecto = [this.nombreProyecto,
-                           this.descripcionProyecto,
-                           this.departamento,
-                           this.selectedEstatus,
-                           this.fechaInicio,
-                           this.fechaFinal,
-                           this.porcentajeRiesgo
-                           ];
+
+            const queryProyecto = `
+                UPDATE proyecto 
+                SET nombreProyecto = ?,
+                    descripcionProyecto = ?,
+                    departamento = ?,
+                    estatus = ?,
+                    fechaInicio = ?,
+                    fechaFinal = ?
+                WHERE idProyecto = ?;
+            `;
+
+            const valueProyecto = [
+                this.nombreProyecto,
+                this.descripcionProyecto,
+                this.departamento,
+                this.selectedEstatus,
+                this.fechaInicio,
+                this.fechaFinal,
+                this.idProyecto
+            ];
+
             const resNewProject = await connection.query(
                 queryProyecto,
                 valueProyecto
             );
-            const queryIdProy = `
-                SELECT idProyecto 
-                FROM proyecto 
-                ORDER BY idProyecto 
-                DESC LIMIT 1;
-            `;
-            const resIdSelect = await connection.query(
-                queryIdProy
-            );
+
             await connection.release();
-            return resIdSelect[0];
-        }
-        catch (error) {
-            res.status(500).send(`Error al guardar el proyecto: ${error}`);
+
+            return resNewProject;
+        } catch (error) {
+            return `Error al guardar el proyecto: ${error}`;
         }
     };
 
@@ -115,21 +109,29 @@ module.exports.Project = class {
         await connection.release();
     }
 
-    async save_clientEmpresaProject(res, req, idEmpresa, idCliente, idProject) {
-        const connection = await db();
-        const query = `
-            UPDATE empresacliente 
-            SET idEmpresa = ?, idCliente = ? 
-            WHERE idProyecto = ?;
-        `;
-        
-        const values = [
-            idEmpresa,
-            idCliente,
-            idProject
-        ];
-        await connection.query(query, values);
-        await connection.release();
+    async update_clientEmpresaProject() {
+        try {
+            const connection = await db();
+            const query = `
+                UPDATE empresacliente 
+                SET idEmpresa = ?,
+                    idCliente = ? 
+                WHERE idProyecto = ?;
+            `;
+            
+            const values = [
+                this.idEmpresa,
+                this.idCliente,
+                this.idProyecto
+            ];
+
+            const result = await connection.query(query, values);
+            await connection.release();
+
+            return result;
+        } catch (error) {
+            return `Error al guardar el proyecto: ${error}`; 
+        }
     }
 
     async selectProject(idProyecto){
@@ -208,7 +210,7 @@ module.exports.Project = class {
         }
     }
 
-    async selectEmpresaCliente(){
+    async selectEmpresaCliente(idProyecto) {
         try {
             //Select empresacliente properties
             
@@ -220,13 +222,111 @@ module.exports.Project = class {
                 WHERE idProyecto = ?;
             `;
 
-            const response = await connection.execute(selectEmpresaClienteQuery, [this.id_proyect]);
+            const [response] = await connection.execute(
+                selectEmpresaClienteQuery,
+                idProyecto
+            );
             await connection.release()
-            return response[0];
+            return response;
             
         } catch (error) {
             console.error('Error al consultar tabla empresacliente: ', error);
-            throw error;
+            return error;
+        }
+    }
+
+    async selectClientes() {
+        try {
+            //Select empresacliente properties
+            
+            const connection = await db();
+
+            const selectClientesQuery = `
+                SELECT *
+                FROM cliente;
+            `;
+
+            const response = await connection.execute(
+                selectClientesQuery
+            );
+            await connection.release()
+            return response;
+            
+        } catch (error) {
+            console.error('Error al consultar tabla cliente: ', error);
+            return error;
+        }
+    }
+
+    async selectEmpresas() {
+        try {
+            //Select empresacliente properties
+            
+            const connection = await db();
+
+            const selectEmpresasQuery = `
+                SELECT *
+                FROM empresa;
+            `;
+
+            const response = await connection.execute(
+                selectEmpresasQuery
+            );
+            await connection.release()
+            return response;
+            
+        } catch (error) {
+            return error;
+        }
+    }
+
+    async selectPlanAccion(idProyecto) {
+        try {
+            //Select empresacliente properties
+            
+            const connection = await db();
+
+            const selectAccionesQuery = `
+                SELECT *
+                FROM accionproyecto
+                WHERE idProyecto = ?;
+            `;
+
+            const response = await connection.execute(
+                selectAccionesQuery,
+                idProyecto
+            );
+
+            await connection.release()
+            return response;
+            
+        } catch (error) {
+            return error;
+        }
+    }
+
+    async selectRiesgos(idProyecto) {
+        try {
+            //Select empresacliente properties
+            
+            const connection = await db();
+
+            const selectRiesgosQuery = `
+                SELECT *
+                FROM riesgoproyecto
+                WHERE idProyecto = ?;
+            `;
+
+            const response = await connection.execute(
+                selectRiesgosQuery,
+                idProyecto
+            );
+
+            await connection.release()
+            return response;
+            
+        } catch (error) {
+            return error;
         }
     }
 
@@ -293,7 +393,7 @@ module.exports.Project = class {
         await connection.release();
     }
 
-    async save_clientEmpresaProject(res, req, idEmpresa, idCliente, idProject) {
+    async save_clientEmpresaProject(idEmpresa, idCliente, idProject) {
         const connection = await db();
     
         const updateQuery = `
@@ -311,11 +411,6 @@ module.exports.Project = class {
         await connection.release();
     }
 }
-
-
-
-
-
 
 module.exports.PlanAccion = class {
     constructor (my_descripcionAccion)
@@ -339,7 +434,6 @@ module.exports.PlanAccion = class {
         }
     }
 }
-
 
 module.exports.Client = class {
     constructor (my_idCliente,
